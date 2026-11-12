@@ -84,3 +84,10 @@ PROPUESTAS CIUDADANAS
 VOTOS Y AVISOS EN EL PANEL
 - Pestaña "Votos": todas las medidas con sus votos a favor, en contra, porcentaje de apoyo y número de avisos.
 - Pestaña "Avisos de firmas": se puede ver por medida (lista de correos) o por correo (medidas de cada persona).
+
+OPINIONES, RESPUESTAS Y ALIAS
+- Cada tarjeta muestra cuántas opiniones tiene. Al abrir la medida se ven en hilos: cada opinión con sus
+  respuestas debajo y un botón "Responder". Las respuestas también pasan por tu revisión antes de publicarse.
+- El alias es obligatorio y queda fijo: la primera vez que alguien opina, responde o propone, su alias se
+  liga a su dispositivo. A partir de ahí siempre firma con ese alias, y nadie más puede usarlo.
+- En el panel, una respuesta pendiente muestra a qué opinión responde.

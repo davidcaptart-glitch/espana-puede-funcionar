@@ -125,6 +125,7 @@ function render(){
  const rows=D.comments.filter(c=>c.status===TAB);
  $("list").innerHTML=rows.map(c=>`<article class="item${c.reports?" new":""}"><div class="meta"><b>${esc(c.alias)}</b><span>${fdate(c.at)}</span>${c.reports?`<span class="tag">${c.reports} ${c.reports===1?"denuncia":"denuncias"}</span>`:""}</div>
 <div class="where">${titles[c.p]?`<a href="./#m=${esc(c.p)}" target="_blank" rel="noopener">${esc(titles[c.p])}</a>`:`Medida que ya no existe (${esc(c.p)})`}</div>
+${c.to?`<p class="note" style="margin-top:6px">Responde a <b style="color:#fff">${esc(c.to.alias)}</b>: «${esc(c.to.body)}»</p>`:""}
 <p class="body">${esc(c.body)}</p><div class="acts">${c.status!=="published"?`<button class="btn ok sm" data-c="published" data-id="${c.id}">Publicar</button>`:""}${c.status!=="rejected"?`<button class="btn no sm" data-c="rejected" data-id="${c.id}">Rechazar</button>`:""}${c.status!=="pending"?`<button class="btn alt sm" data-c="pending" data-id="${c.id}">Devolver a pendientes</button>`:""}</div></article>`).join("")
   ||`<div class="empty">${TAB==="pending"?"No hay opiniones pendientes de revisar.":TAB==="published"?"Todavía no hay opiniones publicadas.":"No hay opiniones rechazadas."}</div>`;
 }

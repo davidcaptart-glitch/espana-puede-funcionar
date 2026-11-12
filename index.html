@@ -678,6 +678,13 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 @media(max-width:860px){.ppband{grid-template-columns:1fr}}
 .cit-chip{background:#fff}
 .card:has(.cit-chip){border-style:dashed}
+.thread{margin-bottom:10px}
+.thread .com{margin-bottom:6px}
+.com.child{margin-left:22px;border-left:2px solid var(--gr)}
+.reply-slot{margin-left:22px}
+.reply-b{min-height:34px;padding:4px 8px;font-size:.84rem}
+.comForm.reply{background:var(--surface);border:1px solid var(--edge);border-radius:12px;padding:4px 14px 14px;margin:4px 0 12px}
+.as{margin-top:12px;font-size:.9rem;color:var(--muted)}.as b{color:#fff}
 </style>
 </head>
 <body>
@@ -863,7 +870,7 @@ let VOTER=ls.get("epf-voter");
 if(!/^[0-9a-f-]{36}$/.test(VOTER||"")){VOTER=uuid();ls.set("epf-voter",VOTER)}
 
 // ───────── Estado ─────────
-const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:blocks[0].nombre,q:"",sort:"prog",rank:"apoyo",just:null,tryId:null,ideas:[],myIdeas:[],year:2027,view:"inicio",ptab:"resumen"};
+const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:blocks[0].nombre,q:"",sort:"prog",rank:"apoyo",just:null,tryId:null,alias:"",ideas:[],myIdeas:[],year:2027,view:"inicio",ptab:"resumen"};
 const tot=id=>S.totals[id]||{up:0,down:0};
 const comsOf=id=>S.comments[id]||[];
 
@@ -892,7 +899,7 @@ const api={
   const st=await rpc("get_state",{p_voter:VOTER});if(visits)st.visits=visits;return st;
  },
  vote:(id,v)=>remote?rpc("cast_vote",{p_proposal:id,p_voter:VOTER,p_value:v}):Promise.resolve(local.vote(id,v)),
- comment:(id,alias,body)=>remote?rpc("add_comment",{p_proposal:id,p_voter:VOTER,p_alias:alias,p_body:body}):Promise.resolve(local.comment(id,alias,body)),
+ comment:(id,alias,body,parent)=>remote?rpc("add_comment",{p_proposal:id,p_voter:VOTER,p_alias:alias,p_body:body,p_parent:parent||null}):Promise.resolve(local.comment(id,alias,body)),
  report:id=>remote?rpc("report_comment",{p_id:id,p_voter:VOTER}):Promise.resolve(),
  idea:(alias,title,body,block)=>remote?rpc("add_idea",{p_voter:VOTER,p_alias:alias,p_title:title,p_body:body,p_block:block||null}):Promise.resolve({id:"c-0",status:"pending"}),
  alert:(id,email,all)=>remote?rpc("add_alert",{p_proposal:id,p_voter:VOTER,p_email:email,p_all:!!all}):Promise.resolve({ok:true})
@@ -900,6 +907,7 @@ const api={
 function errMsg(e){
  if(e&&e.code==="rate_limit")return "Demasiadas acciones seguidas desde esta conexión. Inténtalo más tarde.";
  if(e&&e.code==="invalid_input")return "Revisa los datos e inténtalo de nuevo.";
+ if(e&&e.code==="alias_taken")return "Ese alias ya lo usa otra persona. Elige otro.";
  return "No se pudo conectar con el servidor. Inténtalo de nuevo.";
 }
 function group(list){const o={};(list||[]).forEach(c=>{(o[c.p]=o[c.p]||[]).push(c)});return o}
@@ -907,6 +915,7 @@ async function load(){
  try{
   const st=await api.state();
   S.totals=st.totals||{};S.mine=st.mine||{};S.comments=group(st.comments);S.pending=group(st.pending);S.visits=st.visits||null;S.ready=true;
+  S.alias=st.alias||"";if(S.alias)ls.set("epf-alias",S.alias);
   S.ideas=(st.ideas||[]).map(x=>toIdea(x));S.myIdeas=(st.my_ideas||[]).map(x=>toIdea(x,true));syncIdeas();
   if(!remote)banner("Modo de prueba: no hay servidor configurado y los votos solo se guardan en este navegador.");
  }catch(e){S.ready=false;banner('No se pudo conectar con el servidor de votos. <button class="link" data-act="retry">Reintentar</button>')}
@@ -952,6 +961,11 @@ async function submitAlert(form){
  b.disabled=false;
 }
 
+// ───────── Alias ─────────
+// El alias queda ligado a este dispositivo la primera vez que se usa: no se puede cambiar ni usar el de otra persona.
+const aliasField=what=>S.alias?`<p class="as">${what} como <b>${esc(S.alias)}</b></p><input type="hidden" name="alias" value="${esc(S.alias)}">`
+ :`<label class="field">Alias <small style="font-weight:400;color:var(--muted)">(obligatorio; será tu nombre fijo aquí)</small><input name="alias" maxlength="40" autocomplete="nickname" value="${esc(ls.get("epf-alias")||"")}"></label>`;
+
 // ───────── Propón tu medida ─────────
 function openPropon(){
  const d=$("propon");
@@ -960,7 +974,7 @@ function openPropon(){
 <label class="field">Título de la medida<input name="title" maxlength="140" placeholder="Por ejemplo: Transporte público gratuito para menores de 26"></label>
 <label class="field">Explícala<textarea name="body" maxlength="2000" placeholder="Qué propones, a quién afecta y qué problema resuelve."></textarea></label>
 <label class="field">Categoría<select name="block"><option value="">Elige la categoría que mejor encaje</option>${blocks.map(b=>`<option>${esc(b.nombre)}</option>`).join("")}</select></label>
-<label class="field">Alias (se mostrará junto a tu propuesta)<input name="alias" maxlength="40" autocomplete="nickname" value="${esc(ls.get("epf-alias")||"")}"></label>
+${aliasField("Propones")}
 <p class="form-msg" id="prpMsg" role="status"></p><button class="btn btn-accent" type="submit">Enviar propuesta</button>
 <p class="note">No se publican amenazas, acoso, incitación a la violencia ni ataques discriminatorios. No uses tu nombre completo si no quieres que sea público.</p></form>`;
  if(!d.open)d.showModal();
@@ -976,8 +990,8 @@ async function submitPropon(form){
  b.disabled=true;msg.className="form-msg";msg.textContent="Enviando…";
  try{
   const r=await api.idea(alias,title,body,form.block.value);
-  if(r&&r.error){b.disabled=false;return fail(r.error==="rate_limit"?"Has enviado varias propuestas hoy. Inténtalo de nuevo mañana.":"Revisa los datos e inténtalo de nuevo.")}
-  ls.set("epf-alias",alias);S.myIdeas.unshift(toIdea({id:r.id,title,body,alias,block:form.block.value,at:new Date().toISOString()},true));
+  if(r&&r.error){b.disabled=false;return fail(r.error==="rate_limit"?"Has enviado varias propuestas hoy. Inténtalo de nuevo mañana.":r.error==="alias_taken"?"Ese alias ya lo usa otra persona. Elige otro.":"Revisa los datos e inténtalo de nuevo.",r.error==="alias_taken"?form.alias:null)}
+  S.alias=r.alias||alias;ls.set("epf-alias",S.alias);S.myIdeas.unshift(toIdea({id:r.id,title,body,alias:S.alias,block:form.block.value,at:new Date().toISOString()},true));
   $("propon").close();S.filter=CIT;S.q="";$("q").value="";renderChips();renderGrid();
   if(S.view!=="medidas")location.hash="#medidas";else window.scrollTo(0,0);
   toast("Propuesta recibida. Se publicará cuando se revise.");
@@ -1074,7 +1088,7 @@ function card(p){
  const cs=comsOf(p.id);
  return `<article class="card" style="--c:${colorOf(p)}"><svg class="card-ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg><span class="blk">${ic(iconOf(p))}${esc(p.block)}${p.plan?'<span class="plan-chip">Plan 2027–2034</span>':""}${p.citizen?'<span class="plan-chip cit-chip">Propuesta ciudadana</span>':""}</span>
 <h3><button type="button" data-act="open" data-id="${p.id}">${esc(p.title)}</button></h3>${p.citizen?`<p class="by">Propuesta de <b>${esc(p.alias)}</b>, no del programa</p>`:""}<p class="clamp">${esc(p.desc)}</p>${datosHTML(p,2)}
-${voteBox(p.id)}${n?`<p class="quote"><b>${esc(cs[0].alias)}:</b> ${esc(cs[0].body)}</p>`:""}
+${voteBox(p.id)}${n?`<p class="quote"><b>${esc((cs.find(c=>!c.parent)||cs[0]).alias)}:</b> ${esc((cs.find(c=>!c.parent)||cs[0]).body)}</p>`:""}
 <div class="card-foot"><button type="button" class="ghost" data-act="open" data-id="${p.id}" data-to="coms">${ic("chat-circle")}${n?`${n} ${n===1?"opinión":"opiniones"}`:"Opinar"}</button><button type="button" class="ghost" data-act="share" data-id="${p.id}">${ic("share-network")}Compartir</button></div></article>`;
 }
 function renderGrid(){
@@ -1302,15 +1316,22 @@ window.EPF={drawCard,drawResult,drawStory,props};
 
 // ───────── Detalle de una medida ─────────
 const fdate=s=>{try{return new Date(s).toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"})}catch(e){return ""}};
+const comFormHTML=parent=>`<form class="comForm${parent?" reply":""}" ${parent?`data-parent="${parent}"`:'id="comForm"'} novalidate>${aliasField(parent?"Respondes":"Opinas")}
+<label class="field">${parent?"Tu respuesta":"Tu opinión, mejora o alternativa"}<textarea name="body" maxlength="1200" placeholder="${parent?"Responde con respeto.":"Argumenta tu punto de vista con respeto."}"></textarea></label>
+<p class="form-msg" role="status"></p><button class="btn btn-navy" type="submit">${parent?"Enviar respuesta":"Enviar opinión"}</button>${parent?`<button type="button" class="link" data-act="replyx" style="margin-left:14px">Cancelar</button>`:""}</form>`;
 function comsHTML(id){
  const pub=comsOf(id),pen=S.pending[id]||[];
- return (pub.map(c=>`<div class="com"><div class="com-h"><span><b>${esc(c.alias)}</b> · ${fdate(c.at)}</span><button type="button" class="ghost" data-act="report" data-c="${c.id}">${ic("flag")}Denunciar</button></div><p>${esc(c.body)}</p></div>`).join("")
-  +pen.map(c=>`<div class="com pend"><div class="com-h"><span><b>${esc(c.alias)}</b> · pendiente de revisión</span></div><p>${esc(c.body)}</p></div>`).join(""))
+ const one=(c,pend,child)=>`<div class="com${pend?" pend":""}${child?" child":""}"><div class="com-h"><span><b>${esc(c.alias)}</b> · ${pend?"pendiente de revisión":fdate(c.at)}</span>${pend?"":`<button type="button" class="ghost" data-act="report" data-c="${c.id}">${ic("flag")}Denunciar</button>`}</div><p>${esc(c.body)}</p></div>`;
+ const tops=pub.filter(c=>!c.parent);
+ return (tops.map(c=>{const kids=pub.filter(k=>k.parent===c.id),pk=pen.filter(k=>k.parent===c.id);
+   return `<div class="thread">${one(c)}${kids.map(k=>one(k,false,true)).join("")}${pk.map(k=>one(k,true,true)).join("")}
+<div class="reply-slot" data-slot="${c.id}">${S.replyTo===c.id?comFormHTML(c.id):`<button type="button" class="ghost reply-b" data-act="reply" data-c="${c.id}">${ic("chat-circle")}Responder${kids.length?` · ${kids.length} ${kids.length===1?"respuesta":"respuestas"}`:""}</button>`}</div></div>`}).join("")
+  +pen.filter(c=>!c.parent).map(c=>one(c,true)).join(""))
   ||'<p class="note">Todavía no hay opiniones. Puedes abrir el debate.</p>';
 }
 let openId=null;
 function openDetail(id,to){
- const p=byId[id];if(!p)return;openId=id;const d=$("detalle");
+ const p=byId[id];if(!p)return;openId=id;S.replyTo=null;const d=$("detalle");
  d.style.setProperty("--c",colorOf(p));
  d.innerHTML=`<div class="sheet-top"><span class="blk">${ic(iconOf(p))}${esc(p.block)}</span><button type="button" class="x" data-act="close" aria-label="Cerrar">${ic("x")}</button></div>
 <div class="sheet-body"><h2 id="dT">${esc(p.title)}</h2>${p.citizen?`<p class="by"><span class="plan-chip cit-chip" style="margin:0 8px 0 0">Propuesta ciudadana</span>Propuesta de <b>${esc(p.alias)}</b>, no del programa · ${fdate(p.at)}</p>`:""}<p style="white-space:pre-wrap">${esc(p.desc)}</p>
@@ -1325,10 +1346,8 @@ ${voteBox(id)}
 ${firmasHTML(id)}
 <h3 class="sub" id="dShare">Compartir esta medida</h3>${shareBlock(p)}
 <h3 class="sub" id="dComs">Opiniones (<span id="dComsN">${comsOf(id).length}</span>)</h3><div id="dComsList">${comsHTML(id)}</div>
-<form id="comForm" novalidate><label class="field">Alias (se mostrará junto a tu opinión)<input name="alias" maxlength="40" autocomplete="nickname" value="${esc(ls.get("epf-alias")||"")}"></label>
-<label class="field">Tu opinión, mejora o alternativa<textarea name="body" maxlength="1200" placeholder="Argumenta tu punto de vista con respeto."></textarea></label>
-<p class="form-msg" id="comMsg" role="status"></p><button class="btn btn-navy" type="submit">Enviar opinión</button>
-<p class="note">Las opiniones se revisan antes de publicarse. No uses tu nombre completo si no quieres que sea público.</p></form></div>`;
+${comFormHTML()}
+<p class="note">Las opiniones y respuestas se revisan antes de publicarse. No uses tu nombre completo como alias si no quieres que sea público.</p></div>`;
  if(!d.open)d.showModal();d.scrollTop=0;
  if(location.hash!=="#m="+id)history.replaceState(null,"","#m="+id);
  if(to){const el=$(to==="coms"?"dComs":"dShare");if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),60)}
@@ -1351,18 +1370,21 @@ function route(first){
 }
 window.addEventListener("hashchange",route);
 async function submitComment(form){
- const msg=$("comMsg"),alias=form.alias.value.trim(),body=form.body.value.trim(),id=openId;
- const fail=t=>{msg.className="form-msg err";msg.textContent=t};
- if(alias.length<2)return fail("Escribe un alias de al menos 2 caracteres."),form.alias.focus();
- if(body.length<3)return fail("Escribe tu opinión antes de enviarla."),form.body.focus();
+ const msg=form.querySelector(".form-msg"),alias=form.alias.value.trim(),body=form.body.value.trim(),id=openId,parent=+form.dataset.parent||null;
+ const fail=(t,el)=>{msg.className="form-msg err";msg.textContent=t;if(el&&el.type!=="hidden")el.focus()};
+ if(alias.length<2)return fail("Escribe un alias de al menos 2 caracteres.",form.alias);
+ if(body.length<3)return fail(parent?"Escribe tu respuesta antes de enviarla.":"Escribe tu opinión antes de enviarla.",form.body);
  if(!S.ready)return fail("Sin conexión con el servidor. Inténtalo de nuevo en unos minutos.");
  const btn=form.querySelector("button[type=submit]");btn.disabled=true;msg.className="form-msg";msg.textContent="Enviando…";
  try{
-  await api.comment(id,alias,body);ls.set("epf-alias",alias);
-  (S.pending[id]=S.pending[id]||[]).push({id:"n"+Date.now(),p:id,alias,body,at:new Date().toISOString()});
-  form.body.value="";$("dComsList").innerHTML=comsHTML(id);msg.className="form-msg ok";msg.innerHTML=`Recibida. Se publicará cuando se revise. <button type="button" class="link" data-act="share" data-id="${id}">Mientras tanto, comparte la medida</button>`;
- }catch(e){fail(errMsg(e))}
- btn.disabled=false;
+  const r=await api.comment(id,alias,body,parent);const first=!S.alias;
+  S.alias=(r&&r.alias)||alias;ls.set("epf-alias",S.alias);
+  (S.pending[id]=S.pending[id]||[]).push({id:"n"+Date.now(),p:id,alias:S.alias,body,parent,at:new Date().toISOString()});
+  S.replyTo=null;$("dComsList").innerHTML=comsHTML(id);
+  const main=$("comForm");if(first&&main)main.outerHTML=comFormHTML();
+  const m2=$("comForm").querySelector(".form-msg");if(!parent)$("comForm").body.value="";
+  m2.className="form-msg ok";m2.innerHTML=`${parent?"Respuesta recibida":"Recibida"}. Se publicará cuando se revise. <button type="button" class="link" data-act="share" data-id="${id}">Mientras tanto, comparte la medida</button>`;
+ }catch(e){fail(errMsg(e),e.code==="alias_taken"?form.alias:null);btn.disabled=false}
 }
 
 // ───────── Modo «vota el programa» ─────────
@@ -1412,6 +1434,8 @@ document.addEventListener("click",async e=>{
  else if(a==="img"){el.disabled=true;try{await saveCanvas(await drawCard(byId[id],"post"),id+".png",byId[id].title)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="resimg"){el.disabled=true;try{await saveCanvas(await drawResult(el.dataset.pct,el.dataset.n),"mi-resultado.png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="chip"){S.filter=el.dataset.b;S.q="";$("q").value="";renderChips();renderGrid();if($("grid").getBoundingClientRect().top<0)window.scrollTo(0,0)}
+ else if(a==="reply"){S.replyTo=+el.dataset.c;$("dComsList").innerHTML=comsHTML(openId);const t=document.querySelector(".comForm.reply textarea");if(t)t.focus()}
+ else if(a==="replyx"){S.replyTo=null;$("dComsList").innerHTML=comsHTML(openId)}
  else if(a==="propon"){if(!S.ready){toast("Sin conexión con el servidor.");return}openPropon()}
  else if(a==="prpclose")$("propon").close();
  else if(a==="cit"){S.filter=CIT;S.q="";$("q").value="";renderChips();renderGrid();if(S.view!=="medidas")location.hash="#medidas";else window.scrollTo(0,0)}
@@ -1430,7 +1454,7 @@ document.addEventListener("click",async e=>{
  else if(a==="retry"){banner("");load()}
  else if(a==="report"){try{await api.report(+el.dataset.c);toast("Gracias. Revisaremos esa opinión.");el.disabled=true}catch(x){toast(errMsg(x))}}
 });
-document.addEventListener("submit",e=>{if(e.target.id==="comForm"){e.preventDefault();submitComment(e.target)}else if(e.target.id==="avForm"){e.preventDefault();submitAlert(e.target)}else if(e.target.id==="prpForm"){e.preventDefault();submitPropon(e.target)}});
+document.addEventListener("submit",e=>{if(e.target.classList.contains("comForm")){e.preventDefault();submitComment(e.target)}else if(e.target.id==="avForm"){e.preventDefault();submitAlert(e.target)}else if(e.target.id==="prpForm"){e.preventDefault();submitPropon(e.target)}});
 $("quiz").addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;if(e.key==="ArrowRight")quizAnswer(1);else if(e.key==="ArrowLeft")quizAnswer(-1);else if(e.key==="ArrowDown")quizAnswer(0)});
 $("quiz").addEventListener("close",()=>{renderGrid()});
 $("aviso").addEventListener("input",()=>{const m=$("avMsg");if(m){m.textContent="";m.className="form-msg"}});
