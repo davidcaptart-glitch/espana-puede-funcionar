@@ -1,0 +1,32 @@
+ESPAÑA, UN PAÍS QUE PUEDE FUNCIONAR — cómo publicar y mantener la web
+=====================================================================
+
+PUBLICAR EN GITHUB PAGES
+1. Sube TODO el contenido de esta carpeta a la raíz del repositorio (incluido el archivo .nojekyll).
+2. En GitHub: Settings > Pages > Source: "Deploy from a branch", rama main, carpeta / (root).
+3. Cuando sepas la dirección pública (por ejemplo https://usuario.github.io/repositorio/), ejecuta una vez:
+       node herramientas/generar.js https://usuario.github.io/repositorio/
+   y vuelve a subir los cambios. Esto pone la dirección correcta en las vistas previas
+   de WhatsApp, X, LinkedIn, etc. Sin este paso los enlaces funcionan, pero sin imagen.
+
+QUÉ HAY EN LA CARPETA
+- index.html        La web (diseño y funcionamiento).
+- propuestas.js     Los textos del programa. Es el archivo que editarás normalmente.
+- medida/           Una página por medida. Se genera sola con generar.js. No editar a mano.
+- og/               Imágenes de vista previa para redes (una por medida + portada).
+- fuentes/          Tipografía (Bricolage Grotesque, licencia libre OFL).
+- herramientas/     generar.js
+
+CAMBIAR O AÑADIR MEDIDAS
+- Edita propuestas.js. No cambies el "id" de una medida publicada: los votos y opiniones van ligados a él.
+- Para una medida nueva, copia un bloque { ... } y ponle un id nuevo (minúsculas, números y guiones).
+- Después ejecuta de nuevo generar.js. Una medida nueva usará la imagen de portada como vista previa
+  hasta que se cree su imagen en og/.
+- Las seis medidas de "Para empezar" se eligen en la lista "destacadas", al principio de propuestas.js.
+
+VOTOS, OPINIONES Y VISITAS (Supabase, proyecto "espana-puede-funcionar")
+- Los votos y las visitas se cuentan solos.
+- Las opiniones NO se publican hasta que las apruebes:
+  Supabase > Table Editor > tabla "comments" > filtra status = pending >
+  cambia status a "published" (publicar) o "rejected" (rechazar).
+- Si tres visitantes distintos denuncian una opinión publicada, vuelve a "pending" para que la revises.
