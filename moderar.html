@@ -62,7 +62,7 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const titles=Object.fromEntries(((window.PROGRAMA||{}).propuestas||[]).map(p=>[p.id,p.title]));
 const fdate=s=>{try{return new Date(s).toLocaleString("es-ES",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}catch(e){return ""}};
-let KEY="",D={comments:[],messages:[]},TAB="pending";
+let KEY="",D={comments:[],messages:[],alerts:[],alerts_all:[],alerts_people:0},TAB="pending";
 try{KEY=sessionStorage.getItem("epf-mod")||""}catch(e){}
 const ERR={forbidden:"Clave incorrecta.",rate_limit:"Demasiados intentos fallidos. Espera 15 minutos.",invalid_input:"Datos no válidos."};
 async function rpc(fn,args){
@@ -73,11 +73,19 @@ async function rpc(fn,args){
 async function load(){D=await rpc("mod_list",{});render()}
 function show(on){$("login").hidden=on;$("app").hidden=!on;$("out").hidden=!on}
 function logout(){KEY="";try{sessionStorage.removeItem("epf-mod")}catch(e){}show(false);$("login").key.value=""}
-const TABS=[["pending","Pendientes"],["published","Publicadas"],["rejected","Rechazadas"],["messages","Mensajes"]];
+const TABS=[["pending","Pendientes"],["published","Publicadas"],["rejected","Rechazadas"],["messages","Mensajes"],["alerts","Avisos de firmas"]];
 function render(){
  const n={pending:0,published:0,rejected:0};D.comments.forEach(c=>n[c.status]++);
  const unread=D.messages.filter(x=>!x.read).length;
- $("tabs").innerHTML=TABS.map(([k,l])=>`<button type="button" class="tab" data-tab="${k}" aria-pressed="${TAB===k}">${l}${k==="messages"?`<b>${D.messages.length}</b>${unread?`<span class="dot">${unread} sin leer</span>`:""}`:`<b>${n[k]}</b>`}</button>`).join("");
+ $("tabs").innerHTML=TABS.map(([k,l])=>`<button type="button" class="tab" data-tab="${k}" aria-pressed="${TAB===k}">${l}${k==="alerts"?`<b>${D.alerts_people||0}</b>`:k==="messages"?`<b>${D.messages.length}</b>${unread?`<span class="dot">${unread} sin leer</span>`:""}`:`<b>${n[k]}</b>`}</button>`).join("");
+ if(TAB==="alerts"){
+  const al=D.alerts||[],all=D.alerts_all||[];
+  $("list").innerHTML=`<p class="note" style="margin:0 0 12px">${D.alerts_people||0} ${D.alerts_people===1?"persona ha":"personas han"} dejado su correo. Cada lista es de quienes quieren aviso si se abre la recogida de firmas de esa medida.</p>`
+   +(all.length?`<article class="item"><div class="meta"><b>Quieren aviso de cualquier recogida de firmas</b><span>${all.length} ${all.length===1?"correo":"correos"}</span></div><details><summary>Ver correos</summary><p class="body">${all.map(esc).join("\n")}</p></details><div class="acts"><button class="btn alt sm" data-copy="${esc(all.join(", "))}">Copiar correos</button></div></article>`:"")
+   +(al.map(a=>`<article class="item"><div class="meta"><b>${esc(titles[a.p]||a.p)}</b><span>${a.n} ${a.n===1?"correo":"correos"}</span></div><details><summary>Ver correos</summary><p class="body">${a.emails.map(esc).join("\n")}</p></details><div class="acts"><button class="btn alt sm" data-copy="${esc(a.emails.join(", "))}">Copiar correos</button></div></article>`).join("")||'<div class="empty">Nadie ha pedido aviso todavía.</div>')
+   +`<form class="panel" id="delAl" style="max-width:420px"><label class="field" style="margin-top:0">Borrar un correo de todas las listas<input name="email" type="email" required placeholder="correo@ejemplo.com"></label><button class="btn alt sm" type="submit" style="margin-top:10px">Borrar</button></form>`;
+  return;
+ }
  if(TAB==="messages"){
   $("list").innerHTML=D.messages.map(x=>`<article class="item${x.read?"":" new"}"><div class="meta"><b>${esc(x.name)}</b><span>${fdate(x.at)}</span>${x.read?"":'<span class="tag">Sin leer</span>'}<span>${x.emailed?"Enviado a tu correo":"No enviado por correo"}</span></div>
 <div class="where">${x.email?`<a href="mailto:${esc(x.email)}">${esc(x.email)}</a>`:""}${x.email&&x.phone?" · ":""}${x.phone?`<a href="tel:${esc(x.phone.replace(/[^0-9+]/g,""))}">${esc(x.phone)}</a>`:""}</div>
@@ -100,6 +108,7 @@ $("out").addEventListener("click",logout);
 $("reload").addEventListener("click",async()=>{say("Actualizando…");try{await load();say("")}catch(x){say(x.message,"err");if(x.code==="forbidden")logout()}});
 document.addEventListener("click",async e=>{
  const t=e.target.closest("[data-tab]");if(t){TAB=t.dataset.tab;render();return}
+ const cp=e.target.closest("[data-copy]");if(cp){try{await navigator.clipboard.writeText(cp.dataset.copy);say("Correos copiados. Pégalos en el campo CCO de tu correo para que nadie vea las direcciones de los demás.","ok")}catch(x){say("No se pudo copiar. Abre «Ver correos» y cópialos a mano.","err")}return}
  const b=e.target.closest("[data-c],[data-m]");if(!b)return;
  const id=+b.dataset.id;
  if(b.dataset.m==="delete"&&!confirm("¿Borrar este mensaje definitivamente?"))return;
@@ -109,6 +118,10 @@ document.addEventListener("click",async e=>{
   else await rpc("mod_set_message",{p_id:id,p_action:b.dataset.m});
   await load();say(b.dataset.c==="published"?"Opinión publicada.":b.dataset.c==="rejected"?"Opinión rechazada.":"Hecho.","ok");
  }catch(x){say(x.message,"err");b.disabled=false;if(x.code==="forbidden")logout()}
+});
+document.addEventListener("submit",async e=>{
+ if(e.target.id!=="delAl")return;e.preventDefault();const em=e.target.email.value.trim();if(!em||!confirm("¿Borrar "+em+" de todas las listas de avisos?"))return;
+ try{const r=await rpc("mod_delete_alert",{p_email:em});await load();say(r.deleted?"Correo borrado de "+r.deleted+" "+(r.deleted===1?"lista.":"listas."):"Ese correo no estaba en ninguna lista.","ok")}catch(x){say(x.message,"err")}
 });
 $("chg").addEventListener("submit",async e=>{
  e.preventDefault();const f=e.target,cm=$("cm");

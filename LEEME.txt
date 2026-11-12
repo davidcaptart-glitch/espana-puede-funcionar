@@ -64,3 +64,11 @@ CONTACTO
   con el nombre RESEND_API_KEY (Edge Functions > Secrets). La cuenta de Resend debe crearse con el
   mismo correo en el que quieres recibir los mensajes. Al responder al correo, respondes a quien escribió.
 - supabase/functions/contacto/index.ts es una copia de la función del servidor que recibe el formulario.
+
+AVISOS DE RECOGIDA DE FIRMAS
+- Quien vota a favor (o abre una medida) puede dejar su correo para que se le avise si se abre una
+  recogida de firmas de esa medida. El correo se recuerda en su navegador para apuntarse a otras con un toque.
+- Las listas están en el panel de moderación, pestaña "Avisos de firmas": una lista de correos por medida,
+  más la de quienes quieren aviso de cualquier recogida. "Copiar correos" los deja listos para pegar.
+- Al escribirles, pon las direcciones en CCO (copia oculta) para que nadie vea los correos de los demás.
+- Si alguien pide que se borre su correo, hazlo desde esa misma pestaña ("Borrar un correo de todas las listas").

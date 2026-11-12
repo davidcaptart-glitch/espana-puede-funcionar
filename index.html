@@ -646,6 +646,19 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 .camino{background:var(--surface);border:1px solid var(--edge);border-radius:16px;padding:18px 22px;margin-bottom:18px}
 .camino h3{font-size:1.1rem;margin-bottom:8px}
 .camino ol{margin:0;padding-left:20px;max-width:85ch}.camino li{margin:6px 0}.camino b{color:#fff}
+.firmas{margin-top:14px;border-radius:14px;padding:16px;background:linear-gradient(95deg,rgba(255,79,168,.14),rgba(46,230,166,.12));border:1px solid rgba(255,255,255,.2)}
+.firmas h3{font-size:1rem;color:#fff;margin-bottom:4px}
+.firmas p{font-size:.92rem}
+.al-btn{display:inline-flex;align-items:center;gap:8px;margin-top:12px;border:0;border-radius:10px;padding:10px 16px;min-height:44px;font-weight:700;background:var(--gr);color:#06281c;text-align:left;overflow-wrap:anywhere}
+.al-btn:disabled{opacity:.6}
+.al-other{display:block;margin-top:8px;font-size:.84rem;color:var(--muted)}
+.al-ok{display:flex;align-items:center;gap:8px;margin-top:10px;color:var(--gr);font-weight:600;overflow-wrap:anywhere}.al-ok b{color:#fff}
+.nudge .n3{background:#fff;color:var(--dark)}
+.aviso-d{width:min(480px,calc(100% - 24px))}
+.aviso-in{padding:24px}
+.aviso-in .btn{margin-top:10px}
+.chk{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:.92rem;color:var(--text);min-height:32px}
+.chk input{width:20px;height:20px;accent-color:var(--gr);flex:none}
 </style>
 </head>
 <body>
@@ -764,7 +777,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 
 <footer><div class="wrap" style="display:block;padding-bottom:18px"><p style="max-width:95ch"><b style="color:#fff">Sobre las cifras del Plan 2027–2034.</b> Las cifras de este plan son estimaciones propias en euros de 2025, calculadas a partir de datos públicos de la Agencia Tributaria, la Seguridad Social y el Banco de España. No son una evaluación oficial. El coste real de cada medida lo fijará la auditoría independiente que activa cada hito anual.</p></div><div class="wrap">
  <div><h2>Privacidad</h2>
-  <p>Para votar y opinar no pedimos tu nombre real ni tu correo. Para que cada dispositivo vote una sola vez, tu navegador guarda un identificador aleatorio. El servidor (Supabase, alojado en la UE) conserva un resumen irreversible de la dirección IP únicamente para frenar abusos.</p>
+  <p>Para votar y opinar no pedimos tu nombre real ni tu correo. Si dejas tu correo para que te avisemos de una recogida de firmas, solo se usa para ese aviso y puedes pedir que se borre desde la página de contacto. Para que cada dispositivo vote una sola vez, tu navegador guarda un identificador aleatorio. El servidor (Supabase, alojado en la UE) conserva un resumen irreversible de la dirección IP únicamente para frenar abusos.</p>
   <p>Las opiniones aparecen con el alias que elijas. Los votos reflejan la opinión de quienes participan aquí; no son vinculantes ni representativos.</p></div>
  <div><h2>Visitas a esta web</h2>
   <ul class="visits"><li><b id="vTotal">–</b>visitas en total</li><li><b id="vPeople">–</b>dispositivos distintos</li><li><b id="vToday">–</b>visitas hoy</li></ul>
@@ -775,6 +788,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 
 <dialog class="sheet" id="detalle" aria-labelledby="dT"></dialog>
 <dialog class="hub" id="compartir" aria-labelledby="hubT"></dialog>
+<dialog class="hub aviso-d" id="aviso" aria-labelledby="avT"></dialog>
 <dialog class="quiz" id="quiz" aria-label="Vota el programa"><div class="quiz-in" id="quizIn"></div></dialog>
 <div class="dock" id="dock"><div class="dock-p"><b id="dockN">0</b> votadas<i><span id="dockBar" style="width:0"></span></i></div>
  <button class="btn btn-glass btn-sm" data-act="hub" data-k="web" aria-label="Compartir la web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg></button><button class="btn btn-accent btn-sm" data-act="quiz" id="dockBtn">Votar</button></div>
@@ -849,7 +863,8 @@ const api={
  },
  vote:(id,v)=>remote?rpc("cast_vote",{p_proposal:id,p_voter:VOTER,p_value:v}):Promise.resolve(local.vote(id,v)),
  comment:(id,alias,body)=>remote?rpc("add_comment",{p_proposal:id,p_voter:VOTER,p_alias:alias,p_body:body}):Promise.resolve(local.comment(id,alias,body)),
- report:id=>remote?rpc("report_comment",{p_id:id,p_voter:VOTER}):Promise.resolve()
+ report:id=>remote?rpc("report_comment",{p_id:id,p_voter:VOTER}):Promise.resolve(),
+ alert:(id,email,all)=>remote?rpc("add_alert",{p_proposal:id,p_voter:VOTER,p_email:email,p_all:!!all}):Promise.resolve({ok:true})
 };
 function errMsg(e){
  if(e&&e.code==="rate_limit")return "Demasiadas acciones seguidas desde esta conexión. Inténtalo más tarde.";
@@ -869,6 +884,42 @@ function banner(html){$("bannerText").innerHTML=html;$("banner").classList.toggl
 let toastT;function toast(m){const t=$("toast");t.textContent=m;try{if(t.showPopover){if(t.matches(":popover-open"))t.hidePopover();t.showPopover()}}catch(e){}
  t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>{t.classList.remove("on");setTimeout(()=>{try{if(!t.classList.contains("on")&&t.hidePopover)t.hidePopover()}catch(e){}},300)},4600)}
 
+// ───────── Avisos de recogida de firmas ─────────
+// El correo se guarda en este navegador para poder apuntarse a otras medidas con un toque.
+const AL={email:()=>ls.get("epf-email")||"",ids(){try{return JSON.parse(ls.get("epf-alerts")||"[]")}catch(e){return []}},has(id){return this.ids().includes(id)},add(id){const a=this.ids();if(!a.includes(id)){a.push(id);ls.set("epf-alerts",JSON.stringify(a))}}};
+function alertHTML(id){
+ const em=AL.email();
+ if(AL.has(id))return `<p class="al-ok">${ic("check")}Te avisaremos en <b>${esc(em)}</b> si se abre la recogida de firmas de esta medida.</p>`;
+ return em?`<button type="button" class="al-btn" data-act="alert1" data-id="${id}">${ic("check")}Avísame también de esta en ${esc(em)}</button><button type="button" class="link al-other" data-act="alert" data-id="${id}">Usar otro correo</button>`
+  :`<button type="button" class="al-btn" data-act="alert" data-id="${id}">Avísame si se abre la recogida de firmas</button>`;
+}
+const firmasHTML=id=>`<div class="firmas" data-al="${id}"><h3>Recogida de firmas</h3><p>Las medidas más votadas se llevarán al Congreso. Si esta reúne apoyo suficiente, se abrirá una recogida de firmas.</p>${alertHTML(id)}</div>`;
+function refreshAlerts(id){document.querySelectorAll(`[data-al="${id}"]`).forEach(el=>{el.outerHTML=firmasHTML(id)});if(S.just===id)refreshVotes(id)}
+async function sendAlert(id,email,all){
+ const r=await api.alert(id,email,all);
+ if(r&&r.error){const e=new Error(r.error);e.code=r.error;throw e}
+ ls.set("epf-email",email);AL.add(id);refreshAlerts(id);
+}
+function openAlert(id){
+ const p=byId[id],d=$("aviso");
+ d.innerHTML=`<form class="aviso-in" id="avForm" data-id="${id}" novalidate><div class="hub-h"><h2 id="avT">Te avisamos de la recogida de firmas</h2><button type="button" class="x" data-act="avclose" aria-label="Cerrar">${ic("x")}</button></div>
+<p class="hub-t">Si se abre una recogida de firmas para llevar esta medida al Congreso, te escribimos:<br><b style="color:#fff">${esc(p.title)}</b></p>
+<label class="field">Tu correo electrónico<input name="email" type="email" maxlength="200" autocomplete="email" inputmode="email" value="${esc(AL.email())}" required></label>
+<label class="chk"><input type="checkbox" name="all"> Avísame también de cualquier otra recogida de firmas</label>
+<p class="form-msg" id="avMsg" role="status"></p><button class="btn btn-accent" type="submit">Avísame</button>
+<p class="note">Tu correo solo se usa para avisarte de recogidas de firmas. No se publica ni se cede a nadie, y puedes pedir que se borre desde la página de contacto.</p></form>`;
+ if(!d.open)d.showModal();
+}
+async function submitAlert(form){
+ const msg=$("avMsg"),email=form.email.value.trim(),id=form.dataset.id,b=form.querySelector("button[type=submit]");
+ if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){msg.className="form-msg err";msg.textContent="Revisa el correo electrónico.";form.email.focus();return}
+ if(!S.ready){msg.className="form-msg err";msg.textContent="Sin conexión con el servidor. Inténtalo de nuevo en unos minutos.";return}
+ b.disabled=true;msg.className="form-msg";msg.textContent="Guardando…";
+ try{await sendAlert(id,email,form.all.checked);$("aviso").close();toast("Hecho. Te avisaremos si se abre la recogida de firmas.")}
+ catch(e){msg.className="form-msg err";msg.textContent=e.code==="invalid_input"?"Revisa el correo electrónico.":errMsg(e)}
+ b.disabled=false;
+}
+
 // ───────── Cifras y tablas ─────────
 const datosHTML=(p,max,cls)=>p.datos&&p.datos.length?`<ul class="datos${cls||""}">${p.datos.slice(0,max||99).map(d=>`<li><b>${esc(d[0])}</b><span>${esc(d[1])}</span></li>`).join("")}</ul>`:"";
 const tablasHTML=p=>(p.tablas||[]).map(t=>`<table class="tbl${t.r.some(r=>String(r[r.length-1]).length>22)||t.h.length>2?" txt":""}"><caption>${esc(t.t)}</caption><thead><tr>${t.h.map(x=>`<th scope="col">${esc(x)}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table>`).join("");
@@ -880,7 +931,7 @@ function voteBox(id){
 <div class="bar${n?"":" empty-bar"}" role="img" aria-label="${n?`${p}% de apoyo con ${n} ${n===1?"voto":"votos"}`:"Sin votos todavía"}"><span style="width:${p}%"></span></div>
 <div class="vb-meta"><span>${n?`<b>${p}%</b> de apoyo`:"Sin votos todavía"}</span><span>${n?`${nf.format(n)} ${n===1?"voto":"votos"}`:""}</span></div>
 <div class="vb-btns"><button type="button" class="v up${m===1?" on":""}" data-act="vote" data-id="${id}" data-v="1" aria-pressed="${m===1}">${ic("thumbs-up")}De acuerdo <b>${nf.format(t.up)}</b></button><button type="button" class="v down${m===-1?" on":""}" data-act="vote" data-id="${id}" data-v="-1" aria-pressed="${m===-1}">${ic("thumbs-down")}En contra <b>${nf.format(t.down)}</b></button></div>
-${m&&S.just===id?`<div class="nudge"><span>${m===1?"Has votado a favor. Las más votadas se llevarán al Congreso.":"Has votado en contra. Tu voto también cuenta."}</span><button type="button" data-act="open" data-id="${id}" data-to="coms">${ic("chat-circle")}Di por qué</button><button type="button" data-act="share" data-id="${id}">${ic("share-network")}Compártela</button></div>`:""}</div>`;
+${m&&S.just===id?`<div class="nudge"><span>${m===1?"Has votado a favor. Las más votadas se llevarán al Congreso.":"Has votado en contra. Tu voto también cuenta."}</span><button type="button" data-act="open" data-id="${id}" data-to="coms">${ic("chat-circle")}Di por qué</button><button type="button" data-act="share" data-id="${id}">${ic("share-network")}Compártela</button>${m===1&&!AL.has(id)?`<button type="button" class="n3" data-act="${AL.email()?"alert1":"alert"}" data-id="${id}">Avísame de las firmas</button>`:""}</div>`:""}</div>`;
 }
 function refreshVotes(id){
  const a=document.activeElement;
@@ -1199,6 +1250,7 @@ ${p.measures?`<div class="box dec"><h3>Qué incluye</h3><ul>${p.measures.map(m=>
 ${p.pending?`<div class="box pen"><h3>Pendiente de concretar</h3><p>${esc(p.pending)}</p></div>`:p.detail?`<div class="box pen"><h3>Aspectos a desarrollar</h3><p>${esc(p.detail)}</p></div>`:""}
 ${(blockBy[p.block]||{}).nota?`<p class="note">${esc(blockBy[p.block].nota)}</p>`:""}
 ${voteBox(id)}
+${firmasHTML(id)}
 <h3 class="sub" id="dShare">Compartir esta medida</h3>${shareBlock(p)}
 <h3 class="sub" id="dComs">Opiniones (<span id="dComsN">${comsOf(id).length}</span>)</h3><div id="dComsList">${comsHTML(id)}</div>
 <form id="comForm" novalidate><label class="field">Alias (se mostrará junto a tu opinión)<input name="alias" maxlength="40" autocomplete="nickname" value="${esc(ls.get("epf-alias")||"")}"></label>
@@ -1272,7 +1324,7 @@ function renderResult(){
 // ───────── Eventos ─────────
 document.addEventListener("click",async e=>{
  const d=e.target.closest("dialog");if(d&&e.target===d&&d.id==="detalle"){closeDetail();return}
- if(d&&e.target===d&&d.id==="compartir"){d.close();return}
+ if(d&&e.target===d&&(d.id==="compartir"||d.id==="aviso")){d.close();return}
  const lk=e.target.closest('a[href^="#"]');if(lk&&lk.getAttribute("href")===location.hash)route();
  const el=e.target.closest("[data-act]");if(!el)return;const a=el.dataset.act,id=el.dataset.id;
  if(a==="vote")vote(id,+el.dataset.v);
@@ -1288,6 +1340,9 @@ document.addEventListener("click",async e=>{
  else if(a==="img"){el.disabled=true;try{await saveCanvas(await drawCard(byId[id],"post"),id+".png",byId[id].title)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="resimg"){el.disabled=true;try{await saveCanvas(await drawResult(el.dataset.pct,el.dataset.n),"mi-resultado.png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="chip"){S.filter=el.dataset.b;S.q="";$("q").value="";renderChips();renderGrid();if($("grid").getBoundingClientRect().top<0)window.scrollTo(0,0)}
+ else if(a==="alert")openAlert(id);
+ else if(a==="alert1"){el.disabled=true;try{await sendAlert(id,AL.email(),false);toast("Hecho. Te avisaremos también de esta medida.")}catch(x){el.disabled=false;toast(x.code==="rate_limit"?errMsg(x):"No se pudo guardar. Inténtalo de nuevo.")}}
+ else if(a==="avclose")$("aviso").close();
  else if(a==="trynext"){S.just=null;S.tryId=nextTry(S.tryId);renderTry()}
  else if(a==="year"){S.year=+el.dataset.y;renderPlan(true)}
  else if(a==="ptab"){S.ptab=el.dataset.t;renderPlan();if($("plan").getBoundingClientRect().top<-40)$("plan").scrollIntoView()}
@@ -1300,9 +1355,10 @@ document.addEventListener("click",async e=>{
  else if(a==="retry"){banner("");load()}
  else if(a==="report"){try{await api.report(+el.dataset.c);toast("Gracias. Revisaremos esa opinión.");el.disabled=true}catch(x){toast(errMsg(x))}}
 });
-document.addEventListener("submit",e=>{if(e.target.id==="comForm"){e.preventDefault();submitComment(e.target)}});
+document.addEventListener("submit",e=>{if(e.target.id==="comForm"){e.preventDefault();submitComment(e.target)}else if(e.target.id==="avForm"){e.preventDefault();submitAlert(e.target)}});
 $("quiz").addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;if(e.key==="ArrowRight")quizAnswer(1);else if(e.key==="ArrowLeft")quizAnswer(-1);else if(e.key==="ArrowDown")quizAnswer(0)});
 $("quiz").addEventListener("close",()=>{renderGrid()});
+$("aviso").addEventListener("input",()=>{const m=$("avMsg");if(m){m.textContent="";m.className="form-msg"}});
 let qT;$("q").addEventListener("input",e=>{clearTimeout(qT);qT=setTimeout(()=>{S.q=e.target.value;renderChips();renderGrid()},120)});
 $("sort").addEventListener("change",e=>{S.sort=e.target.value;renderGrid()});
 $("catSel").addEventListener("change",e=>{S.filter=e.target.value;S.q="";$("q").value="";renderChips();renderGrid();window.scrollTo(0,0)});
