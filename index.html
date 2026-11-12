@@ -606,6 +606,8 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 .more{grid-column:1/-1;justify-self:start;display:inline-flex;align-items:center;gap:8px;border:1px solid color-mix(in srgb,var(--c) 50%,transparent);background:color-mix(in srgb,var(--c) 12%,transparent);color:#fff;border-radius:12px;padding:10px 16px;min-height:44px;font-weight:650;font-size:.92rem;text-align:left;transition:background .2s}
 .more:hover{background:color-mix(in srgb,var(--c) 24%,transparent)}
 .more .ic{color:var(--c)}
+.allbtn{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:6px}
+.allbtn span{color:var(--muted);font-size:.9rem}
 </style>
 </head>
 <body>
@@ -656,18 +658,19 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 </header>
 
 <main>
-<section class="wrap" data-view="inicio" aria-labelledby="teaT"><a class="teaser" href="#plan" id="teaser">
- <div><p class="kicker">Nuevo · Cómo y cuándo</p><h2 id="teaT">Plan 2027–2034</h2><p>Las rebajas de impuestos, año a año, y solo cuando una auditoría independiente confirma que están pagadas.</p></div>
- <ul id="teaNums"></ul>
- <span class="btn btn-accent btn-sm">Ver el plan <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></span>
-</a></section>
-
 <section class="sec wrap" id="destacadas" data-view="inicio" aria-labelledby="destT">
  <div class="sec-head">
   <div><p class="kicker">Para empezar</p><h2 id="destT">Seis medidas, seis cifras</h2></div>
   <div class="feat-nav"><button type="button" data-act="feat" data-d="-1" aria-label="Anteriores"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg></button><button type="button" data-act="feat" data-d="1" aria-label="Siguientes"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button></div>
  </div>
  <div class="feats" id="feats" tabindex="0" role="region" aria-label="Medidas destacadas"></div>
+ <p class="allbtn"><a class="btn btn-accent" href="#medidas">Ver todas las medidas por categorías <svg class="ic" viewBox="0 0 256 256" aria-hidden="true" style="transform:rotate(90deg)"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></a><span>Son 90 medidas en 15 categorías. Puedes votar y compartir cada una.</span></p>
+</section>
+
+<section class="sec wrap" id="plan-resumen" data-view="inicio" aria-labelledby="prT">
+ <p class="kicker">Fiscalidad y economía · Cómo y cuándo</p>
+ <h2 id="prT" style="font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:700;margin-top:6px">Plan 2027–2034</h2>
+ <div id="planHome"></div>
 </section>
 
 <section class="plan-sec wrap" id="plan" data-view="plan" hidden aria-labelledby="planT">
@@ -677,7 +680,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 </section>
 
 <section class="sec" id="programa" data-view="inicio" aria-labelledby="progT">
- <div class="wrap sec-head"><div><p class="kicker">El programa completo</p><h2 id="progT">Todas las medidas</h2></div></div>
+ <div class="wrap sec-head"><div><p class="kicker">El programa completo</p><h2 id="progT">Todas las medidas</h2><p>Elige una categoría para ver sus medidas, votarlas y compartirlas.</p></div></div>
  <div class="wrap prog">
   <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
   <aside class="tools" aria-label="Buscar y filtrar medidas">
@@ -777,7 +780,7 @@ let VOTER=ls.get("epf-voter");
 if(!/^[0-9a-f-]{36}$/.test(VOTER||"")){VOTER=uuid();ls.set("epf-voter",VOTER)}
 
 // ───────── Estado ─────────
-const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:"Todas",q:"",sort:"prog",rank:"apoyo",just:null,year:2027,view:"inicio",ptab:"resumen"};
+const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:blocks[0].nombre,q:"",sort:"prog",rank:"apoyo",just:null,year:2027,view:"inicio",ptab:"resumen"};
 const tot=id=>S.totals[id]||{up:0,down:0};
 const comsOf=id=>S.comments[id]||[];
 
@@ -881,15 +884,15 @@ function renderFeats(){
 }
 function renderChips(){
  const counts={};props.forEach(p=>counts[p.block]=(counts[p.block]||0)+1);
- const chip=(name,n,b)=>`<button type="button" class="cat" data-act="chip" data-b="${esc(name)}" aria-pressed="${S.filter===name}"${b?` style="--c:${colorOf({block:b.nombre})}"`:""}>${b?ic(b.icono):ic("check")}<span>${esc(name)}</span><small>${n}</small></button>`;
+ const chip=(name,n,b)=>`<button type="button" class="cat" data-act="chip" data-b="${esc(name)}" aria-pressed="${S.filter===name&&!S.q.trim()}"${b?` style="--c:${colorOf({block:b.nombre})}"`:""}>${b?ic(b.icono):ic("check")}<span>${esc(name)}</span><small>${n}</small></button>`;
  const bs=blocks.filter(b=>counts[b.nombre]);
- $("chips").innerHTML=chip("Todas",props.length)+bs.map(b=>chip(b.nombre,counts[b.nombre],b)).join("");
- $("catSel").innerHTML=`<option value="Todas">Todas las categorías (${props.length})</option>`+bs.map(b=>`<option value="${esc(b.nombre)}">${esc(b.nombre)} (${counts[b.nombre]})</option>`).join("");
+ $("chips").innerHTML=bs.map(b=>chip(b.nombre,counts[b.nombre],b)).join("");
+ $("catSel").innerHTML=bs.map(b=>`<option value="${esc(b.nombre)}">${esc(b.nombre)} (${counts[b.nombre]})</option>`).join("");
  $("catSel").value=S.filter;
 }
 function visible(){
  const q=norm(S.q.trim());
- let list=props.filter(p=>(S.filter==="Todas"||p.block===S.filter)&&(!q||norm([p.title,p.desc,p.plan||"",p.goal||"",p.block,(p.measures||[]).join(" "),(p.datos||[]).join(" ")].join(" ")).includes(q)));
+ let list=props.filter(p=>(q?true:p.block===S.filter)&&(!q||norm([p.title,p.desc,p.plan||"",p.goal||"",p.block,(p.measures||[]).join(" "),(p.datos||[]).join(" ")].join(" ")).includes(q)));
  const net=p=>{const t=tot(p.id),n=t.up+t.down;return n?t.up/n:-1};
  if(S.sort==="apoyo")list=[...list].sort((a,b)=>net(b)-net(a)||tot(b.id).up-tot(a.id).up);
  if(S.sort==="votos")list=[...list].sort((a,b)=>tot(b.id).up+tot(b.id).down-tot(a.id).up-tot(a.id).down);
@@ -906,11 +909,12 @@ ${voteBox(p.id)}${n?`<p class="quote"><b>${esc(cs[0].alias)}:</b> ${esc(cs[0].bo
 }
 function renderGrid(){
  const list=visible();
- const grouped=S.filter==="Todas"&&!S.q.trim()&&S.sort==="prog";let last=null;
- // Vista general: tres medidas por categoría y un botón para ver el resto.
- if(grouped){$("grid").innerHTML=blocks.map(b=>{const ps=list.filter(p=>p.block===b.nombre);if(!ps.length)return "";const c=colorOf(ps[0]);
-  return `<h3 class="grid-h" style="--c:${c}">${ic(b.icono)}${esc(b.nombre)}<small>${ps.length} medidas</small></h3>${b.nota?`<p class="blk-nota">${esc(b.nota)}</p>`:""}${ps.slice(0,3).map(card).join("")}${ps.length>3?`<button type="button" class="more" style="--c:${c}" data-act="chip" data-b="${esc(b.nombre)}">Ver las ${ps.length} medidas de ${esc(b.nombre)} ${ic("arrow-right")}</button>`:""}`}).join("");return}
- $("grid").innerHTML=list.map(p=>{let hd="";if(grouped&&p.block!==last){last=p.block;const n=props.filter(x=>x.block===p.block).length;hd=`<h3 class="grid-h" style="--c:${colorOf(p)}">${ic(iconOf(p))}${esc(p.block)}<small>${n} medidas</small></h3>${(blockBy[p.block]||{}).nota?`<p class="blk-nota">${esc(blockBy[p.block].nota)}</p>`:""}`}return hd+card(p)}).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Ver todas las medidas</button></div>`;
+
+ // Sin búsqueda se ve una sola categoría; al buscar, se busca en todas.
+ const q=S.q.trim(),b=blockBy[S.filter]||{},c=colorOf({block:S.filter});
+ const head=q?`<h3 class="grid-h">${ic("magnifying-glass")}Resultados de «${esc(q)}»<small>${list.length} ${list.length===1?"medida":"medidas"}</small></h3>`
+  :`<h3 class="grid-h" style="--c:${c}">${ic(b.icono)}${esc(S.filter)}<small>${list.length} medidas</small></h3>${b.nota?`<p class="blk-nota">${esc(b.nota)}</p>`:""}`;
+ $("grid").innerHTML=head+(list.map(card).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Volver a las categorías</button></div>`);
 }
 function renderRank(){
  const rows=props.map(p=>({p,t:tot(p.id)})).filter(r=>r.t.up+r.t.down>0);
@@ -937,15 +941,15 @@ ${tbl("Coste estimado de cada medida (M€)",["Medida","Qué cambia","Coste (M�
 const PTABS=[["resumen","Resumen"],["calendario","Calendario año a año"],["regla","Cómo se activa"],["pago","Cómo se paga"],["escenarios","Escenarios y riesgos"],["ti","Qué significa para ti"],["despues","Después de 2034"]];
 function renderPlan(only){
  if(!PL)return;
- $("teaNums").innerHTML=[0,3,6].map(i=>PL.resumen[i]).map(r=>`<li><b>${esc(r[2].split(",")[0])}</b><span>${esc(r[0])} en 2034</span></li>`).join("");
  if(only&&$("yPanel")){document.querySelectorAll(".yr").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.y===S.year));$("yPanel").innerHTML=yearHTML();return}
  const cols=["#ff4fa8","#2ee6a6","#ff8ecb","#8af5d0","#c9a8f5"],tot=PL.pago.reduce((n,x)=>n+x[2],0);
- const part={
- resumen:()=>`<p class="plan-lead">${esc(PL.intro)}</p>
+ const resumen=`<p class="plan-lead">${esc(PL.intro)}</p>
 <ul class="cmp">${PL.resumen.map(r=>`<li><span>${esc(r[0])}</span><em>Hoy</em><s>${esc(r[1])}</s><br><em>2034</em><b>${esc(r[2])}</b></li>`).join("")}</ul>
 <div class="trio">${PL.compromisos.map(c=>`<div><b>${esc(c[0])}</b><p>${esc(c[1])}</p></div>`).join("")}</div>
-<p class="plan-note">${esc(PL.cierre)}</p>
-<p style="margin-top:20px"><button type="button" class="btn btn-accent" data-act="ptab" data-t="calendario">Ver el calendario año a año ${ic("arrow-right")}</button></p>`,
+<p class="plan-note">${esc(PL.cierre)}</p>`;
+ $("planHome").innerHTML=resumen+`<p class="allbtn" style="margin-top:20px"><a class="btn btn-accent" href="#plan">Ver el plan completo, año a año ${ic("arrow-right")}</a><a class="btn btn-glass" href="#medidas">Ver todas las medidas</a></p>`;
+ const part={
+ resumen:()=>resumen+`<p style="margin-top:20px"><button type="button" class="btn btn-accent" data-act="ptab" data-t="calendario">Ver el calendario año a año ${ic("arrow-right")}</button></p>`,
  calendario:()=>`<h3 class="plan-h">Calendario 2027–2034</h3>
 <p class="plan-p">Elige un año para ver sus hitos, lo que cuestan y cómo queda cada impuesto.</p>
 <div class="years" role="group" aria-label="Año del plan">${PL.anios.map(y=>`<button type="button" class="yr" data-act="year" data-y="${y.a}" aria-pressed="${y.a===S.year}" aria-label="${y.a}: ${y.acum} M€ acumulados"><small>${y.acum}</small><i style="height:${Math.max(8,y.n/PL.total*100)}%"></i><b>${y.a}</b></button>`).join("")}</div>
@@ -1154,7 +1158,7 @@ ${voteBox(id)}
 function closeDetail(){const d=$("detalle");if(d.open)d.close()}
 $("detalle").addEventListener("close",()=>{openId=null;if(location.hash.startsWith("#m="))history.replaceState(null,"","#"+S.view)});
 // Pestañas: #inicio, #plan, #medidas y #resultados (y los nombres antiguos de las secciones).
-const VIEW_OF={inicio:"inicio",top:"inicio",destacadas:"inicio",difunde:"inicio",medidas:"inicio",programa:"inicio",plan:"plan",resultados:"resultados",ranking:"resultados",como:"como"};
+const VIEW_OF={inicio:"inicio",top:"inicio",destacadas:"inicio","plan-resumen":"inicio",difunde:"inicio",medidas:"inicio",programa:"inicio",plan:"plan",resultados:"resultados",ranking:"resultados",como:"como"};
 function setView(v,keepScroll){
  S.view=v;document.querySelectorAll("[data-view]").forEach(e=>{e.hidden=e.dataset.view!==v});
  document.querySelectorAll(".tab").forEach(t=>{if(t.dataset.v===v)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
@@ -1215,6 +1219,7 @@ function renderResult(){
 document.addEventListener("click",async e=>{
  const d=e.target.closest("dialog");if(d&&e.target===d&&d.id==="detalle"){closeDetail();return}
  if(d&&e.target===d&&d.id==="compartir"){d.close();return}
+ const lk=e.target.closest('a[href^="#"]');if(lk&&lk.getAttribute("href")===location.hash)route();
  const el=e.target.closest("[data-act]");if(!el)return;const a=el.dataset.act,id=el.dataset.id;
  if(a==="vote")vote(id,+el.dataset.v);
  else if(a==="open")openDetail(id,el.dataset.to);
@@ -1228,10 +1233,10 @@ document.addEventListener("click",async e=>{
  else if(a==="copy"){try{await copy(urlOf(id));toast("Enlace copiado.")}catch(x){toast("No se pudo copiar. Copia la dirección desde la barra del navegador.")}}
  else if(a==="img"){el.disabled=true;try{await saveCanvas(await drawCard(byId[id],"post"),id+".png",byId[id].title)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="resimg"){el.disabled=true;try{await saveCanvas(await drawResult(el.dataset.pct,el.dataset.n),"mi-resultado.png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
- else if(a==="chip"){S.filter=el.dataset.b;renderChips();renderGrid();if($("grid").getBoundingClientRect().top<0)$("programa").scrollIntoView()}
+ else if(a==="chip"){S.filter=el.dataset.b;S.q="";$("q").value="";renderChips();renderGrid();if($("grid").getBoundingClientRect().top<0)$("programa").scrollIntoView()}
  else if(a==="year"){S.year=+el.dataset.y;renderPlan(true)}
  else if(a==="ptab"){S.ptab=el.dataset.t;renderPlan();if($("plan").getBoundingClientRect().top<-40)$("plan").scrollIntoView()}
- else if(a==="clear"){S.filter="Todas";S.q="";$("q").value="";renderChips();renderGrid()}
+ else if(a==="clear"){S.q="";$("q").value="";renderChips();renderGrid()}
  else if(a==="rank"){S.rank=el.dataset.m;document.querySelectorAll('[data-act="rank"]').forEach(b=>b.setAttribute("aria-pressed",b===el));renderRank()}
  else if(a==="feat"){const f=$("feats");f.scrollBy({left:+el.dataset.d*Math.min(f.clientWidth,712),behavior:"smooth"})}
  else if(a==="quiz"){if(!S.ready){toast("Sin conexión con el servidor de votos.");return}closeDetail();openQuiz()}
@@ -1243,9 +1248,9 @@ document.addEventListener("click",async e=>{
 document.addEventListener("submit",e=>{if(e.target.id==="comForm"){e.preventDefault();submitComment(e.target)}});
 $("quiz").addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;if(e.key==="ArrowRight")quizAnswer(1);else if(e.key==="ArrowLeft")quizAnswer(-1);else if(e.key==="ArrowDown")quizAnswer(0)});
 $("quiz").addEventListener("close",()=>{renderGrid()});
-let qT;$("q").addEventListener("input",e=>{clearTimeout(qT);qT=setTimeout(()=>{S.q=e.target.value;renderGrid()},120)});
+let qT;$("q").addEventListener("input",e=>{clearTimeout(qT);qT=setTimeout(()=>{S.q=e.target.value;renderChips();renderGrid()},120)});
 $("sort").addEventListener("change",e=>{S.sort=e.target.value;renderGrid()});
-$("catSel").addEventListener("change",e=>{S.filter=e.target.value;renderChips();renderGrid();$("programa").scrollIntoView()});
+$("catSel").addEventListener("change",e=>{S.filter=e.target.value;S.q="";$("q").value="";renderChips();renderGrid();$("programa").scrollIntoView()});
 
 if(matchMedia("(max-width:520px)").matches)$("q").placeholder="Buscar medidas…";
 function renderSpread(){
