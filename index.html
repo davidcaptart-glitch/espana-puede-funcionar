@@ -569,18 +569,63 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  .top-plan{display:none}
  .tbl{font-size:.86rem}.tbl td,.tbl th{padding:8px 10px}
 }
+
+/* Pestañas */
+[hidden]{display:none!important}
+.topbar{position:static;border-bottom:0;background:var(--navy)}
+.tabsbar{position:sticky;top:0;z-index:20;background:rgba(13,8,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.tabsbar .wrap{display:flex;align-items:center;gap:4px;height:52px}
+.tab{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:99px;color:var(--muted);font-weight:650;text-decoration:none;font-size:.95rem;white-space:nowrap;min-height:38px;transition:background .2s,color .2s}
+.tab:hover{color:#fff;background:rgba(255,255,255,.08)}
+.tab[aria-current=page]{background:#fff;color:var(--dark)}
+.tabsbar .btn{margin-left:auto}
+.ptabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 4px}
+.ptab{border:1px solid var(--edge);background:var(--surface);color:var(--text);border-radius:99px;padding:8px 14px;min-height:40px;font-weight:600;font-size:.9rem;transition:background .2s}
+.ptab:hover{background:rgba(255,255,255,.12)}
+.ptab[aria-pressed=true]{background:var(--mix);color:var(--dark);border-color:transparent;font-weight:700}
+.plan-h{margin-top:26px}
+.plan-sec,#programa,#ranking{min-height:60vh}
+.tools{top:68px;max-height:calc(100dvh - 84px)}
+@media(max-width:1000px){.tools{top:52px;max-height:none}}
+@media(max-width:860px){
+ .tabsbar .wrap{justify-content:space-between;gap:2px}
+ .tabsbar .btn,.tab .lg{display:none}
+ .tab{padding:8px 11px;font-size:.9rem}
+}
+
+.teaser{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;gap:20px 28px;align-items:center;margin-top:28px;padding:20px 24px;border-radius:20px;border:1px solid var(--edge);text-decoration:none;color:var(--text);background:radial-gradient(420px 200px at 0 0,rgba(255,79,168,.3),transparent 70%),radial-gradient(420px 200px at 100% 100%,rgba(46,230,166,.24),transparent 70%),#1a1129;transition:border-color .2s,transform .2s}
+.teaser:hover{border-color:rgba(255,255,255,.35);transform:translateY(-2px)}
+.teaser h2{font-size:1.5rem;font-weight:750;margin:4px 0 6px}
+.teaser p:not(.kicker){font-size:.93rem}
+.teaser ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.teaser li{display:flex;flex-direction:column}
+.teaser li b{font-family:var(--display);font-size:1.3rem;color:var(--gr);line-height:1.15}
+.teaser li span{font-size:.76rem;color:var(--muted);line-height:1.25}
+#como{min-height:60vh}
+@media(max-width:860px){.teaser{grid-template-columns:1fr;padding:18px}.teaser .btn{justify-self:start}.tab{padding:8px 9px;font-size:.86rem}}
+.more{grid-column:1/-1;justify-self:start;display:inline-flex;align-items:center;gap:8px;border:1px solid color-mix(in srgb,var(--c) 50%,transparent);background:color-mix(in srgb,var(--c) 12%,transparent);color:#fff;border-radius:12px;padding:10px 16px;min-height:44px;font-weight:650;font-size:.92rem;text-align:left;transition:background .2s}
+.more:hover{background:color-mix(in srgb,var(--c) 24%,transparent)}
+.more .ic{color:var(--c)}
 </style>
 </head>
 <body>
-<a class="skip" href="#programa">Saltar a las medidas</a>
+<a class="skip" href="#medidas">Saltar a las medidas</a>
 <div class="banner" id="banner" role="status"><div class="wrap" id="bannerText"></div></div>
 
 <div class="topbar"><div class="wrap">
- <a class="brand" href="#top"><img src="favicon.svg" alt="" width="30" height="30"><span>España puede funcionar</span></a>
- <div class="top-acts"><a class="btn btn-glass btn-sm top-plan" href="#plan">Plan 2027–2034</a><a class="btn btn-glass btn-sm top-contact" href="contacto.html">Contacto</a><button class="btn btn-glass btn-sm" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir</button><button class="btn btn-accent btn-sm top-vote" data-act="quiz">Votar</button></div>
+ <a class="brand" href="#inicio"><img src="favicon.svg" alt="" width="30" height="30"><span>España puede funcionar</span></a>
+ <div class="top-acts"><a class="btn btn-glass btn-sm top-contact" href="contacto.html">Contacto</a><button class="btn btn-glass btn-sm" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir</button></div>
 </div></div>
 
-<header class="hero" id="top">
+<nav class="tabsbar" aria-label="Secciones"><div class="wrap">
+ <a class="tab" href="#inicio" data-v="inicio">Inicio</a>
+ <a class="tab" href="#plan" data-v="plan">Plan<span class="lg"> 2027–2034</span></a>
+ <a class="tab" href="#resultados" data-v="resultados">Resultados</a>
+ <a class="tab" href="#como" data-v="como">Cómo funciona</a>
+ <button class="btn btn-accent btn-sm" data-act="quiz">Votar</button>
+</div></nav>
+
+<header class="hero" id="top" data-view="inicio">
  <div class="wrap hero-in">
   <div>
    <p class="kicker">Programa abierto · Debate ciudadano</p>
@@ -589,8 +634,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
    <div class="hero-cta">
     <button class="btn btn-accent" data-act="quiz"><span id="ctaMain">Vota el programa</span> <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button>
     <button class="btn btn-glass" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir la web</button>
-    <a class="link" href="#plan">Plan 2027–2034</a>
-    <a class="link" href="#programa">Ver las medidas</a>
+    <a class="link" href="#medidas">Ver las medidas</a>
    </div>
    <ul class="stats" aria-label="Participación">
     <li><b id="stMedidas">–</b><span>medidas</span></li>
@@ -612,7 +656,13 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 </header>
 
 <main>
-<section class="sec wrap" id="destacadas" aria-labelledby="destT">
+<section class="wrap" data-view="inicio" aria-labelledby="teaT"><a class="teaser" href="#plan" id="teaser">
+ <div><p class="kicker">Nuevo · Cómo y cuándo</p><h2 id="teaT">Plan 2027–2034</h2><p>Las rebajas de impuestos, año a año, y solo cuando una auditoría independiente confirma que están pagadas.</p></div>
+ <ul id="teaNums"></ul>
+ <span class="btn btn-accent btn-sm">Ver el plan <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></span>
+</a></section>
+
+<section class="sec wrap" id="destacadas" data-view="inicio" aria-labelledby="destT">
  <div class="sec-head">
   <div><p class="kicker">Para empezar</p><h2 id="destT">Seis medidas, seis cifras</h2></div>
   <div class="feat-nav"><button type="button" data-act="feat" data-d="-1" aria-label="Anteriores"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg></button><button type="button" data-act="feat" data-d="1" aria-label="Siguientes"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button></div>
@@ -620,13 +670,13 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  <div class="feats" id="feats" tabindex="0" role="region" aria-label="Medidas destacadas"></div>
 </section>
 
-<section class="plan-sec wrap" id="plan" aria-labelledby="planT">
+<section class="plan-sec wrap" id="plan" data-view="plan" hidden aria-labelledby="planT">
  <p class="kicker">Fiscalidad y economía · Cómo y cuándo</p>
  <h2 id="planT" style="font-size:clamp(1.9rem,4.4vw,3rem);font-weight:750;margin-top:6px">Plan 2027–2034</h2>
  <div id="planBody"></div>
 </section>
 
-<section class="sec" id="programa" aria-labelledby="progT">
+<section class="sec" id="programa" data-view="inicio" aria-labelledby="progT">
  <div class="wrap sec-head"><div><p class="kicker">El programa completo</p><h2 id="progT">Todas las medidas</h2></div></div>
  <div class="wrap prog">
   <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
@@ -640,7 +690,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  </div>
 </section>
 
-<section class="sec wrap" id="ranking" aria-labelledby="rankT">
+<section class="sec wrap" id="ranking" data-view="resultados" hidden aria-labelledby="rankT">
  <div class="sec-head">
   <div><p class="kicker">Resultados en directo</p><h2 id="rankT">Qué opina quien ha votado</h2><p>Votos reales de los visitantes de esta página. No es una encuesta representativa.</p></div>
   <div class="seg" role="group" aria-label="Ordenar ranking"><button type="button" data-act="rank" data-m="apoyo" aria-pressed="true">Más apoyo</button><button type="button" data-act="rank" data-m="rechazo" aria-pressed="false">Más rechazo</button><button type="button" data-act="rank" data-m="votos" aria-pressed="false">Más votadas</button></div>
@@ -648,7 +698,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  <div id="rank"></div>
 </section>
 
-<section class="sec wrap" id="como" aria-labelledby="comoT">
+<section class="sec wrap" id="como" data-view="como" hidden aria-labelledby="comoT">
  <div class="sec-head"><div><p class="kicker">Cómo funciona</p><h2 id="comoT">Tres pasos, sin registro</h2></div></div>
  <div class="how">
   <div><p class="how-n">1</p><h3>Lee</h3><p>Cada medida explica qué propone, qué objetivo persigue y qué queda pendiente de estudiar.</p></div>
@@ -658,7 +708,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  <div class="rules"><h3>Debate con reglas claras</h3><p>Se permiten críticas firmes a las ideas, instituciones y responsables públicos. No se publican amenazas, acoso, incitación a la violencia ni ataques discriminatorios. Las opiniones se revisan antes de aparecer, y no se rechaza ninguna por ser contraria al programa.</p></div>
 </section>
 
-<section class="wrap" id="difunde" aria-labelledby="difT">
+<section class="wrap" id="difunde" data-view="inicio" aria-labelledby="difT">
  <div class="spread">
   <div><p class="kicker">Pásalo</p><h2 id="difT">Esto solo funciona si llega a más gente.</h2>
    <p>Comparte la web en tu historia de Instagram, mándala por WhatsApp o copia el enlace. Cuanta más gente vote, más dicen los resultados.</p>
@@ -727,7 +777,7 @@ let VOTER=ls.get("epf-voter");
 if(!/^[0-9a-f-]{36}$/.test(VOTER||"")){VOTER=uuid();ls.set("epf-voter",VOTER)}
 
 // ───────── Estado ─────────
-const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:"Todas",q:"",sort:"prog",rank:"apoyo",just:null,year:2027};
+const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:"Todas",q:"",sort:"prog",rank:"apoyo",just:null,year:2027,view:"inicio",ptab:"resumen"};
 const tot=id=>S.totals[id]||{up:0,down:0};
 const comsOf=id=>S.comments[id]||[];
 
@@ -857,6 +907,9 @@ ${voteBox(p.id)}${n?`<p class="quote"><b>${esc(cs[0].alias)}:</b> ${esc(cs[0].bo
 function renderGrid(){
  const list=visible();
  const grouped=S.filter==="Todas"&&!S.q.trim()&&S.sort==="prog";let last=null;
+ // Vista general: tres medidas por categoría y un botón para ver el resto.
+ if(grouped){$("grid").innerHTML=blocks.map(b=>{const ps=list.filter(p=>p.block===b.nombre);if(!ps.length)return "";const c=colorOf(ps[0]);
+  return `<h3 class="grid-h" style="--c:${c}">${ic(b.icono)}${esc(b.nombre)}<small>${ps.length} medidas</small></h3>${b.nota?`<p class="blk-nota">${esc(b.nota)}</p>`:""}${ps.slice(0,3).map(card).join("")}${ps.length>3?`<button type="button" class="more" style="--c:${c}" data-act="chip" data-b="${esc(b.nombre)}">Ver las ${ps.length} medidas de ${esc(b.nombre)} ${ic("arrow-right")}</button>`:""}`}).join("");return}
  $("grid").innerHTML=list.map(p=>{let hd="";if(grouped&&p.block!==last){last=p.block;const n=props.filter(x=>x.block===p.block).length;hd=`<h3 class="grid-h" style="--c:${colorOf(p)}">${ic(iconOf(p))}${esc(p.block)}<small>${n} medidas</small></h3>${(blockBy[p.block]||{}).nota?`<p class="blk-nota">${esc(blockBy[p.block].nota)}</p>`:""}`}return hd+card(p)}).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Ver todas las medidas</button></div>`;
 }
 function renderRank(){
@@ -881,47 +934,48 @@ function yearHTML(){
 ${tbl("Coste estimado de cada medida (M€)",["Medida","Qué cambia","Coste (M€)"],y.det,"w3")}
 <div class="ynav">${i>0?`<button type="button" class="btn btn-glass btn-sm" data-act="year" data-y="${y.a-1}">${ic("arrow-left")}${y.a-1}</button>`:"<span></span>"}${i<PL.anios.length-1?`<button type="button" class="btn btn-glass btn-sm" data-act="year" data-y="${y.a+1}">${y.a+1}${ic("arrow-right")}</button>`:""}</div>`;
 }
+const PTABS=[["resumen","Resumen"],["calendario","Calendario año a año"],["regla","Cómo se activa"],["pago","Cómo se paga"],["escenarios","Escenarios y riesgos"],["ti","Qué significa para ti"],["despues","Después de 2034"]];
 function renderPlan(only){
  if(!PL)return;
- if(only){document.querySelectorAll(".yr").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.y===S.year));$("yPanel").innerHTML=yearHTML();return}
+ $("teaNums").innerHTML=[0,3,6].map(i=>PL.resumen[i]).map(r=>`<li><b>${esc(r[2].split(",")[0])}</b><span>${esc(r[0])} en 2034</span></li>`).join("");
+ if(only&&$("yPanel")){document.querySelectorAll(".yr").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.y===S.year));$("yPanel").innerHTML=yearHTML();return}
  const cols=["#ff4fa8","#2ee6a6","#ff8ecb","#8af5d0","#c9a8f5"],tot=PL.pago.reduce((n,x)=>n+x[2],0);
- $("planBody").innerHTML=`<p class="plan-lead">${esc(PL.intro)}</p>
+ const part={
+ resumen:()=>`<p class="plan-lead">${esc(PL.intro)}</p>
 <ul class="cmp">${PL.resumen.map(r=>`<li><span>${esc(r[0])}</span><em>Hoy</em><s>${esc(r[1])}</s><br><em>2034</em><b>${esc(r[2])}</b></li>`).join("")}</ul>
 <div class="trio">${PL.compromisos.map(c=>`<div><b>${esc(c[0])}</b><p>${esc(c[1])}</p></div>`).join("")}</div>
 <p class="plan-note">${esc(PL.cierre)}</p>
-
-<h3 class="plan-h" id="plan-calendario">Calendario 2027–2034</h3>
+<p style="margin-top:20px"><button type="button" class="btn btn-accent" data-act="ptab" data-t="calendario">Ver el calendario año a año ${ic("arrow-right")}</button></p>`,
+ calendario:()=>`<h3 class="plan-h">Calendario 2027–2034</h3>
 <p class="plan-p">Elige un año para ver sus hitos, lo que cuestan y cómo queda cada impuesto.</p>
 <div class="years" role="group" aria-label="Año del plan">${PL.anios.map(y=>`<button type="button" class="yr" data-act="year" data-y="${y.a}" aria-pressed="${y.a===S.year}" aria-label="${y.a}: ${y.acum} M€ acumulados"><small>${y.acum}</small><i style="height:${Math.max(8,y.n/PL.total*100)}%"></i><b>${y.a}</b></button>`).join("")}</div>
 <div class="ypanel" id="yPanel" aria-live="polite">${yearHTML()}</div>
-<p class="note">${esc(PL.calNota)}</p>
-
-<h3 class="plan-h" id="plan-regla">Cómo se activa cada hito</h3>
+<p class="note">${esc(PL.calNota)}</p>`,
+ regla:()=>`<h3 class="plan-h">Cómo se activa cada hito</h3>
 <p class="plan-p">${esc(PL.reglaIntro)}</p>
 <ol class="steps2">${PL.regla.map(r=>`<li><b>${esc(r[0])}</b><p>${esc(r[1])}</p></li>`).join("")}</ol>
-<p class="plan-note">${esc(PL.reglaCierre)}</p>
-
-<h3 class="plan-h" id="plan-pago">Cómo se paga</h3>
+<p class="plan-note">${esc(PL.reglaCierre)}</p>`,
+ pago:()=>`<h3 class="plan-h">Cómo se paga</h3>
 <div class="pay" role="img" aria-label="Reparto de las fuentes de financiación en 2034">${PL.pago.map((x,i)=>`<i style="width:${x[2]/tot*100}%;background:${cols[i]}"></i>`).join("")}</div>
 <div class="pay-k">${PL.pago.map((x,i)=>`<span><i style="background:${cols[i]}"></i>${esc(x[0])}</span>`).join("")}</div>
 ${tbl("",["Fuente de financiación en 2034","M€ de 2025","En qué consiste"],[...PL.pago.map(x=>[x[0],x[1],x[3]]),["Total",PL.pagoTotal,""]])}
-<p class="plan-note">${esc(PL.pagoCierre)}</p>
-
-<h3 class="plan-h" id="plan-escenarios">Tres escenarios</h3>
+<p class="plan-note">${esc(PL.pagoCierre)}</p>`,
+ escenarios:()=>`<h3 class="plan-h">Tres escenarios</h3>
 <p class="plan-p">${esc(PL.escIntro)}</p>
 ${tbl("",["Escenario","Crecimiento real medio","Retorno de las rebajas","Rebajas en 2034 (M€)","Plan completo en"],PL.escenarios)}
 <p class="plan-note"><b style="color:#fff">Riesgos que el plan reconoce:</b></p>
-<ul class="risks">${PL.riesgos.map(r=>`<li><b>${esc(r[0])}</b> ${esc(r[1])}</li>`).join("")}</ul>
-
-<h3 class="plan-h" id="plan-ti">Qué significa para ti</h3>
+<ul class="risks">${PL.riesgos.map(r=>`<li><b>${esc(r[0])}</b> ${esc(r[1])}</li>`).join("")}</ul>`,
+ ti:()=>`<h3 class="plan-h">Qué significa para ti</h3>
 <p class="plan-p">${esc(PL.casosIntro)}</p>
-<div class="cases">${PL.casos.map(c=>`<div class="case"><b>${esc(c[2])}</b><strong>${esc(c[0])}</strong><p>${esc(c[1])}</p></div>`).join("")}</div>
-
-<h3 class="plan-h" id="plan-despues">Lo que sigue después de 2034</h3>
+<div class="cases">${PL.casos.map(c=>`<div class="case"><b>${esc(c[2])}</b><strong>${esc(c[0])}</strong><p>${esc(c[1])}</p></div>`).join("")}</div>`,
+ despues:()=>`<h3 class="plan-h">Lo que sigue después de 2034</h3>
 ${tbl("",["Medida","Punto de partida en 2034","Objetivo final"],PL.despues)}
-<p class="plan-note">${esc(PL.despuesCierre)}</p>
+<p class="plan-note">${esc(PL.despuesCierre)}</p>`};
+ $("planBody").innerHTML=`<div class="ptabs" role="group" aria-label="Apartados del plan">${PTABS.map(([k,l])=>`<button type="button" class="ptab" data-act="ptab" data-t="${k}" aria-pressed="${S.ptab===k}">${l}</button>`).join("")}</div>
+${(part[S.ptab]||part.resumen)()}
 <blockquote class="aviso">${esc(PL.aviso)}</blockquote>`;
 }
+
 function renderAll(){renderStats();renderMe();renderFeats();renderChips();renderGrid();renderRank();route()}
 
 // ───────── Compartir ─────────
@@ -1098,8 +1152,21 @@ ${voteBox(id)}
  if(to){const el=$(to==="coms"?"dComs":"dShare");if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),60)}
 }
 function closeDetail(){const d=$("detalle");if(d.open)d.close()}
-$("detalle").addEventListener("close",()=>{openId=null;if(location.hash.startsWith("#m="))history.replaceState(null,"",location.pathname+location.search)});
-function route(){const m=location.hash.match(/^#m=([a-z0-9-]+)$/);if(m&&byId[m[1]]&&openId!==m[1])openDetail(m[1])}
+$("detalle").addEventListener("close",()=>{openId=null;if(location.hash.startsWith("#m="))history.replaceState(null,"","#"+S.view)});
+// Pestañas: #inicio, #plan, #medidas y #resultados (y los nombres antiguos de las secciones).
+const VIEW_OF={inicio:"inicio",top:"inicio",destacadas:"inicio",difunde:"inicio",medidas:"inicio",programa:"inicio",plan:"plan",resultados:"resultados",ranking:"resultados",como:"como"};
+function setView(v,keepScroll){
+ S.view=v;document.querySelectorAll("[data-view]").forEach(e=>{e.hidden=e.dataset.view!==v});
+ document.querySelectorAll(".tab").forEach(t=>{if(t.dataset.v===v)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
+ if(!keepScroll)window.scrollTo(0,0);
+}
+function route(first){
+ const h=location.hash.slice(1),m=h.match(/^m=([a-z0-9-]+)$/);
+ if(m){if(first===true)setView("inicio",true);if(S.ready!==undefined&&byId[m[1]]&&openId!==m[1]&&first!==true)openDetail(m[1]);return}
+ const v=VIEW_OF[h];
+ if(v){if(v!==S.view||first===true)setView(v,first===true);const el=h!==v&&h!=="top"&&$(h==="medidas"?"programa":h);if(el)el.scrollIntoView();else if(h===v&&first!==true)window.scrollTo(0,0)}
+ else if(first===true)setView("inicio",true);
+}
 window.addEventListener("hashchange",route);
 async function submitComment(form){
  const msg=$("comMsg"),alias=form.alias.value.trim(),body=form.body.value.trim(),id=openId;
@@ -1163,6 +1230,7 @@ document.addEventListener("click",async e=>{
  else if(a==="resimg"){el.disabled=true;try{await saveCanvas(await drawResult(el.dataset.pct,el.dataset.n),"mi-resultado.png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="chip"){S.filter=el.dataset.b;renderChips();renderGrid();if($("grid").getBoundingClientRect().top<0)$("programa").scrollIntoView()}
  else if(a==="year"){S.year=+el.dataset.y;renderPlan(true)}
+ else if(a==="ptab"){S.ptab=el.dataset.t;renderPlan();if($("plan").getBoundingClientRect().top<-40)$("plan").scrollIntoView()}
  else if(a==="clear"){S.filter="Todas";S.q="";$("q").value="";renderChips();renderGrid()}
  else if(a==="rank"){S.rank=el.dataset.m;document.querySelectorAll('[data-act="rank"]').forEach(b=>b.setAttribute("aria-pressed",b===el));renderRank()}
  else if(a==="feat"){const f=$("feats");f.scrollBy({left:+el.dataset.d*Math.min(f.clientWidth,712),behavior:"smooth"})}
@@ -1187,7 +1255,7 @@ function renderSpread(){
  const paint=()=>shareCtx("web").story().then(c=>{$("spreadImg").src=c.toDataURL("image/jpeg",.8)}).catch(()=>{});
  if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();paint()}},{rootMargin:"600px"});io.observe($("difunde"))}else paint();
 }
-renderStats();renderFeats();renderChips();renderSpread();renderPlan();
+route(true);renderStats();renderFeats();renderChips();renderSpread();renderPlan();
 load();
 
 </script>
