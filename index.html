@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>España, un país que puede funcionar</title>
-<meta name="description" content="33 medidas abiertas a tu voto. Lee el programa, vota cada propuesta y deja tu opinión.">
-<meta name="theme-color" content="#15122b">
+<meta name="description" content="Un programa de medidas concretas, con cifras, abierto a tu voto. Lee cada propuesta, vota y deja tu opinión.">
+<meta name="theme-color" content="#100a1c">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <!--OG-->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="España, un país que puede funcionar">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="España, un país que puede funcionar">
-<meta property="og:description" content="33 medidas abiertas a tu voto. Lee el programa, vota cada propuesta y deja tu opinión.">
+<meta property="og:description" content="90 medidas abiertas a tu voto. Lee el programa, vota cada propuesta y deja tu opinión.">
 <meta property="og:url" content="https://davidcaptart-glitch.github.io/espana-puede-funcionar/">
 <meta property="og:image" content="https://davidcaptart-glitch.github.io/espana-puede-funcionar/og/portada.jpg">
 <meta property="og:image:width" content="1200">
@@ -286,20 +286,214 @@ form .btn{margin-top:10px}
  .q-hint{display:none}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ═════════ Tema rosa y verde (sustituye a la paleta anterior) ═════════ */
+:root{
+ --navy:#100a1c;--navy-2:#1d1330;--ink:#fff;--text:#d8d0e6;--muted:#a59cba;--line:rgba(255,255,255,.1);
+ --paper:#0d0817;--soft:rgba(255,255,255,.07);--surface:rgba(255,255,255,.055);--edge:rgba(255,255,255,.13);
+ --pk:#ff4fa8;--pk2:#ff8ecb;--gr:#2ee6a6;--gr2:#8af5d0;--dark:#14061a;
+ --accent:var(--pk);--accent-soft:rgba(255,79,168,.14);
+ --good:var(--gr);--good-soft:rgba(46,230,166,.13);--bad:var(--pk);--bad-soft:rgba(255,79,168,.13);
+ --mix:linear-gradient(95deg,var(--pk) 5%,var(--gr) 95%);
+ --shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 40px -22px rgba(0,0,0,.8);
+ color-scheme:dark;
+}
+html{background:var(--paper)}
+body{background:none}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(900px 700px at -10% 35%,rgba(255,79,168,.13),transparent 60%),radial-gradient(900px 700px at 110% 65%,rgba(46,230,166,.11),transparent 60%)}
+:focus-visible{outline-color:var(--gr2)}
+.skip{color:var(--dark)}
+.btn-accent{background:var(--mix);color:var(--dark);font-weight:700;box-shadow:0 10px 30px -10px rgba(255,79,168,.75)}
+.btn-accent:hover{background:var(--mix);filter:brightness(1.1)}
+.btn-navy{background:var(--gr);color:#06281c}.btn-navy:hover{background:var(--gr2)}
+.btn-line{border-color:var(--edge);color:#fff}
+.btn-glass{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.22)}.btn-glass:hover{background:rgba(255,255,255,.18)}
+.btn-sm{min-height:40px;padding:8px 14px;font-size:.9rem}
+.kicker{color:var(--pk2);text-transform:uppercase;letter-spacing:.12em;font-size:.74rem}
+
+/* Barra superior */
+.topbar{position:sticky;top:0;z-index:20;height:56px;background:rgba(13,8,23,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:100%;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;color:#fff;text-decoration:none;min-width:0}
+.brand img{width:30px;height:30px;flex:none}
+.brand span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-acts{display:flex;gap:8px;flex:none}
+.tools{top:56px;background:rgba(13,8,23,.88);border-color:var(--line)}
+section{scroll-margin-top:130px}
+
+/* Cabecera con focos */
+.hero{background:radial-gradient(780px 640px at 0% -12%,rgba(255,79,168,.8),transparent 62%),radial-gradient(780px 640px at 100% -12%,rgba(46,230,166,.62),transparent 60%),var(--navy)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;filter:blur(10px);background:conic-gradient(from 148deg at 4% -6%,transparent 0 6deg,rgba(255,140,205,.28) 15deg,transparent 30deg),conic-gradient(from 182deg at 96% -6%,transparent 0 6deg,rgba(110,245,200,.24) 15deg,transparent 30deg)}
+.hero-in{z-index:1}
+.hero h1 em{background:linear-gradient(95deg,var(--pk2) 5%,var(--gr) 95%);-webkit-background-clip:text;background-clip:text}
+.hero-lead{color:#ece6f5}
+.hero-cta{gap:12px}
+.ring .fg{stroke:var(--gr)}
+.ballot{background:rgba(16,10,28,.45)}
+
+/* Destacadas */
+.feat{background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 45%,#100a1c));box-shadow:0 20px 40px -24px var(--c)}
+.feat button{color:var(--dark)}
+.feat-nav button{border-color:var(--edge);color:#fff}
+
+/* Filtros */
+.chip{background:var(--surface);border-color:var(--edge)}
+.chip[aria-pressed=true]{background:var(--c,#fff);border-color:transparent;color:var(--dark)}
+.chip[aria-pressed=true] .ic,.chip[aria-pressed=true] small{color:var(--dark)}
+.search input,.tools select,.field input,.field textarea{background:rgba(255,255,255,.07);border-color:var(--edge);color:#fff}
+::placeholder{color:var(--muted);opacity:1}
+
+/* Tarjetas */
+.card{position:relative;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 15%,transparent),transparent 50%),var(--surface);border:1px solid var(--edge);border-top:1px solid color-mix(in srgb,var(--c) 65%,transparent)}
+.card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 26px 50px -30px var(--c)}
+.card>*{position:relative}
+.card-ic{position:absolute!important;right:-22px;top:-22px;width:130px;height:130px;fill:var(--c);opacity:.08;pointer-events:none}
+.card .v{padding:9px 6px;font-size:.88rem;gap:6px;white-space:nowrap}
+.card h3 button:focus-visible{outline-color:var(--gr2)}
+.card-foot{border-color:var(--line)}
+.quote{font-size:.86rem;border-left:2px solid var(--c);padding-left:10px;margin-top:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.quote b{color:#fff}
+.empty{border-color:var(--edge)}
+
+/* Votación: verde a favor, rosa en contra */
+.bar{height:10px}
+.v{background:rgba(255,255,255,.06);border-color:var(--edge);color:#fff}
+.v.up .ic{color:var(--gr)}.v.down .ic{color:var(--pk)}
+.v.up.on{color:#06281c}.v.down.on{color:#2a0518}
+.v.on b,.v.on .ic{color:inherit}
+.nudge{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:10px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.07);font-size:.86rem;animation:pop .3s cubic-bezier(.2,.8,.2,1)}
+.nudge span{flex:1 1 140px;color:#fff;font-weight:600}
+.nudge button{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:8px;padding:7px 11px;min-height:36px;font-weight:700;font-size:.84rem;background:var(--gr);color:#06281c}
+.nudge button+button{background:var(--pk);color:#2a0518}
+
+/* Ranking */
+.seg button[aria-pressed=true]{color:var(--dark)}
+.rank{background:var(--surface);border:1px solid var(--edge)}
+.rank li{border-color:var(--line)}
+.how-n{background:var(--mix);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+
+/* Pásalo */
+.spread{margin-top:64px;border-radius:26px;padding:clamp(24px,5vw,48px);border:1px solid var(--edge);display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:36px;align-items:center;background:radial-gradient(560px 340px at 0 0,rgba(255,79,168,.5),transparent 70%),radial-gradient(560px 340px at 100% 100%,rgba(46,230,166,.42),transparent 70%),#1a1129}
+.spread h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:750;margin:8px 0 12px}
+.spread p{color:#ece6f5;max-width:52ch}
+.spread .share{margin-top:22px}
+.urlpill{display:flex;align-items:center;gap:8px;margin-top:14px;padding:6px 6px 6px 14px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--edge);max-width:520px}
+.urlpill span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.88rem;color:#fff}
+.story{all:unset;cursor:pointer;display:block;justify-self:center;width:min(230px,100%);aspect-ratio:9/16;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.25);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);transform:rotate(3deg);transition:transform .25s;background:#100a1c}
+.story:hover{transform:rotate(0) scale(1.03)}
+.story:focus-visible{outline:3px solid var(--gr2);outline-offset:4px}
+.story img{display:block;width:100%;height:100%;object-fit:cover}
+
+footer{background:#0a0612;border-top:1px solid var(--line)}
+
+/* Paneles */
+dialog{background:#130c20}
+dialog::backdrop{background:rgba(5,3,10,.7)}
+.sheet-top{background:linear-gradient(95deg,color-mix(in srgb,var(--c) 55%,#100a1c),color-mix(in srgb,var(--c) 25%,#100a1c))}
+.box{background:var(--surface);border:1px solid var(--edge)}
+.box.dec{background:var(--good-soft)}
+.box.pen{background:rgba(255,200,90,.1)}.box.pen h3{color:#ffcf7a}
+.sheet-body .vb{background:var(--surface);border:1px solid var(--edge)}
+.sh{background:rgba(255,255,255,.07);border-color:var(--edge);color:#fff;cursor:pointer}
+.sh:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+.sh.wa{background:#22c268;border-color:transparent;color:#04200f}.sh.wa:hover{background:#3bd47c}
+.sh.ig{background:linear-gradient(45deg,#f9a03c,#ee2a7b 50%,#7b3fe4);border-color:transparent;color:#fff}.sh.ig:hover{filter:brightness(1.1);background:linear-gradient(45deg,#f9a03c,#ee2a7b 50%,#7b3fe4)}
+.com{background:var(--surface);border:1px solid var(--line)}
+.com.pend{background:rgba(255,200,90,.1)}
+.form-msg .link{color:#fff;font-weight:700}
+
+/* Centro de compartir */
+.hub{width:min(780px,calc(100% - 24px));max-height:calc(100dvh - 24px);border-radius:22px;border:1px solid var(--edge);overflow-y:auto;box-shadow:0 40px 90px rgba(0,0,0,.7)}
+.hub[open]{animation:pop .28s cubic-bezier(.2,.8,.2,1)}
+.hub-in{display:grid;grid-template-columns:230px minmax(0,1fr);gap:26px;padding:24px;align-items:start}
+.hub-prev{aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#100a1c;border:1px solid var(--edge)}
+.hub-prev img{display:block;width:100%;height:100%;object-fit:cover}
+.hub-h{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.hub h2{font-size:1.5rem;font-weight:700}
+.hub .x{background:rgba(255,255,255,.1);color:#fff;flex:none}
+.hub-t{margin:6px 0 16px;color:var(--muted);font-size:.95rem}
+.hub .sh.ig{width:100%;justify-content:center;min-height:52px;font-size:1rem}
+.steps{margin:10px 0 18px;padding-left:20px;font-size:.86rem;color:var(--muted)}
+.steps li{margin:3px 0}.steps b{color:#fff}
+
+/* Modo votación */
+.quiz{background:radial-gradient(620px 480px at 0 0,rgba(255,79,168,.45),transparent 65%),radial-gradient(620px 480px at 100% 0,rgba(46,230,166,.36),transparent 65%),var(--navy)}
+.quiz-prog span{background:var(--mix)}
+.q-card{background:#1a1129;border:1px solid var(--edge);border-top:6px solid var(--c)}
+.res-n{background:var(--mix);-webkit-background-clip:text;background-clip:text}
+.res .sh:not(.wa):not(.ig){background:transparent}
+
+/* Barra inferior (móvil) */
+.dock{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:15;display:none;align-items:center;gap:10px;padding:8px 8px 8px 14px;border-radius:16px;background:rgba(26,17,41,.94);backdrop-filter:blur(12px);border:1px solid var(--edge);box-shadow:0 14px 40px rgba(0,0,0,.6)}
+.dock-p{flex:1;min-width:0;font-size:.8rem;color:var(--muted)}
+.dock-p b{color:#fff;font-variant-numeric:tabular-nums}
+.dock-p i{display:block;height:5px;border-radius:9px;background:rgba(255,255,255,.14);margin-top:5px;overflow:hidden}
+.dock-p i span{display:block;height:100%;background:var(--mix);transition:width .4s}
+.dock .btn{flex:none}
+
+.toast{background:#fff;color:var(--dark);font-weight:600;border:0;margin:0;inset:auto auto 22px 50%}
+.banner{background:#3a2a0c;color:#ffd98a}
+.skel{background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%}
+
+@media(max-width:860px){
+ .spread{grid-template-columns:1fr}
+ .story{width:170px;order:-1}
+ .dock{display:flex}
+ footer{padding-bottom:110px}
+ .toast{bottom:calc(84px + env(safe-area-inset-bottom))}
+ .hub-in{grid-template-columns:1fr;padding:18px;gap:16px}
+ .hub-prev{width:130px;margin:auto}
+}
+@media(max-width:520px){
+ .top-vote{display:none}
+ .brand{font-size:.95rem}
+}
+
+/* Cifras y tablas de cada medida */
+.datos{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:0;list-style:none}
+.datos li{display:flex;flex-direction:column;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--c) 13%,transparent);border:1px solid color-mix(in srgb,var(--c) 35%,transparent);min-width:0;max-width:100%}
+.datos b{font-family:var(--display);font-size:1.25rem;line-height:1.15;color:var(--c);font-variant-numeric:tabular-nums}
+.datos span{font-size:.76rem;color:var(--text);line-height:1.25}
+.datos.big{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 4px}
+.datos.big li{padding:14px 16px;border-radius:14px}
+.datos.big b{font-size:1.9rem}
+.datos.big span{font-size:.84rem}
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-size:.93rem;background:var(--surface);border:1px solid var(--edge);border-radius:12px;overflow:hidden}
+.tbl caption{text-align:left;font-weight:700;color:#fff;padding:0 0 6px;font-size:.84rem}
+.tbl th{text-align:left;font-size:.76rem;font-weight:650;color:var(--muted);padding:9px 14px;border-bottom:1px solid var(--edge)}
+.tbl td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:last-child,.tbl th:last-child{text-align:right;font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+.tbl.txt td:last-child,.tbl.txt th:last-child{text-align:left;font-weight:400;color:var(--text)}
+.tbl.txt td:first-child{font-weight:700;color:#fff;white-space:nowrap}
+.grid-h{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:1.35rem;font-weight:700;margin:26px 0 0;color:#fff}
+.grid-h:first-child{margin-top:0}
+.grid-h .ic{color:var(--c);width:1.3em;height:1.3em}
+.grid-h small{font-family:var(--body);font-size:.8rem;font-weight:600;color:var(--muted);letter-spacing:0;margin-left:auto;white-space:nowrap}
+.feat-n{font-size:clamp(2rem,6vw,2.6rem);font-weight:750;opacity:1;line-height:1;letter-spacing:-.03em;padding-right:44px}
+.feat-l{font-size:.82rem;opacity:.9;margin-top:4px;padding-right:30px}
+.feat h3{margin-top:22px;font-size:1.25rem}
+.q-card .datos{margin:14px 0 0}
 </style>
 </head>
 <body>
 <a class="skip" href="#programa">Saltar a las medidas</a>
 <div class="banner" id="banner" role="status"><div class="wrap" id="bannerText"></div></div>
 
-<header class="hero">
+<div class="topbar"><div class="wrap">
+ <a class="brand" href="#top"><img src="favicon.svg" alt="" width="30" height="30"><span>España puede funcionar</span></a>
+ <div class="top-acts"><button class="btn btn-glass btn-sm" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir</button><button class="btn btn-accent btn-sm top-vote" data-act="quiz">Votar</button></div>
+</div></div>
+
+<header class="hero" id="top">
  <div class="wrap hero-in">
   <div>
    <p class="kicker">Programa abierto · Debate ciudadano</p>
    <h1>España, un país que <em>puede funcionar.</em></h1>
-   <p class="hero-lead">Un programa hecho de medidas concretas, abierto a tu voto. Léelas, di si estás de acuerdo y deja tu opinión: las ideas contrarias también tienen espacio.</p>
+   <p class="hero-lead">Un programa hecho de medidas concretas, con sus cifras, abierto a tu voto. Léelas, di si estás de acuerdo y deja tu opinión: las ideas contrarias también tienen espacio.</p>
    <div class="hero-cta">
     <button class="btn btn-accent" data-act="quiz"><span id="ctaMain">Vota el programa</span> <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button>
+    <button class="btn btn-glass" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir la web</button>
     <a class="link" href="#programa">Ver las medidas</a>
    </div>
    <ul class="stats" aria-label="Participación">
@@ -324,7 +518,7 @@ form .btn{margin-top:10px}
 <main>
 <section class="sec wrap" id="destacadas" aria-labelledby="destT">
  <div class="sec-head">
-  <div><p class="kicker">Para empezar</p><h2 id="destT">Seis medidas que definen el programa</h2></div>
+  <div><p class="kicker">Para empezar</p><h2 id="destT">Seis medidas, seis cifras</h2></div>
   <div class="feat-nav"><button type="button" data-act="feat" data-d="-1" aria-label="Anteriores"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg></button><button type="button" data-act="feat" data-d="1" aria-label="Siguientes"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button></div>
  </div>
  <div class="feats" id="feats" tabindex="0" role="region" aria-label="Medidas destacadas"></div>
@@ -361,6 +555,17 @@ form .btn{margin-top:10px}
  </div>
  <div class="rules"><h3>Debate con reglas claras</h3><p>Se permiten críticas firmes a las ideas, instituciones y responsables públicos. No se publican amenazas, acoso, incitación a la violencia ni ataques discriminatorios. Las opiniones se revisan antes de aparecer, y no se rechaza ninguna por ser contraria al programa.</p></div>
 </section>
+
+<section class="wrap" id="difunde" aria-labelledby="difT">
+ <div class="spread">
+  <div><p class="kicker">Pásalo</p><h2 id="difT">Esto solo funciona si llega a más gente.</h2>
+   <p>Comparte la web en tu historia de Instagram, mándala por WhatsApp o copia el enlace. Cuanta más gente vote, más dicen los resultados.</p>
+   <div class="share" id="spreadShare"></div>
+   <div class="urlpill"><span id="spreadUrl"></span><button type="button" class="btn btn-glass btn-sm" data-act="copy">Copiar enlace</button></div>
+  </div>
+  <button type="button" class="story" data-act="hub" data-k="web" aria-label="Ver la imagen para tu historia de Instagram"><img id="spreadImg" alt="" width="1080" height="1920"></button>
+ </div>
+</section>
 </main>
 
 <footer><div class="wrap">
@@ -372,8 +577,11 @@ form .btn{margin-top:10px}
 </div></footer>
 
 <dialog class="sheet" id="detalle" aria-labelledby="dT"></dialog>
+<dialog class="hub" id="compartir" aria-labelledby="hubT"></dialog>
 <dialog class="quiz" id="quiz" aria-label="Vota el programa"><div class="quiz-in" id="quizIn"></div></dialog>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="dock" id="dock"><div class="dock-p"><b id="dockN">0</b> votadas<i><span id="dockBar" style="width:0"></span></i></div>
+ <button class="btn btn-glass btn-sm" data-act="hub" data-k="web" aria-label="Compartir la web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg></button><button class="btn btn-accent btn-sm" data-act="quiz" id="dockBtn">Votar</button></div>
+<div class="toast" id="toast" role="status" aria-live="polite" popover="manual"></div>
 
 <script src="propuestas.js"></script>
 <script>
@@ -382,19 +590,22 @@ form .btn{margin-top:10px}
 const CONFIG={
  supabaseUrl:"https://roglrkyhkoqngqqdnefh.supabase.co",
  supabaseKey:"sb_publishable_GQEgyQTx05J09R0-YvcLNQ_S0b6tQQg",
- titulo:"España, un país que puede funcionar"
+ titulo:"España, un país que puede funcionar",
+ // Opcional: dirección del perfil de Instagram (por ejemplo "https://www.instagram.com/usuario/"). Si se rellena, aparece un botón «Síguenos».
+ instagram:""
 };
-const ICONS={"bank":"<path d=\"M24,104H48v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16H208V104h24a8,8,0,0,0,4.19-14.81l-104-64a8,8,0,0,0-8.38,0l-104,64A8,8,0,0,0,24,104Zm40,0H96v64H64Zm80,0v64H112V104Zm48,64H160V104h32ZM128,41.39,203.74,88H52.26ZM248,208a8,8,0,0,1-8,8H16a8,8,0,0,1,0-16H240A8,8,0,0,1,248,208Z\"/>","eye":"<path d=\"M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.33,133.33,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z\"/>","receipt":"<path d=\"M72,104a8,8,0,0,1,8-8h96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,104Zm8,40h96a8,8,0,0,0,0-16H80a8,8,0,0,0,0,16ZM232,56V208a8,8,0,0,1-11.58,7.15L192,200.94l-28.42,14.21a8,8,0,0,1-7.16,0L128,200.94,99.58,215.15a8,8,0,0,1-7.16,0L64,200.94,35.58,215.15A8,8,0,0,1,24,208V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Zm-16,0H40V195.06l20.42-10.22a8,8,0,0,1,7.16,0L96,199.06l28.42-14.22a8,8,0,0,1,7.16,0L160,199.06l28.42-14.22a8,8,0,0,1,7.16,0L216,195.06Z\"/>","briefcase":"<path d=\"M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z\"/>","coins":"<path d=\"M184,89.57V84c0-25.08-37.83-44-88-44S8,58.92,8,84v40c0,20.89,26.25,37.49,64,42.46V172c0,25.08,37.83,44,88,44s88-18.92,88-44V132C248,111.3,222.58,94.68,184,89.57ZM232,132c0,13.22-30.79,28-72,28-3.73,0-7.43-.13-11.08-.37C170.49,151.77,184,139,184,124V105.74C213.87,110.19,232,122.27,232,132ZM72,150.25V126.46A183.74,183.74,0,0,0,96,128a183.74,183.74,0,0,0,24-1.54v23.79A163,163,0,0,1,96,152,163,163,0,0,1,72,150.25Zm96-40.32V124c0,8.39-12.41,17.4-32,22.87V123.5C148.91,120.37,159.84,115.71,168,109.93ZM96,56c41.21,0,72,14.78,72,28s-30.79,28-72,28S24,97.22,24,84,54.79,56,96,56ZM24,124V109.93c8.16,5.78,19.09,10.44,32,13.57v23.37C36.41,141.4,24,132.39,24,124Zm64,48v-4.17c2.63.1,5.29.17,8,.17,3.88,0,7.67-.13,11.39-.35A121.92,121.92,0,0,0,120,171.41v23.46C100.41,189.4,88,180.39,88,172Zm48,26.25V174.4a179.48,179.48,0,0,0,24,1.6,183.74,183.74,0,0,0,24-1.54v23.79a165.45,165.45,0,0,1-48,0Zm64-3.38V171.5c12.91-3.13,23.84-7.79,32-13.57V172C232,180.39,219.59,189.4,200,194.87Z\"/>","house-line":"<path d=\"M240,208H224V136l2.34,2.34A8,8,0,0,0,237.66,127L139.31,28.68a16,16,0,0,0-22.62,0L18.34,127a8,8,0,0,0,11.32,11.31L32,136v72H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM48,120l80-80,80,80v88H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48Zm96,88H112V160h32Z\"/>","heartbeat":"<path d=\"M72,144H32a8,8,0,0,1,0-16H67.72l13.62-20.44a8,8,0,0,1,13.32,0l25.34,38,9.34-14A8,8,0,0,1,136,128h24a8,8,0,0,1,0,16H140.28l-13.62,20.44a8,8,0,0,1-13.32,0L88,126.42l-9.34,14A8,8,0,0,1,72,144ZM178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,.75,0,1.5,0,2.25a8,8,0,1,0,16-.5c0-.58,0-1.17,0-1.75A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46c0,53.61-77.76,102.15-96,112.8-10.83-6.31-42.63-26-66.68-52.21a8,8,0,1,0-11.8,10.82c31.17,34,72.93,56.68,74.69,57.63a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z\"/>","graduation-cap":"<path d=\"M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z\"/>","factory":"<path d=\"M116,176a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h28A8,8,0,0,1,116,176Zm60-8H148a8,8,0,0,0,0,16h28a8,8,0,0,0,0-16Zm64,48a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16h8V88a8,8,0,0,1,12.8-6.4L96,120V88a8,8,0,0,1,12.8-6.4l38.74,29.05L159.1,29.74A16.08,16.08,0,0,1,174.94,16h18.12A16.08,16.08,0,0,1,208.9,29.74l15,105.13s.08.78.08,1.13v72h8A8,8,0,0,1,240,216Zm-77.86-94.4,8.53,6.4h36.11L193.06,32H174.94ZM48,208H208V144H168a8,8,0,0,1-4.8-1.6l-14.4-10.8,0,0L112,104v32a8,8,0,0,1-12.8,6.4L48,104Z\"/>","scales":"<path d=\"M239.43,133l-32-80h0a8,8,0,0,0-9.16-4.84L136,62V40a8,8,0,0,0-16,0V65.58L54.26,80.19A8,8,0,0,0,48.57,85h0v.06L16.57,165a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32a7.92,7.92,0,0,0-.57-3L66.92,93.77,120,82V208H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16H136V78.42L187,67.1,160.57,133a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32A7.92,7.92,0,0,0,239.43,133ZM56,184c-7.53,0-22.76-3.61-23.93-14.64L56,109.54l23.93,59.82C78.76,180.39,63.53,184,56,184Zm144-32c-7.53,0-22.76-3.61-23.93-14.64L200,77.54l23.93,59.82C222.76,148.39,207.53,152,200,152Z\"/>","train-regional":"<path d=\"M223.72,117.9,201.33,35.79A16,16,0,0,0,185.89,24H70.11A16,16,0,0,0,54.67,35.79L32.28,117.9a8.08,8.08,0,0,0,0,4.2l22.39,82.11A16,16,0,0,0,70.11,216H80L65.6,235.2a8,8,0,1,0,12.8,9.6L100,216h56l21.6,28.8a8,8,0,1,0,12.8-9.6L176,216h9.89a16,16,0,0,0,15.44-11.79l22.39-82.11A8.08,8.08,0,0,0,223.72,117.9ZM70.11,40H185.89L206,113.69l-78,14.18L50,113.69Zm-19,90.14L120,142.68V200H70.11ZM185.89,200H136V142.68l68.94-12.54ZM88,88a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H96A8,8,0,0,1,88,88Z\"/>","globe-hemisphere-west":"<path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm88,104a87.62,87.62,0,0,1-6.4,32.94l-44.7-27.49a15.92,15.92,0,0,0-6.24-2.23l-22.82-3.08a16.11,16.11,0,0,0-16,7.86h-8.72l-3.8-7.86a15.91,15.91,0,0,0-11-8.67l-8-1.73L96.14,104h16.71a16.06,16.06,0,0,0,7.73-2l12.25-6.76a16.62,16.62,0,0,0,3-2.14l26.91-24.34A15.93,15.93,0,0,0,166,49.1l-.36-.65A88.11,88.11,0,0,1,216,128ZM143.31,41.34,152,56.9,125.09,81.24,112.85,88H96.14a16,16,0,0,0-13.88,8l-8.73,15.23L63.38,84.19,74.32,58.32a87.87,87.87,0,0,1,69-17ZM40,128a87.53,87.53,0,0,1,8.54-37.8l11.34,30.27a16,16,0,0,0,11.62,10l21.43,4.61L96.74,143a16.09,16.09,0,0,0,14.4,9h1.48l-7.23,16.23a16,16,0,0,0,2.86,17.37l.14.14L128,205.94l-1.94,10A88.11,88.11,0,0,1,40,128Zm102.58,86.78,1.13-5.81a16.09,16.09,0,0,0-4-13.9,1.85,1.85,0,0,1-.14-.14L120,174.74,133.7,144l22.82,3.08,45.72,28.12A88.18,88.18,0,0,1,142.58,214.78Z\"/>","leaf":"<path d=\"M223.45,40.07a8,8,0,0,0-7.52-7.52C139.8,28.08,78.82,51,52.82,94a87.09,87.09,0,0,0-12.76,49c.57,15.92,5.21,32,13.79,47.85l-19.51,19.5a8,8,0,0,0,11.32,11.32l19.5-19.51C81,210.73,97.09,215.37,113,215.94q1.67.06,3.33.06A86.93,86.93,0,0,0,162,203.18C205,177.18,227.93,116.21,223.45,40.07ZM153.75,189.5c-22.75,13.78-49.68,14-76.71.77l88.63-88.62a8,8,0,0,0-11.32-11.32L65.73,179c-13.19-27-13-54,.77-76.71,22.09-36.47,74.6-56.44,141.31-54.06C210.2,114.89,190.22,167.41,153.75,189.5Z\"/>","grains":"<path d=\"M208,56a87.53,87.53,0,0,0-31.85,6c-14.32-29.7-43.25-44.46-44.57-45.12a8,8,0,0,0-7.16,0c-1.33.66-30.25,15.42-44.57,45.12A87.53,87.53,0,0,0,48,56a8,8,0,0,0-8,8v80a88,88,0,0,0,176,0V64A8,8,0,0,0,208,56ZM120,215.56A72.1,72.1,0,0,1,56,144V128.44A72.1,72.1,0,0,1,120,200Zm0-66.1a88,88,0,0,0-64-37.09V72.44A72.1,72.1,0,0,1,120,144ZM94.15,69.11c9.22-19.21,26.41-31.33,33.85-35.9,7.44,4.58,24.63,16.7,33.84,35.9A88.61,88.61,0,0,0,128,107.36,88.57,88.57,0,0,0,94.15,69.11ZM200,144a72.1,72.1,0,0,1-64,71.56V200a72.1,72.1,0,0,1,64-71.56Zm0-31.63a88,88,0,0,0-64,37.09V144a72.1,72.1,0,0,1,64-71.56Z\"/>","mask-happy":"<path d=\"M217,34.8a15.94,15.94,0,0,0-14.82-1.71C188.15,38.55,159.82,47.71,128,47.71S67.84,38.55,53.79,33.09A16,16,0,0,0,32,48v55.77c0,35.84,9.65,69.65,27.18,95.18,18.16,26.46,42.6,41,68.82,41s50.66-14.57,68.82-41C214.35,173.44,224,139.63,224,103.79V48A16,16,0,0,0,217,34.8Zm-9,69c0,32.64-8.66,63.23-24.37,86.13C168.54,211.9,148.79,224,128,224s-40.54-12.1-55.63-34.08C56.66,167,48,136.43,48,103.79V48c15.11,5.87,45.58,15.71,80,15.71S192.9,53.87,208,48v55.81Zm-18,18.87A8,8,0,1,1,178,133.33c-2.68-3-8.85-5.33-14-5.33s-11.36,2.34-14,5.33A8,8,0,1,1,138,122.66c5.71-6.38,16.14-10.66,26-10.66S184.25,116.28,190,122.66ZM92,128c-5.19,0-11.36,2.34-14,5.33A8,8,0,1,1,66,122.66C71.75,116.28,82.18,112,92,112s20.25,4.28,26,10.66A8,8,0,1,1,106,133.33C103.36,130.34,97.19,128,92,128Zm76.45,45.19a52.9,52.9,0,0,1-80.9,0A8,8,0,1,1,99.72,162.8a36.89,36.89,0,0,0,56.56,0,8,8,0,0,1,12.17,10.39Z\"/>","share-network":"<path d=\"M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z\"/>","chat-circle":"<path d=\"M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z\"/>","thumbs-up":"<path d=\"M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z\"/>","thumbs-down":"<path d=\"M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z\"/>","x":"<path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/>","magnifying-glass":"<path d=\"M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z\"/>","link":"<path d=\"M240,88.23a54.43,54.43,0,0,1-16,37L189.25,160a54.27,54.27,0,0,1-38.63,16h-.05A54.63,54.63,0,0,1,96,119.84a8,8,0,0,1,16,.45A38.62,38.62,0,0,0,150.58,160h0a38.39,38.39,0,0,0,27.31-11.31l34.75-34.75a38.63,38.63,0,0,0-54.63-54.63l-11,11A8,8,0,0,1,135.7,59l11-11A54.65,54.65,0,0,1,224,48,54.86,54.86,0,0,1,240,88.23ZM109,185.66l-11,11A38.41,38.41,0,0,1,70.6,208h0a38.63,38.63,0,0,1-27.29-65.94L78,107.31A38.63,38.63,0,0,1,144,135.71a8,8,0,0,0,16,.45A54.86,54.86,0,0,0,144,96a54.65,54.65,0,0,0-77.27,0L32,130.75A54.62,54.62,0,0,0,70.56,224h0a54.28,54.28,0,0,0,38.64-16l11-11A8,8,0,0,0,109,185.66Z\"/>","whatsapp-logo":"<path d=\"M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z\"/>","x-logo":"<path d=\"M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z\"/>","facebook-logo":"<path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z\"/>","linkedin-logo":"<path d=\"M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z\"/>","telegram-logo":"<path d=\"M228.88,26.19a9,9,0,0,0-9.16-1.57L17.06,103.93a14.22,14.22,0,0,0,2.43,27.21L72,141.45V200a15.92,15.92,0,0,0,10,14.83,15.91,15.91,0,0,0,17.51-3.73l25.32-26.26L165,220a15.88,15.88,0,0,0,10.51,4,16.3,16.3,0,0,0,5-.79,15.85,15.85,0,0,0,10.67-11.63L231.77,35A9,9,0,0,0,228.88,26.19Zm-61.14,36L78.15,126.35l-49.6-9.73ZM88,200V152.52l24.79,21.74Zm87.53,8L92.85,135.5l119-85.29Z\"/>","arrow-right":"<path d=\"M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z\"/>","arrow-left":"<path d=\"M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z\"/>","check":"<path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/>","flag":"<path d=\"M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z\"/>","image":"<path d=\"M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z\"/>"};
+const ICONS={"instagram-logo":"<path d=\"M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z\"/>","bank":"<path d=\"M24,104H48v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16H208V104h24a8,8,0,0,0,4.19-14.81l-104-64a8,8,0,0,0-8.38,0l-104,64A8,8,0,0,0,24,104Zm40,0H96v64H64Zm80,0v64H112V104Zm48,64H160V104h32ZM128,41.39,203.74,88H52.26ZM248,208a8,8,0,0,1-8,8H16a8,8,0,0,1,0-16H240A8,8,0,0,1,248,208Z\"/>","eye":"<path d=\"M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.33,133.33,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z\"/>","receipt":"<path d=\"M72,104a8,8,0,0,1,8-8h96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,104Zm8,40h96a8,8,0,0,0,0-16H80a8,8,0,0,0,0,16ZM232,56V208a8,8,0,0,1-11.58,7.15L192,200.94l-28.42,14.21a8,8,0,0,1-7.16,0L128,200.94,99.58,215.15a8,8,0,0,1-7.16,0L64,200.94,35.58,215.15A8,8,0,0,1,24,208V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Zm-16,0H40V195.06l20.42-10.22a8,8,0,0,1,7.16,0L96,199.06l28.42-14.22a8,8,0,0,1,7.16,0L160,199.06l28.42-14.22a8,8,0,0,1,7.16,0L216,195.06Z\"/>","briefcase":"<path d=\"M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z\"/>","coins":"<path d=\"M184,89.57V84c0-25.08-37.83-44-88-44S8,58.92,8,84v40c0,20.89,26.25,37.49,64,42.46V172c0,25.08,37.83,44,88,44s88-18.92,88-44V132C248,111.3,222.58,94.68,184,89.57ZM232,132c0,13.22-30.79,28-72,28-3.73,0-7.43-.13-11.08-.37C170.49,151.77,184,139,184,124V105.74C213.87,110.19,232,122.27,232,132ZM72,150.25V126.46A183.74,183.74,0,0,0,96,128a183.74,183.74,0,0,0,24-1.54v23.79A163,163,0,0,1,96,152,163,163,0,0,1,72,150.25Zm96-40.32V124c0,8.39-12.41,17.4-32,22.87V123.5C148.91,120.37,159.84,115.71,168,109.93ZM96,56c41.21,0,72,14.78,72,28s-30.79,28-72,28S24,97.22,24,84,54.79,56,96,56ZM24,124V109.93c8.16,5.78,19.09,10.44,32,13.57v23.37C36.41,141.4,24,132.39,24,124Zm64,48v-4.17c2.63.1,5.29.17,8,.17,3.88,0,7.67-.13,11.39-.35A121.92,121.92,0,0,0,120,171.41v23.46C100.41,189.4,88,180.39,88,172Zm48,26.25V174.4a179.48,179.48,0,0,0,24,1.6,183.74,183.74,0,0,0,24-1.54v23.79a165.45,165.45,0,0,1-48,0Zm64-3.38V171.5c12.91-3.13,23.84-7.79,32-13.57V172C232,180.39,219.59,189.4,200,194.87Z\"/>","house-line":"<path d=\"M240,208H224V136l2.34,2.34A8,8,0,0,0,237.66,127L139.31,28.68a16,16,0,0,0-22.62,0L18.34,127a8,8,0,0,0,11.32,11.31L32,136v72H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM48,120l80-80,80,80v88H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48Zm96,88H112V160h32Z\"/>","heartbeat":"<path d=\"M72,144H32a8,8,0,0,1,0-16H67.72l13.62-20.44a8,8,0,0,1,13.32,0l25.34,38,9.34-14A8,8,0,0,1,136,128h24a8,8,0,0,1,0,16H140.28l-13.62,20.44a8,8,0,0,1-13.32,0L88,126.42l-9.34,14A8,8,0,0,1,72,144ZM178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,.75,0,1.5,0,2.25a8,8,0,1,0,16-.5c0-.58,0-1.17,0-1.75A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46c0,53.61-77.76,102.15-96,112.8-10.83-6.31-42.63-26-66.68-52.21a8,8,0,1,0-11.8,10.82c31.17,34,72.93,56.68,74.69,57.63a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z\"/>","graduation-cap":"<path d=\"M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z\"/>","factory":"<path d=\"M116,176a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h28A8,8,0,0,1,116,176Zm60-8H148a8,8,0,0,0,0,16h28a8,8,0,0,0,0-16Zm64,48a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16h8V88a8,8,0,0,1,12.8-6.4L96,120V88a8,8,0,0,1,12.8-6.4l38.74,29.05L159.1,29.74A16.08,16.08,0,0,1,174.94,16h18.12A16.08,16.08,0,0,1,208.9,29.74l15,105.13s.08.78.08,1.13v72h8A8,8,0,0,1,240,216Zm-77.86-94.4,8.53,6.4h36.11L193.06,32H174.94ZM48,208H208V144H168a8,8,0,0,1-4.8-1.6l-14.4-10.8,0,0L112,104v32a8,8,0,0,1-12.8,6.4L48,104Z\"/>","scales":"<path d=\"M239.43,133l-32-80h0a8,8,0,0,0-9.16-4.84L136,62V40a8,8,0,0,0-16,0V65.58L54.26,80.19A8,8,0,0,0,48.57,85h0v.06L16.57,165a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32a7.92,7.92,0,0,0-.57-3L66.92,93.77,120,82V208H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16H136V78.42L187,67.1,160.57,133a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32A7.92,7.92,0,0,0,239.43,133ZM56,184c-7.53,0-22.76-3.61-23.93-14.64L56,109.54l23.93,59.82C78.76,180.39,63.53,184,56,184Zm144-32c-7.53,0-22.76-3.61-23.93-14.64L200,77.54l23.93,59.82C222.76,148.39,207.53,152,200,152Z\"/>","train-regional":"<path d=\"M223.72,117.9,201.33,35.79A16,16,0,0,0,185.89,24H70.11A16,16,0,0,0,54.67,35.79L32.28,117.9a8.08,8.08,0,0,0,0,4.2l22.39,82.11A16,16,0,0,0,70.11,216H80L65.6,235.2a8,8,0,1,0,12.8,9.6L100,216h56l21.6,28.8a8,8,0,1,0,12.8-9.6L176,216h9.89a16,16,0,0,0,15.44-11.79l22.39-82.11A8.08,8.08,0,0,0,223.72,117.9ZM70.11,40H185.89L206,113.69l-78,14.18L50,113.69Zm-19,90.14L120,142.68V200H70.11ZM185.89,200H136V142.68l68.94-12.54ZM88,88a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H96A8,8,0,0,1,88,88Z\"/>","globe-hemisphere-west":"<path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm88,104a87.62,87.62,0,0,1-6.4,32.94l-44.7-27.49a15.92,15.92,0,0,0-6.24-2.23l-22.82-3.08a16.11,16.11,0,0,0-16,7.86h-8.72l-3.8-7.86a15.91,15.91,0,0,0-11-8.67l-8-1.73L96.14,104h16.71a16.06,16.06,0,0,0,7.73-2l12.25-6.76a16.62,16.62,0,0,0,3-2.14l26.91-24.34A15.93,15.93,0,0,0,166,49.1l-.36-.65A88.11,88.11,0,0,1,216,128ZM143.31,41.34,152,56.9,125.09,81.24,112.85,88H96.14a16,16,0,0,0-13.88,8l-8.73,15.23L63.38,84.19,74.32,58.32a87.87,87.87,0,0,1,69-17ZM40,128a87.53,87.53,0,0,1,8.54-37.8l11.34,30.27a16,16,0,0,0,11.62,10l21.43,4.61L96.74,143a16.09,16.09,0,0,0,14.4,9h1.48l-7.23,16.23a16,16,0,0,0,2.86,17.37l.14.14L128,205.94l-1.94,10A88.11,88.11,0,0,1,40,128Zm102.58,86.78,1.13-5.81a16.09,16.09,0,0,0-4-13.9,1.85,1.85,0,0,1-.14-.14L120,174.74,133.7,144l22.82,3.08,45.72,28.12A88.18,88.18,0,0,1,142.58,214.78Z\"/>","leaf":"<path d=\"M223.45,40.07a8,8,0,0,0-7.52-7.52C139.8,28.08,78.82,51,52.82,94a87.09,87.09,0,0,0-12.76,49c.57,15.92,5.21,32,13.79,47.85l-19.51,19.5a8,8,0,0,0,11.32,11.32l19.5-19.51C81,210.73,97.09,215.37,113,215.94q1.67.06,3.33.06A86.93,86.93,0,0,0,162,203.18C205,177.18,227.93,116.21,223.45,40.07ZM153.75,189.5c-22.75,13.78-49.68,14-76.71.77l88.63-88.62a8,8,0,0,0-11.32-11.32L65.73,179c-13.19-27-13-54,.77-76.71,22.09-36.47,74.6-56.44,141.31-54.06C210.2,114.89,190.22,167.41,153.75,189.5Z\"/>","grains":"<path d=\"M208,56a87.53,87.53,0,0,0-31.85,6c-14.32-29.7-43.25-44.46-44.57-45.12a8,8,0,0,0-7.16,0c-1.33.66-30.25,15.42-44.57,45.12A87.53,87.53,0,0,0,48,56a8,8,0,0,0-8,8v80a88,88,0,0,0,176,0V64A8,8,0,0,0,208,56ZM120,215.56A72.1,72.1,0,0,1,56,144V128.44A72.1,72.1,0,0,1,120,200Zm0-66.1a88,88,0,0,0-64-37.09V72.44A72.1,72.1,0,0,1,120,144ZM94.15,69.11c9.22-19.21,26.41-31.33,33.85-35.9,7.44,4.58,24.63,16.7,33.84,35.9A88.61,88.61,0,0,0,128,107.36,88.57,88.57,0,0,0,94.15,69.11ZM200,144a72.1,72.1,0,0,1-64,71.56V200a72.1,72.1,0,0,1,64-71.56Zm0-31.63a88,88,0,0,0-64,37.09V144a72.1,72.1,0,0,1,64-71.56Z\"/>","mask-happy":"<path d=\"M217,34.8a15.94,15.94,0,0,0-14.82-1.71C188.15,38.55,159.82,47.71,128,47.71S67.84,38.55,53.79,33.09A16,16,0,0,0,32,48v55.77c0,35.84,9.65,69.65,27.18,95.18,18.16,26.46,42.6,41,68.82,41s50.66-14.57,68.82-41C214.35,173.44,224,139.63,224,103.79V48A16,16,0,0,0,217,34.8Zm-9,69c0,32.64-8.66,63.23-24.37,86.13C168.54,211.9,148.79,224,128,224s-40.54-12.1-55.63-34.08C56.66,167,48,136.43,48,103.79V48c15.11,5.87,45.58,15.71,80,15.71S192.9,53.87,208,48v55.81Zm-18,18.87A8,8,0,1,1,178,133.33c-2.68-3-8.85-5.33-14-5.33s-11.36,2.34-14,5.33A8,8,0,1,1,138,122.66c5.71-6.38,16.14-10.66,26-10.66S184.25,116.28,190,122.66ZM92,128c-5.19,0-11.36,2.34-14,5.33A8,8,0,1,1,66,122.66C71.75,116.28,82.18,112,92,112s20.25,4.28,26,10.66A8,8,0,1,1,106,133.33C103.36,130.34,97.19,128,92,128Zm76.45,45.19a52.9,52.9,0,0,1-80.9,0A8,8,0,1,1,99.72,162.8a36.89,36.89,0,0,0,56.56,0,8,8,0,0,1,12.17,10.39Z\"/>","share-network":"<path d=\"M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z\"/>","chat-circle":"<path d=\"M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z\"/>","thumbs-up":"<path d=\"M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z\"/>","thumbs-down":"<path d=\"M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z\"/>","x":"<path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/>","magnifying-glass":"<path d=\"M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z\"/>","link":"<path d=\"M240,88.23a54.43,54.43,0,0,1-16,37L189.25,160a54.27,54.27,0,0,1-38.63,16h-.05A54.63,54.63,0,0,1,96,119.84a8,8,0,0,1,16,.45A38.62,38.62,0,0,0,150.58,160h0a38.39,38.39,0,0,0,27.31-11.31l34.75-34.75a38.63,38.63,0,0,0-54.63-54.63l-11,11A8,8,0,0,1,135.7,59l11-11A54.65,54.65,0,0,1,224,48,54.86,54.86,0,0,1,240,88.23ZM109,185.66l-11,11A38.41,38.41,0,0,1,70.6,208h0a38.63,38.63,0,0,1-27.29-65.94L78,107.31A38.63,38.63,0,0,1,144,135.71a8,8,0,0,0,16,.45A54.86,54.86,0,0,0,144,96a54.65,54.65,0,0,0-77.27,0L32,130.75A54.62,54.62,0,0,0,70.56,224h0a54.28,54.28,0,0,0,38.64-16l11-11A8,8,0,0,0,109,185.66Z\"/>","whatsapp-logo":"<path d=\"M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z\"/>","x-logo":"<path d=\"M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z\"/>","facebook-logo":"<path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z\"/>","linkedin-logo":"<path d=\"M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z\"/>","telegram-logo":"<path d=\"M228.88,26.19a9,9,0,0,0-9.16-1.57L17.06,103.93a14.22,14.22,0,0,0,2.43,27.21L72,141.45V200a15.92,15.92,0,0,0,10,14.83,15.91,15.91,0,0,0,17.51-3.73l25.32-26.26L165,220a15.88,15.88,0,0,0,10.51,4,16.3,16.3,0,0,0,5-.79,15.85,15.85,0,0,0,10.67-11.63L231.77,35A9,9,0,0,0,228.88,26.19Zm-61.14,36L78.15,126.35l-49.6-9.73ZM88,200V152.52l24.79,21.74Zm87.53,8L92.85,135.5l119-85.29Z\"/>","arrow-right":"<path d=\"M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z\"/>","arrow-left":"<path d=\"M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z\"/>","check":"<path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/>","flag":"<path d=\"M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z\"/>","image":"<path d=\"M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z\"/>"};
 
 const P=window.PROGRAMA,props=P.propuestas,blocks=P.bloques;
 const byId=Object.fromEntries(props.map(p=>[p.id,p]));
 const blockBy=Object.fromEntries(blocks.map(b=>[b.nombre,b]));
 const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])).replace(/(\d) (?=[€%])/g,"$1\u00a0");
 const ic=n=>`<svg class="ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[n]||""}</svg>`;
 const nf=new Intl.NumberFormat("es-ES",{useGrouping:"always"});
 const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
-const colorOf=p=>(blockBy[p.block]||{}).color||"#6b51a1";
+const TONES=["#ff6ab5","#2ee6a6"],blockIdx=Object.fromEntries(blocks.map((b,i)=>[b.nombre,i]));
+const colorOf=p=>TONES[(blockIdx[p.block]||0)%2];
 const iconOf=p=>(blockBy[p.block]||{}).icono||"check";
 
 // ───────── Almacenamiento local seguro ─────────
@@ -410,7 +621,7 @@ let VOTER=ls.get("epf-voter");
 if(!/^[0-9a-f-]{36}$/.test(VOTER||"")){VOTER=uuid();ls.set("epf-voter",VOTER)}
 
 // ───────── Estado ─────────
-const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:"Todas",q:"",sort:"prog",rank:"apoyo"};
+const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:"Todas",q:"",sort:"prog",rank:"apoyo",just:null};
 const tot=id=>S.totals[id]||{up:0,down:0};
 const comsOf=id=>S.comments[id]||[];
 
@@ -457,7 +668,12 @@ async function load(){
  renderAll();
 }
 function banner(html){$("bannerText").innerHTML=html;$("banner").classList.toggle("on",!!html)}
-let toastT;function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),3800)}
+let toastT;function toast(m){const t=$("toast");t.textContent=m;try{if(t.showPopover){if(t.matches(":popover-open"))t.hidePopover();t.showPopover()}}catch(e){}
+ t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>{t.classList.remove("on");setTimeout(()=>{try{if(!t.classList.contains("on")&&t.hidePopover)t.hidePopover()}catch(e){}},300)},4600)}
+
+// ───────── Cifras y tablas ─────────
+const datosHTML=(p,max,cls)=>p.datos&&p.datos.length?`<ul class="datos${cls||""}">${p.datos.slice(0,max||99).map(d=>`<li><b>${esc(d[0])}</b><span>${esc(d[1])}</span></li>`).join("")}</ul>`:"";
+const tablasHTML=p=>(p.tablas||[]).map(t=>`<table class="tbl${t.r.some(r=>String(r[r.length-1]).length>22)?" txt":""}"><caption>${esc(t.t)}</caption><thead><tr>${t.h.map(x=>`<th scope="col">${esc(x)}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table>`).join("");
 
 // ───────── Votos ─────────
 function voteBox(id){
@@ -465,7 +681,8 @@ function voteBox(id){
  return `<div class="vb" data-vb="${id}">
 <div class="bar${n?"":" empty-bar"}" role="img" aria-label="${n?`${p} % de apoyo con ${n} ${n===1?"voto":"votos"}`:"Sin votos todavía"}"><span style="width:${p}%"></span></div>
 <div class="vb-meta"><span>${n?`<b>${p} %</b> de apoyo`:"Sin votos todavía"}</span><span>${n?`${nf.format(n)} ${n===1?"voto":"votos"}`:""}</span></div>
-<div class="vb-btns"><button type="button" class="v up${m===1?" on":""}" data-act="vote" data-id="${id}" data-v="1" aria-pressed="${m===1}">${ic("thumbs-up")}De acuerdo <b>${nf.format(t.up)}</b></button><button type="button" class="v down${m===-1?" on":""}" data-act="vote" data-id="${id}" data-v="-1" aria-pressed="${m===-1}">${ic("thumbs-down")}En contra <b>${nf.format(t.down)}</b></button></div></div>`;
+<div class="vb-btns"><button type="button" class="v up${m===1?" on":""}" data-act="vote" data-id="${id}" data-v="1" aria-pressed="${m===1}">${ic("thumbs-up")}De acuerdo <b>${nf.format(t.up)}</b></button><button type="button" class="v down${m===-1?" on":""}" data-act="vote" data-id="${id}" data-v="-1" aria-pressed="${m===-1}">${ic("thumbs-down")}En contra <b>${nf.format(t.down)}</b></button></div>
+${m&&S.just===id?`<div class="nudge"><span>${m===1?"Has votado a favor.":"Has votado en contra."} ¿Y ahora?</span><button type="button" data-act="open" data-id="${id}" data-to="coms">${ic("chat-circle")}Di por qué</button><button type="button" data-act="share" data-id="${id}">${ic("share-network")}Compártela</button></div>`:""}</div>`;
 }
 function refreshVotes(id){
  const a=document.activeElement;
@@ -479,7 +696,7 @@ async function vote(id,v){
  if(!S.ready){toast("Sin conexión con el servidor de votos.");return false}
  const prev=S.mine[id]||0,nv=prev===v?0:v,old={...tot(id)},t={...old};
  if(prev===1)t.up--;if(prev===-1)t.down--;if(nv===1)t.up++;if(nv===-1)t.down++;
- S.totals[id]=t;if(nv)S.mine[id]=nv;else delete S.mine[id];refreshVotes(id);
+ S.totals[id]=t;if(nv)S.mine[id]=nv;else delete S.mine[id];S.just=nv&&!$("quiz").open?id:null;refreshVotes(id);
  try{const r=await api.vote(id,nv);if(r&&remote){S.totals[id]={up:r.up||0,down:r.down||0};refreshVotes(id)}return true}
  catch(e){S.totals[id]=old;if(prev)S.mine[id]=prev;else delete S.mine[id];refreshVotes(id);toast(errMsg(e));return false}
 }
@@ -497,23 +714,23 @@ function renderMe(){
  $("ringFg").style.strokeDashoffset=L*(1-c.n/props.length);$("ringN").textContent=c.n;$("ringOf").textContent=`de ${props.length} votadas`;
  $("ballotSplit").innerHTML=c.n?`<span>${ic("thumbs-up")} ${c.up} de acuerdo</span><span>${ic("thumbs-down")} ${c.down} en contra</span>`:"Aún no has votado ninguna medida";
  const label=c.n===0?"Empezar a votar":c.n<props.length?"Seguir votando":"Ver mi resultado";
- $("ballotBtn").textContent=label;$("ctaMain").textContent=c.n===0?"Vota el programa":label;
+ $("ballotBtn").textContent=label;$("dockN").textContent=`${c.n}/${props.length}`;$("dockBar").style.width=c.n/props.length*100+"%";$("dockBtn").textContent=c.n===0?"Votar":c.n<props.length?"Seguir":"Mi resultado";$("ctaMain").textContent=c.n===0?"Vota el programa":label;
 }
 function renderFeats(){
- const tones=["#5d36ad","#126a55"];
+ const tones=["#d92b85","#0b9468"];
  $("feats").innerHTML=(P.destacadas||[]).map(id=>byId[id]).filter(Boolean).map((p,i)=>`<article class="feat" style="--c:${tones[i%2]}">
-<svg class="ic ic-big" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg><span class="feat-n">${String(i+1).padStart(2,"0")}</span>
+<svg class="ic ic-big" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg>${p.datos&&p.datos[0]?`<span class="feat-n">${esc(p.datos[0][0])}</span><span class="feat-l">${esc(p.datos[0][1])}</span>`:`<span class="feat-n">${String(i+1).padStart(2,"0")}</span>`}
 <h3>${esc(p.title)}</h3><p class="feat-b">${esc(p.block)}</p>
 <button type="button" data-act="open" data-id="${p.id}">Ver y votar ${ic("arrow-right")}</button></article>`).join("");
 }
 function renderChips(){
  const counts={};props.forEach(p=>counts[p.block]=(counts[p.block]||0)+1);
- const chip=(name,n,b)=>`<button type="button" class="chip" data-act="chip" data-b="${esc(name)}" aria-pressed="${S.filter===name}"${b?` style="--c:${b.color}"`:""}>${b?ic(b.icono):""}${esc(name)} <small>${n}</small></button>`;
+ const chip=(name,n,b)=>`<button type="button" class="chip" data-act="chip" data-b="${esc(name)}" aria-pressed="${S.filter===name}"${b?` style="--c:${colorOf({block:b.nombre})}"`:""}>${b?ic(b.icono):""}${esc(name)} <small>${n}</small></button>`;
  $("chips").innerHTML=chip("Todas",props.length)+blocks.filter(b=>counts[b.nombre]).map(b=>chip(b.nombre,counts[b.nombre],b)).join("");
 }
 function visible(){
  const q=norm(S.q.trim());
- let list=props.filter(p=>(S.filter==="Todas"||p.block===S.filter)&&(!q||norm([p.title,p.desc,p.goal,p.block].join(" ")).includes(q)));
+ let list=props.filter(p=>(S.filter==="Todas"||p.block===S.filter)&&(!q||norm([p.title,p.desc,p.goal||"",p.block,(p.measures||[]).join(" "),(p.datos||[]).join(" ")].join(" ")).includes(q)));
  const net=p=>{const t=tot(p.id),n=t.up+t.down;return n?t.up/n:-1};
  if(S.sort==="apoyo")list=[...list].sort((a,b)=>net(b)-net(a)||tot(b.id).up-tot(a.id).up);
  if(S.sort==="votos")list=[...list].sort((a,b)=>tot(b.id).up+tot(b.id).down-tot(a.id).up-tot(a.id).down);
@@ -522,14 +739,16 @@ function visible(){
 }
 function card(p){
  const n=comsOf(p.id).length;
- return `<article class="card" style="--c:${colorOf(p)}"><span class="blk">${ic(iconOf(p))}${esc(p.block)}</span>
-<h3><button type="button" data-act="open" data-id="${p.id}">${esc(p.title)}</button></h3><p class="clamp">${esc(p.desc)}</p>
-${voteBox(p.id)}
+ const cs=comsOf(p.id);
+ return `<article class="card" style="--c:${colorOf(p)}"><svg class="card-ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg><span class="blk">${ic(iconOf(p))}${esc(p.block)}</span>
+<h3><button type="button" data-act="open" data-id="${p.id}">${esc(p.title)}</button></h3><p class="clamp">${esc(p.desc)}</p>${datosHTML(p,2)}
+${voteBox(p.id)}${n?`<p class="quote"><b>${esc(cs[0].alias)}:</b> ${esc(cs[0].body)}</p>`:""}
 <div class="card-foot"><button type="button" class="ghost" data-act="open" data-id="${p.id}" data-to="coms">${ic("chat-circle")}${n?`${n} ${n===1?"opinión":"opiniones"}`:"Opinar"}</button><button type="button" class="ghost" data-act="share" data-id="${p.id}">${ic("share-network")}Compartir</button></div></article>`;
 }
 function renderGrid(){
  const list=visible();
- $("grid").innerHTML=list.map(card).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Ver todas las medidas</button></div>`;
+ const grouped=S.filter==="Todas"&&!S.q.trim()&&S.sort==="prog";let last=null;
+ $("grid").innerHTML=list.map(p=>{let hd="";if(grouped&&p.block!==last){last=p.block;const n=props.filter(x=>x.block===p.block).length;hd=`<h3 class="grid-h" style="--c:${colorOf(p)}">${ic(iconOf(p))}${esc(p.block)}<small>${n} medidas</small></h3>`}return hd+card(p)}).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Ver todas las medidas</button></div>`;
 }
 function renderRank(){
  const rows=props.map(p=>({p,t:tot(p.id)})).filter(r=>r.t.up+r.t.down>0);
@@ -546,7 +765,11 @@ function renderAll(){renderStats();renderMe();renderFeats();renderChips();render
 // ───────── Compartir ─────────
 const onWeb=/^https?:$/.test(location.protocol)&&!["localhost","127.0.0.1"].includes(location.hostname);
 const baseUrl=()=>location.href.split("#")[0].split("?")[0].replace(/index\.html$/,"");
-const urlOf=id=>onWeb?(id?`${baseUrl()}medida/${id}/`:baseUrl()):"";
+// En local (pruebas) se usa la dirección pública declarada en <link rel="canonical">.
+const CANON=(document.querySelector('link[rel="canonical"]')||{}).href||"";
+const siteUrl=()=>onWeb?baseUrl():CANON;
+const urlOf=id=>siteUrl()?(id?`${siteUrl()}medida/${id}/`:siteUrl()):"";
+const shortUrl=()=>siteUrl().replace(/^https?:\/\//,"").replace(/\/$/,"");
 function shareLinks(text,url){
  const t=encodeURIComponent(text),u=encodeURIComponent(url),tu=encodeURIComponent(text+" "+url);
  return `<a class="sh wa" href="https://wa.me/?text=${tu}" target="_blank" rel="noopener noreferrer">${ic("whatsapp-logo")}WhatsApp</a>
@@ -558,28 +781,54 @@ function shareLinks(text,url){
 const shareText=p=>`«${p.title}». ¿Estás de acuerdo? Vota aquí:`;
 function shareBlock(p){
  const url=urlOf(p.id);
- return `<div class="share">${url?shareLinks(shareText(p),url)+`<button type="button" class="sh" data-act="copy" data-id="${p.id}">${ic("link")}Copiar enlace</button>`:""}
+ return `<div class="share"><button type="button" class="sh ig" data-act="hub" data-k="m" data-id="${p.id}">${ic("instagram-logo")}Instagram</button>${url?shareLinks(shareText(p),url)+`<button type="button" class="sh" data-act="copy" data-id="${p.id}">${ic("link")}Copiar enlace</button>`:""}
 <button type="button" class="sh" data-act="img" data-id="${p.id}">${ic("image")}Descargar imagen</button></div>
 ${url?"":'<p class="note">Los enlaces para redes aparecerán cuando la página esté publicada en internet.</p>'}`;
 }
 async function copy(text){
  try{await navigator.clipboard.writeText(text)}catch(e){const f=document.createElement("textarea");f.value=text;f.style.cssText="position:fixed;opacity:0";(document.querySelector("dialog[open]")||document.body).appendChild(f);f.select();const ok=document.execCommand("copy");f.remove();if(!ok)throw e}
 }
-async function nativeShare(p){
- const url=urlOf(p.id);
- if(navigator.share&&url){try{await navigator.share({title:p.title,text:shareText(p),url})}catch(e){}return}
- openDetail(p.id,"share");
+
+// ───────── Centro de compartir (web, medida o resultado) ─────────
+const webText=()=>`${props.length} medidas para que España funcione. Vota cada una y di lo que piensas:`;
+function shareCtx(k,id){
+ if(k==="m"){const p=byId[id],url=urlOf(id);return {k,h:"Comparte esta medida",sub:p.title,text:shareText(p),url,name:id,
+  story:()=>drawStory({tag:p.block,title:p.title,desc:p.desc,stat:p.datos&&p.datos[0],cta:"¿Estás de acuerdo? Vota.",btns:true}),post:()=>drawCard(p,"post")}}
+ if(k==="res"){const c=myCounts(),pct=c.n?Math.round(c.up/c.n*100):0,url=urlOf("");return {k,h:"Comparte tu resultado",sub:`Coincides con el ${pct} % de las medidas que has votado.`,
+  text:`He votado el programa «${CONFIG.titulo}» y estoy de acuerdo con el ${pct} % de las medidas. ¿Y tú?`,url,name:"mi-resultado",
+  story:()=>drawStory({tag:CONFIG.titulo,big:pct+" %",title:"de acuerdo con el programa",desc:`He votado ${c.n} de ${props.length} medidas.`,cta:"¿Y tú? Vota."}),post:()=>drawResult(pct,c.n)}}
+ const web={title:CONFIG.titulo+".",desc:`${props.length} medidas concretas, abiertas a tu voto. Vótalas una a una y deja tu opinión.`,block:"Programa abierto",cta:"Entra y vota."};
+ return {k:"web",h:"Comparte la web",sub:"Cuanta más gente vote, más dicen los resultados.",text:webText(),url:urlOf(""),name:"espana-puede-funcionar",
+  story:()=>drawStory({tag:web.block,title:web.title,stat:[String(props.length),"medidas concretas, abiertas a tu voto"],cta:web.cta,btns:true}),post:()=>drawCard(web,"post")};
+}
+const HUB={cur:null,canvas:null};
+async function openHub(k,id){
+ const s=HUB.cur=shareCtx(k,id),d=$("compartir");HUB.canvas=null;
+ d.innerHTML=`<div class="hub-in"><div class="hub-prev"><img id="hubImg" alt="Imagen vertical para la historia de Instagram" width="1080" height="1920"></div>
+<div><div class="hub-h"><h2 id="hubT">${esc(s.h)}</h2><button type="button" class="x" data-act="hubclose" aria-label="Cerrar">${ic("x")}</button></div>
+<p class="hub-t">${esc(s.sub)}</p>
+<button type="button" class="sh ig" data-act="ig">${ic("instagram-logo")}Compartir en mi historia de Instagram</button>
+<ol class="steps"><li>Se abre o se descarga la <b>imagen</b> y se copia el <b>enlace</b>.</li><li>Súbela a tu historia.</li><li>Añade el sticker <b>«Enlace»</b> y pega la dirección.</li></ol>
+<div class="share">${s.url?shareLinks(s.text,s.url)+`<button type="button" class="sh" data-act="hubcopy">${ic("link")}Copiar enlace</button>`:""}<button type="button" class="sh" data-act="hubpost">${ic("image")}Imagen 4:5</button></div></div></div>`;
+ if(!d.open)d.showModal();
+ try{const c=await s.story();if(HUB.cur===s){HUB.canvas=c;$("hubImg").src=c.toDataURL("image/jpeg",.85)}}catch(e){}
+}
+async function shareIG(){
+ const s=HUB.cur;if(!s)return;
+ try{const c=HUB.canvas||(HUB.canvas=await s.story());let copied=false;try{await copy(s.url);copied=true}catch(e){}
+  await saveCanvas(c,s.name+"-historia.png",CONFIG.titulo,(copied?"Enlace copiado. ":"")+"Sube la imagen a tu historia y pega la dirección en el sticker «Enlace».");
+ }catch(x){toast("No se pudo crear la imagen.")}
 }
 
 // ───────── Tarjetas-imagen (canvas) ─────────
 function wrapText(ctx,text,maxW){const out=[];let line="";for(const w of text.split(/\s+/)){const t=line?line+" "+w:w;if(ctx.measureText(t).width>maxW&&line){out.push(line);line=w}else line=t}if(line)out.push(line);return out}
 function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function cardBg(ctx,W,H){
- ctx.fillStyle="#15122b";ctx.fillRect(0,0,W,H);
+ ctx.fillStyle="#100a1c";ctx.fillRect(0,0,W,H);
  const glow=(x,y,r,c)=>{const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,c);g.addColorStop(1,"rgba(0,0,0,0)");ctx.fillStyle=g;ctx.fillRect(0,0,W,H)};
- glow(W*.08,-H*.05,Math.max(W,H)*.62,"rgba(165,110,240,.62)");glow(W*.95,-H*.05,Math.max(W,H)*.62,"rgba(60,200,160,.5)");
+ glow(W*.05,-H*.05,Math.max(W,H)*.62,"rgba(255,79,168,.66)");glow(W*.95,-H*.05,Math.max(W,H)*.62,"rgba(46,230,166,.52)");
 }
-function grad(ctx,x,w){const g=ctx.createLinearGradient(x,0,x+w,0);g.addColorStop(0,"#c9a8f5");g.addColorStop(1,"#5fd6b0");return g}
+function grad(ctx,x,w){const g=ctx.createLinearGradient(x,0,x+w,0);g.addColorStop(0,"#ff8ecb");g.addColorStop(1,"#2ee6a6");return g}
 const DF='"Bricolage Grotesque",system-ui,sans-serif',BF='system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
 async function fontsReady(){try{await Promise.all([document.fonts.load('700 60px "Bricolage Grotesque"'),document.fonts.load('600 30px "Bricolage Grotesque"')])}catch(e){}}
 function fitTitle(ctx,text,maxW,sizes,maxLines){for(const s of sizes){ctx.font=`700 ${s}px ${DF}`;const l=wrapText(ctx,text,maxW);if(l.length<=maxLines)return {s,l}}const s=sizes[sizes.length-1];ctx.font=`700 ${s}px ${DF}`;const l=wrapText(ctx,text,maxW).slice(0,maxLines);l[maxLines-1]+="…";return {s,l}}
@@ -596,7 +845,7 @@ async function drawCard(p,fmt){
  const footH=og?120:250,avail=H-M-footH-y;
  const ft=fitTitle(ctx,p.title,W-2*M,og?[68,60,52,46]:[92,82,72,64,56],og?4:7);
  ctx.fillStyle="#fff";ft.l.forEach((l,i)=>ctx.fillText(l,M,y+i*ft.s*1.08));y+=ft.l.length*ft.s*1.08+(og?18:34);
- if(p.desc){const ds=og?27:36,lh=ds*1.42;ctx.font=`400 ${ds}px ${BF}`;ctx.fillStyle="#d3cee2";
+ if(p.desc){const ds=og?27:36,lh=ds*1.42;ctx.font=`400 ${ds}px ${BF}`;ctx.fillStyle="#e6dff0";
   let lines=wrapText(ctx,p.desc,W-2*M);const maxL=Math.max(0,Math.floor((H-M-footH-y)/lh));
   if(lines.length>maxL){lines=lines.slice(0,maxL);if(maxL)lines[maxL-1]=lines[maxL-1].replace(/[\s,.;:]+\S*$/,"")+"…"}
   lines.forEach((l,i)=>ctx.fillText(l,M,y+i*lh))}
@@ -617,13 +866,42 @@ async function drawResult(pct,n){
  if(onWeb){ctx.font=`500 30px ${BF}`;ctx.fillStyle="#aba5c0";ctx.fillText(location.host+location.pathname.replace(/\/(index\.html)?$/,""),M,1228,W-2*M)}
  return c;
 }
-async function saveCanvas(c,name,title){
+// Historia de Instagram (1080×1920). Deja libres las franjas superior e inferior que tapa la interfaz de Instagram.
+async function drawStory(o){
+ await fontsReady();
+ const W=1080,H=1920,M=90,c=document.createElement("canvas");c.width=W;c.height=H;const ctx=c.getContext("2d");cardBg(ctx,W,H);ctx.textBaseline="top";
+ let y=270;
+ const tag=(o.tag||CONFIG.titulo).toUpperCase();ctx.font=`600 30px ${DF}`;try{ctx.letterSpacing="1.5px"}catch(e){}
+ const tw=ctx.measureText(tag).width;ctx.fillStyle="rgba(255,255,255,.16)";rr(ctx,M,y,Math.min(tw+48,W-2*M),62,31);ctx.fill();
+ ctx.fillStyle="#fff";ctx.fillText(tag,M+24,y+15,W-2*M-48);try{ctx.letterSpacing="0px"}catch(e){}
+ y+=62+64;
+ const footY=o.btns?1210:1330;
+ if(o.big){ctx.font=`750 330px ${DF}`;ctx.fillStyle=grad(ctx,M,700);ctx.fillText(o.big,M-8,y-20);y+=350}
+ if(o.stat){let fs=210;ctx.font=`750 ${fs}px ${DF}`;const w=ctx.measureText(o.stat[0]).width;if(w>W-2*M){fs=Math.floor(fs*(W-2*M)/w);ctx.font=`750 ${fs}px ${DF}`}
+  ctx.fillStyle=grad(ctx,M,Math.min(w,W-2*M));ctx.fillText(o.stat[0],M-4,y-10);y+=fs*1.02;
+  ctx.font=`500 40px ${BF}`;ctx.fillStyle="#fff";wrapText(ctx,o.stat[1],W-2*M).slice(0,2).forEach((l,i)=>ctx.fillText(l,M,y+i*54));y+=54*Math.min(2,wrapText(ctx,o.stat[1],W-2*M).length)+46}
+ const ft=fitTitle(ctx,o.title,W-2*M,o.big?[92,80]:o.stat?[84,76,68,60,54]:[112,100,90,80,70,62],o.big?3:o.stat?6:7);
+ ctx.fillStyle="#fff";ft.l.forEach((l,i)=>ctx.fillText(l,M,y+i*ft.s*1.08));y+=ft.l.length*ft.s*1.08+40;
+ if(o.desc){const ds=40,lh=ds*1.42;ctx.font=`400 ${ds}px ${BF}`;ctx.fillStyle="#e6dff0";
+  let lines=wrapText(ctx,o.desc,W-2*M);const maxL=Math.max(0,Math.min(6,Math.floor((footY-30-y)/lh)));
+  if(lines.length>maxL){lines=lines.slice(0,maxL);if(maxL)lines[maxL-1]=lines[maxL-1].replace(/[\s,.;:]+\S*$/,"")+"…"}
+  lines.forEach((l,i)=>ctx.fillText(l,M,y+i*lh))}
+ y=footY;
+ if(o.btns){const bw=(W-2*M-30)/2,bh=120;
+  [["De acuerdo","#2ee6a6","#06281c"],["En contra","#ff4fa8","#2a0518"]].forEach(([t,bg,fg],i)=>{const x=M+i*(bw+30);ctx.fillStyle=bg;rr(ctx,x,y,bw,bh,28);ctx.fill();
+   ctx.font=`700 46px ${DF}`;ctx.fillStyle=fg;ctx.fillText(t,x+(bw-ctx.measureText(t).width)/2,y+36)});
+  y+=bh+56}
+ ctx.font=`700 76px ${DF}`;ctx.fillStyle=grad(ctx,M,820);ctx.fillText(o.cta||"Entra y vota.",M,y,W-2*M);y+=118;
+ const u=shortUrl();if(u){ctx.font=`600 34px ${BF}`;const uw=Math.min(ctx.measureText(u).width+64,W-2*M);ctx.fillStyle="#fff";rr(ctx,M,y,uw,78,39);ctx.fill();ctx.fillStyle="#14061a";ctx.fillText(u,M+32,y+21,uw-64)}
+ return c;
+}
+async function saveCanvas(c,name,title,msg){
  const blob=await new Promise(r=>c.toBlob(r,"image/png"));
  const file=new File([blob],name,{type:"image/png"});
- if(navigator.canShare&&navigator.canShare({files:[file]})&&matchMedia("(pointer:coarse)").matches){try{await navigator.share({files:[file],title});return}catch(e){if(e.name==="AbortError")return}}
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;(document.querySelector("dialog[open]")||document.body).appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast("Imagen descargada.");
+ if(navigator.canShare&&navigator.canShare({files:[file]})&&matchMedia("(pointer:coarse)").matches){try{await navigator.share({files:[file],title});if(msg)toast(msg);return}catch(e){if(e.name==="AbortError")return}}
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;(document.querySelector("dialog[open]")||document.body).appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast(msg?"Imagen descargada. "+msg:"Imagen descargada.");
 }
-window.EPF={drawCard,drawResult,props};
+window.EPF={drawCard,drawResult,drawStory,props};
 
 // ───────── Detalle de una medida ─────────
 const fdate=s=>{try{return new Date(s).toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"})}catch(e){return ""}};
@@ -639,9 +917,11 @@ function openDetail(id,to){
  d.style.setProperty("--c",colorOf(p));
  d.innerHTML=`<div class="sheet-top"><span class="blk">${ic(iconOf(p))}${esc(p.block)}</span><button type="button" class="x" data-act="close" aria-label="Cerrar">${ic("x")}</button></div>
 <div class="sheet-body"><h2 id="dT">${esc(p.title)}</h2><p>${esc(p.desc)}</p>
-<div class="box goal"><h3>Objetivo</h3><p>${esc(p.goal)}</p></div>
-${p.decision?`<div class="box dec"><h3>Decisión acordada</h3><p>${esc(p.decision.replace(/^Decisión política aprobada:\s*/i,"").replace(/^./,c=>c.toUpperCase()))}</p>${p.measures?`<ul>${p.measures.map(m=>`<li>${esc(m)}</li>`).join("")}</ul>`:""}</div>`:""}
-${p.pending?`<div class="box pen"><h3>Pendiente de auditoría jurídica o económica</h3><p>${esc(p.pending)}</p></div>`:p.detail?`<div class="box pen"><h3>Aspectos a desarrollar</h3><p>${esc(p.detail)}</p></div>`:""}
+${datosHTML(p,0," big")}
+${p.goal?`<div class="box goal"><h3>Objetivo</h3><p>${esc(p.goal)}</p></div>`:""}
+${tablasHTML(p)}
+${p.measures?`<div class="box dec"><h3>Qué incluye</h3><ul>${p.measures.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>`:""}
+${p.pending?`<div class="box pen"><h3>Pendiente de concretar</h3><p>${esc(p.pending)}</p></div>`:p.detail?`<div class="box pen"><h3>Aspectos a desarrollar</h3><p>${esc(p.detail)}</p></div>`:""}
 ${voteBox(id)}
 <h3 class="sub" id="dShare">Compartir esta medida</h3>${shareBlock(p)}
 <h3 class="sub" id="dComs">Opiniones (<span id="dComsN">${comsOf(id).length}</span>)</h3><div id="dComsList">${comsHTML(id)}</div>
@@ -667,7 +947,7 @@ async function submitComment(form){
  try{
   await api.comment(id,alias,body);ls.set("epf-alias",alias);
   (S.pending[id]=S.pending[id]||[]).push({id:"n"+Date.now(),p:id,alias,body,at:new Date().toISOString()});
-  form.body.value="";$("dComsList").innerHTML=comsHTML(id);msg.className="form-msg ok";msg.textContent="Recibida. Se publicará cuando se revise.";
+  form.body.value="";$("dComsList").innerHTML=comsHTML(id);msg.className="form-msg ok";msg.innerHTML=`Recibida. Se publicará cuando se revise. <button type="button" class="link" data-act="share" data-id="${id}">Mientras tanto, comparte la medida</button>`;
  }catch(e){fail(errMsg(e))}
  btn.disabled=false;
 }
@@ -681,7 +961,7 @@ function renderQuiz(){
  if(Q.i>=Q.list.length)return renderResult();
  const p=byId[Q.list[Q.i]];
  box.innerHTML=quizTop(c.n,props.length)+`<article class="q-card" style="--c:${colorOf(p)}"><span class="blk" style="--c:${colorOf(p)}">${ic(iconOf(p))}${esc(p.block)}</span>
-<h2 tabindex="-1" id="qT">${esc(p.title)}</h2><p>${esc(p.desc)}</p><p class="goal-line"><b>Objetivo:</b> ${esc(p.goal)}</p></article>
+<h2 tabindex="-1" id="qT">${esc(p.title)}</h2><p>${esc(p.desc)}</p>${datosHTML(p,3)}${p.goal?`<p class="goal-line"><b>Objetivo:</b> ${esc(p.goal)}</p>`:""}</article>
 <div class="q-btns"><button type="button" class="v down" data-act="q" data-v="-1">${ic("thumbs-down")}En contra</button><button type="button" class="skipb" data-act="q" data-v="0">Saltar</button><button type="button" class="v up" data-act="q" data-v="1">${ic("thumbs-up")}De acuerdo</button></div>
 <p class="q-hint">Teclado: ← en contra · → de acuerdo · ↓ saltar</p>`;
  $("qT").focus({preventScroll:true});$("quiz").scrollTop=0;
@@ -695,19 +975,25 @@ function renderResult(){
  const url=urlOf(""),text=`He votado el programa «${CONFIG.titulo}» y estoy de acuerdo con el ${pct} % de las medidas. ¿Y tú?`;
  box.innerHTML=quizTop(c.n,props.length)+`<div class="res"><p class="res-n">${pct} %</p><h2 tabindex="-1" id="qT">de acuerdo con el programa</h2>
 <p>Has votado ${c.n} de ${props.length} medidas: ${c.up} a favor y ${c.down} en contra.</p>
-<ul class="res-blocks">${rows.map(r=>`<li><span>${esc(r.b.nombre)}</span><div class="rank-bar"><i class="g" style="width:${r.u/r.n*100}%;background:#5fd6b0"></i></div><span>${r.u}/${r.n}</span></li>`).join("")}</ul>
-<div class="share">${url?shareLinks(text,url):""}<button type="button" class="sh" data-act="resimg" data-pct="${pct}" data-n="${c.n}">${ic("image")}Descargar imagen</button>${left?`<button type="button" class="sh" data-act="quiz">Votar las ${left} que faltan</button>`:""}</div></div>`;
+<ul class="res-blocks">${rows.map(r=>`<li><span>${esc(r.b.nombre)}</span><div class="rank-bar"><i class="g" style="width:${r.u/r.n*100}%"></i></div><span>${r.u}/${r.n}</span></li>`).join("")}</ul>
+<div class="share"><button type="button" class="sh ig" data-act="hub" data-k="res">${ic("instagram-logo")}Instagram</button>${url?shareLinks(text,url):""}<button type="button" class="sh" data-act="resimg" data-pct="${pct}" data-n="${c.n}">${ic("image")}Descargar imagen</button>${left?`<button type="button" class="sh" data-act="quiz">Votar las ${left} que faltan</button>`:""}</div></div>`;
  $("qT").focus({preventScroll:true});
 }
 
 // ───────── Eventos ─────────
 document.addEventListener("click",async e=>{
  const d=e.target.closest("dialog");if(d&&e.target===d&&d.id==="detalle"){closeDetail();return}
+ if(d&&e.target===d&&d.id==="compartir"){d.close();return}
  const el=e.target.closest("[data-act]");if(!el)return;const a=el.dataset.act,id=el.dataset.id;
  if(a==="vote")vote(id,+el.dataset.v);
  else if(a==="open")openDetail(id,el.dataset.to);
  else if(a==="close")closeDetail();
- else if(a==="share")nativeShare(byId[id]);
+ else if(a==="share")openHub("m",id);
+ else if(a==="hub")openHub(el.dataset.k,id);
+ else if(a==="hubclose")$("compartir").close();
+ else if(a==="ig"){el.disabled=true;await shareIG();el.disabled=false}
+ else if(a==="hubcopy"){try{await copy(HUB.cur.url);toast("Enlace copiado.")}catch(x){toast("No se pudo copiar el enlace.")}}
+ else if(a==="hubpost"){el.disabled=true;try{await saveCanvas(await HUB.cur.post(),HUB.cur.name+".png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="copy"){try{await copy(urlOf(id));toast("Enlace copiado.")}catch(x){toast("No se pudo copiar. Copia la dirección desde la barra del navegador.")}}
  else if(a==="img"){el.disabled=true;try{await saveCanvas(await drawCard(byId[id],"post"),id+".png",byId[id].title)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="resimg"){el.disabled=true;try{await saveCanvas(await drawResult(el.dataset.pct,el.dataset.n),"mi-resultado.png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
@@ -728,7 +1014,14 @@ let qT;$("q").addEventListener("input",e=>{clearTimeout(qT);qT=setTimeout(()=>{S
 $("sort").addEventListener("change",e=>{S.sort=e.target.value;renderGrid()});
 
 if(matchMedia("(max-width:520px)").matches)$("q").placeholder="Buscar medidas…";
-renderStats();renderFeats();renderChips();
+function renderSpread(){
+ const url=urlOf("");$("spreadUrl").textContent=shortUrl();
+ $("spreadShare").innerHTML=`<button type="button" class="sh ig" data-act="hub" data-k="web">${ic("instagram-logo")}Historia de Instagram</button>${url?shareLinks(webText(),url):""}`
+  +(CONFIG.instagram?`<a class="sh" href="${esc(CONFIG.instagram)}" target="_blank" rel="noopener noreferrer">${ic("instagram-logo")}Síguenos</a>`:"");
+ const paint=()=>shareCtx("web").story().then(c=>{$("spreadImg").src=c.toDataURL("image/jpeg",.8)}).catch(()=>{});
+ if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();paint()}},{rootMargin:"600px"});io.observe($("difunde"))}else paint();
+}
+renderStats();renderFeats();renderChips();renderSpread();
 load();
 
 </script>

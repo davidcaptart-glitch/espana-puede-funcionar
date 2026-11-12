@@ -23,6 +23,24 @@ CAMBIAR O AÑADIR MEDIDAS
 - Después ejecuta de nuevo generar.js. Una medida nueva usará la imagen de portada como vista previa
   hasta que se cree su imagen en og/.
 - Las seis medidas de "Para empezar" se eligen en la lista "destacadas", al principio de propuestas.js.
+- Cada medida puede llevar, además de título, descripción y objetivo:
+    "datos":    cifras destacadas, por ejemplo [["40.000 €","de salario bruto anual exentos"]].
+                La primera cifra es la que sale en grande en la tarjeta destacada y en la imagen de Instagram.
+    "tablas":   tablas de tramos, por ejemplo [{"t":"Título","h":["Columna 1","Columna 2"],"r":[["a","b"]]}].
+    "measures": la lista "Qué incluye".
+    "pending":  lo que queda "Pendiente de concretar".
+- No inventes cifras: pon solo las que estén aprobadas en el documento del programa.
+
+COMPARTIR E INSTAGRAM
+- El botón "Compartir" (arriba, en la portada, en cada medida y en el resultado) abre un panel con
+  WhatsApp, Telegram, X, Facebook, LinkedIn, copiar enlace y "Compartir en mi historia de Instagram".
+- Instagram no deja publicar enlaces directamente: el botón crea una imagen vertical (1080×1920) y copia
+  la dirección. En el móvil se abre el menú de compartir para elegir Instagram; en el ordenador se descarga.
+  Después se añade el sticker "Enlace" a la historia y se pega la dirección.
+- Para mostrar un botón "Síguenos" con tu perfil, rellena "instagram" en CONFIG, al principio del
+  <script> de index.html. No toques supabaseUrl ni supabaseKey.
+- Las imágenes de vista previa de og/ (las que salen al pegar un enlace en WhatsApp, X, etc.) se
+  generaron con los colores y textos actuales. Si cambias títulos, pide que se regeneren.
 
 VOTOS, OPINIONES Y VISITAS (Supabase, proyecto "espana-puede-funcionar")
 - Los votos y las visitas se cuentan solos.
