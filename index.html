@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="España, un país que puede funcionar">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="España, un país que puede funcionar">
-<meta property="og:description" content="90 medidas abiertas a tu voto. Lee el programa, vota cada propuesta y deja tu opinión.">
+<meta property="og:description" content="90 medidas abiertas a tu voto. Las más votadas se llevarán al Congreso. Vota cada propuesta y deja tu opinión.">
 <meta property="og:url" content="https://davidcaptart-glitch.github.io/espana-puede-funcionar/">
 <meta property="og:image" content="https://davidcaptart-glitch.github.io/espana-puede-funcionar/og/portada.jpg">
 <meta property="og:image:width" content="1200">
@@ -638,6 +638,14 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  .steps3 li{flex-direction:row;align-items:center;gap:8px;padding:9px 12px 9px 46px;flex-wrap:wrap}
  .steps3 li::before{top:50%;transform:translateY(-50%)}
 }
+.claim{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:20px;padding:12px 16px;border-radius:14px;max-width:620px;background:linear-gradient(95deg,rgba(255,79,168,.28),rgba(46,230,166,.24));border:1px solid rgba(255,255,255,.3)}
+.claim b{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dark);background:#fff;border-radius:99px;padding:3px 10px}
+.claim span{color:#fff;font-weight:700;font-size:1.05rem;flex:1 1 220px}
+.claim a{color:#fff;font-weight:600;font-size:.9rem}
+.steps3{margin-top:12px}
+.camino{background:var(--surface);border:1px solid var(--edge);border-radius:16px;padding:18px 22px;margin-bottom:18px}
+.camino h3{font-size:1.1rem;margin-bottom:8px}
+.camino ol{margin:0;padding-left:20px;max-width:85ch}.camino li{margin:6px 0}.camino b{color:#fff}
 </style>
 </head>
 <body>
@@ -663,6 +671,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
    <p class="kicker">Programa político abierto a tu voto</p>
    <h1>España, un país que <em>puede funcionar.</em></h1>
    <p class="hero-lead">Aquí hay <b><span data-n="medidas">90</span> medidas concretas</b> para cambiar cómo funciona el país: impuestos, vivienda, sanidad, empleo… En cada una decides tú: <b class="c-gr">de acuerdo</b> o <b class="c-pk">en contra</b>. Sin registro.</p>
+   <p class="claim"><b>Compromiso</b><span>Las medidas más votadas se llevarán al Congreso.</span><a href="#resultados">Cómo</a></p>
    <ol class="steps3" aria-label="Cómo funciona">
     <li><b>Lee</b><span>una medida y sus cifras</span></li>
     <li><b>Vota</b><span>de acuerdo o en contra</span></li>
@@ -725,9 +734,14 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 
 <section class="sec wrap" id="ranking" data-view="resultados" hidden aria-labelledby="rankT">
  <div class="sec-head">
-  <div><p class="kicker">Resultados en directo</p><h2 id="rankT">Qué opina quien ha votado</h2><p>Votos reales de los visitantes de esta página. No es una encuesta representativa.</p></div>
+  <div><p class="kicker">Resultados en directo</p><h2 id="rankT">Las más votadas se llevarán al Congreso</h2><p>Votos reales de los visitantes de esta página. No es una encuesta representativa.</p></div>
   <div class="seg" role="group" aria-label="Ordenar ranking"><button type="button" data-act="rank" data-m="apoyo" aria-pressed="true">Más apoyo</button><button type="button" data-act="rank" data-m="rechazo" aria-pressed="false">Más rechazo</button><button type="button" data-act="rank" data-m="votos" aria-pressed="false">Más votadas</button></div>
  </div>
+ <div class="camino"><h3>Cómo llega una medida al Congreso</h3>
+  <ol><li><b>Tu voto la sube.</b> Cuantos más apoyos reúne una medida aquí, más arriba aparece en esta lista.</li>
+  <li><b>Petición formal.</b> Las medidas con más apoyo se presentarán por escrito ante el Congreso de los Diputados, con sus resultados.</li>
+  <li><b>Campaña de firmas.</b> Para que el Congreso debata una medida como ley hace falta una iniciativa legislativa popular con 500.000 firmas. Si una medida reúne apoyo suficiente, se abrirá una campaña para conseguirlas.</li></ol>
+  <p class="note">Compártela: cada voto nuevo la acerca.</p></div>
  <div id="rank"></div>
 </section>
 
@@ -866,7 +880,7 @@ function voteBox(id){
 <div class="bar${n?"":" empty-bar"}" role="img" aria-label="${n?`${p}% de apoyo con ${n} ${n===1?"voto":"votos"}`:"Sin votos todavía"}"><span style="width:${p}%"></span></div>
 <div class="vb-meta"><span>${n?`<b>${p}%</b> de apoyo`:"Sin votos todavía"}</span><span>${n?`${nf.format(n)} ${n===1?"voto":"votos"}`:""}</span></div>
 <div class="vb-btns"><button type="button" class="v up${m===1?" on":""}" data-act="vote" data-id="${id}" data-v="1" aria-pressed="${m===1}">${ic("thumbs-up")}De acuerdo <b>${nf.format(t.up)}</b></button><button type="button" class="v down${m===-1?" on":""}" data-act="vote" data-id="${id}" data-v="-1" aria-pressed="${m===-1}">${ic("thumbs-down")}En contra <b>${nf.format(t.down)}</b></button></div>
-${m&&S.just===id?`<div class="nudge"><span>${m===1?"Has votado a favor.":"Has votado en contra."} ¿Y ahora?</span><button type="button" data-act="open" data-id="${id}" data-to="coms">${ic("chat-circle")}Di por qué</button><button type="button" data-act="share" data-id="${id}">${ic("share-network")}Compártela</button></div>`:""}</div>`;
+${m&&S.just===id?`<div class="nudge"><span>${m===1?"Has votado a favor. Las más votadas se llevarán al Congreso.":"Has votado en contra. Tu voto también cuenta."}</span><button type="button" data-act="open" data-id="${id}" data-to="coms">${ic("chat-circle")}Di por qué</button><button type="button" data-act="share" data-id="${id}">${ic("share-network")}Compártela</button></div>`:""}</div>`;
 }
 function refreshVotes(id){
  const a=document.activeElement;
@@ -1050,7 +1064,7 @@ async function copy(text){
 }
 
 // ───────── Centro de compartir (web, medida o resultado) ─────────
-const webText=()=>`${props.length} medidas para que España funcione. Vota cada una y di lo que piensas:`;
+const webText=()=>`${props.length} medidas para que España funcione. Vota cada una: las más votadas se llevarán al Congreso.`;
 function shareCtx(k,id){
  if(k==="m"){const p=byId[id],url=urlOf(id);return {k,h:"Comparte esta medida",sub:p.title,text:shareText(p),url,name:id,
   story:()=>drawStory({tag:p.block,title:p.title,desc:p.desc,stat:p.datos&&p.datos[0],cta:"¿Estás de acuerdo? Vota.",btns:true}),post:()=>drawCard(p,"post")}}

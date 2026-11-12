@@ -40,7 +40,7 @@ ${og(p.title,"¿Estás de acuerdo? Vota y opina. "+desc,base+"medida/"+p.id+"/",
 }
 const idx=path.join(root,"index.html");let html=fs.readFileSync(idx,"utf8");
 if(!/<!--OG-->[\s\S]*<!--\/OG-->/.test(html))throw new Error("No encuentro las marcas <!--OG--> en index.html");
-html=html.replace(/<!--OG-->[\s\S]*<!--\/OG-->/,()=>"<!--OG-->\n"+og(SITE,P.propuestas.length+" medidas abiertas a tu voto. Lee el programa, vota cada propuesta y deja tu opinión.",base,base+"og/portada.jpg")+"\n<!--/OG-->");
+html=html.replace(/<!--OG-->[\s\S]*<!--\/OG-->/,()=>"<!--OG-->\n"+og(SITE,P.propuestas.length+" medidas abiertas a tu voto. Las más votadas se llevarán al Congreso. Vota cada propuesta y deja tu opinión.",base,base+"og/portada.jpg")+"\n<!--/OG-->");
 fs.writeFileSync(idx,html);
 const sinImg=P.propuestas.filter(p=>!fs.existsSync(path.join(root,"og",p.id+".jpg"))).map(p=>p.id);
 console.log(`Listo: ${P.propuestas.length} páginas en /medida para ${base}`);
