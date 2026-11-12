@@ -44,7 +44,19 @@ COMPARTIR E INSTAGRAM
 
 VOTOS, OPINIONES Y VISITAS (Supabase, proyecto "espana-puede-funcionar")
 - Los votos y las visitas se cuentan solos.
-- Las opiniones NO se publican hasta que las apruebes:
-  Supabase > Table Editor > tabla "comments" > filtra status = pending >
-  cambia status a "published" (publicar) o "rejected" (rechazar).
+- Las opiniones NO se publican hasta que las apruebes. Se hace desde el panel privado:
+      https://TU-WEB/moderar.html   (no está enlazado desde la web; guárdalo en favoritos)
+  Pide una clave. Dentro puedes publicar, rechazar o devolver a pendientes cada opinión,
+  y cambiar la clave ("Cambiar la clave", abajo). Tras 8 claves erróneas se bloquea 15 minutos.
+  Si pierdes la clave, se puede poner otra desde Supabase (pide ayuda para hacerlo).
 - Si tres visitantes distintos denuncian una opinión publicada, vuelve a "pending" para que la revises.
+
+CONTACTO
+- contacto.html es el formulario para escribirte en privado. Quien escribe deja nombre, correo o
+  teléfono y el mensaje. Tu dirección de correo no aparece en la web ni en este repositorio:
+  está guardada solo en el servidor (Supabase).
+- Todos los mensajes quedan en la pestaña "Mensajes" del panel de moderación.
+- Para que además te lleguen por correo hace falta una clave de Resend (gratis) guardada en Supabase
+  con el nombre RESEND_API_KEY (Edge Functions > Secrets). La cuenta de Resend debe crearse con el
+  mismo correo en el que quieres recibir los mensajes. Al responder al correo, respondes a quien escribió.
+- supabase/functions/contacto/index.ts es una copia de la función del servidor que recibe el formulario.

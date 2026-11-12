@@ -445,7 +445,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  .hub-prev{width:130px;margin:auto}
 }
 @media(max-width:520px){
- .top-vote{display:none}
+ .top-vote,.top-contact{display:none}
  .brand{font-size:.95rem}
 }
 
@@ -482,7 +482,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 
 <div class="topbar"><div class="wrap">
  <a class="brand" href="#top"><img src="favicon.svg" alt="" width="30" height="30"><span>España puede funcionar</span></a>
- <div class="top-acts"><button class="btn btn-glass btn-sm" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir</button><button class="btn btn-accent btn-sm top-vote" data-act="quiz">Votar</button></div>
+ <div class="top-acts"><a class="btn btn-glass btn-sm top-contact" href="contacto.html">Contacto</a><button class="btn btn-glass btn-sm" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir</button><button class="btn btn-accent btn-sm top-vote" data-act="quiz">Votar</button></div>
 </div></div>
 
 <header class="hero" id="top">
@@ -570,10 +570,13 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 
 <footer><div class="wrap">
  <div><h2>Privacidad</h2>
-  <p>No pedimos tu nombre real ni tu correo. Para que cada dispositivo vote una sola vez, tu navegador guarda un identificador aleatorio. El servidor (Supabase, alojado en la UE) conserva un resumen irreversible de la dirección IP únicamente para frenar abusos.</p>
+  <p>Para votar y opinar no pedimos tu nombre real ni tu correo. Para que cada dispositivo vote una sola vez, tu navegador guarda un identificador aleatorio. El servidor (Supabase, alojado en la UE) conserva un resumen irreversible de la dirección IP únicamente para frenar abusos.</p>
   <p>Las opiniones aparecen con el alias que elijas. Los votos reflejan la opinión de quienes participan aquí; no son vinculantes ni representativos.</p></div>
  <div><h2>Visitas a esta web</h2>
-  <ul class="visits"><li><b id="vTotal">–</b>visitas en total</li><li><b id="vPeople">–</b>dispositivos distintos</li><li><b id="vToday">–</b>visitas hoy</li></ul></div>
+  <ul class="visits"><li><b id="vTotal">–</b>visitas en total</li><li><b id="vPeople">–</b>dispositivos distintos</li><li><b id="vToday">–</b>visitas hoy</li></ul>
+  <h2 style="margin-top:22px">Contacto</h2>
+  <p>¿Una propuesta, una crítica o quieres colaborar?</p>
+  <p><a class="btn btn-glass btn-sm" href="contacto.html">Escríbeme</a></p></div>
 </div></footer>
 
 <dialog class="sheet" id="detalle" aria-labelledby="dT"></dialog>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contacto · España, un país que puede funcionar</title>
+<meta name="description" content="Escríbeme directamente: propuestas, críticas, colaboraciones o medios.">
+<meta name="theme-color" content="#100a1c">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="paginas.css">
+</head>
+<body>
+<div class="top"><a class="brand" href="./"><img src="favicon.svg" alt="" width="30" height="30"><span>España puede funcionar</span></a><a class="btn alt sm" href="./">Ver las medidas</a></div>
+<main class="wrap">
+ <p class="kicker">Contacto</p>
+ <h1>Escríbeme <em>directamente.</em></h1>
+ <p class="lead">¿Una propuesta, una crítica, quieres colaborar o eres de un medio? Cuéntamelo. Leo todos los mensajes y, si procede, te contesto al contacto que dejes.</p>
+
+ <form class="panel" id="f" novalidate>
+  <label class="field">Tu nombre<input name="name" maxlength="80" autocomplete="name" required></label>
+  <div class="two">
+   <label class="field">Correo electrónico<input name="email" type="email" maxlength="200" autocomplete="email" inputmode="email"></label>
+   <label class="field">Teléfono <small>(opcional)</small><input name="phone" type="tel" maxlength="30" autocomplete="tel" inputmode="tel"></label>
+  </div>
+  <label class="field">Mensaje<textarea name="body" maxlength="3000" required placeholder="Cuéntame lo que quieras."></textarea></label>
+  <label class="hp" aria-hidden="true">No rellenes este campo<input name="web" tabindex="-1" autocomplete="off"></label>
+  <p class="msg" id="m" role="status" aria-live="polite"></p>
+  <button class="btn" type="submit">Enviar mensaje</button>
+  <p class="note">Tus datos solo se usan para leer tu mensaje y poder responderte. No se publican ni se ceden a nadie. Si lo que quieres es opinar en público sobre una medida, hazlo en <a href="./#programa">la página de cada medida</a>.</p>
+ </form>
+
+ <div class="panel" id="done" hidden>
+  <h2>Mensaje enviado</h2>
+  <p style="margin-top:8px">Gracias por escribir. Si dejaste un contacto, podré responderte ahí.</p>
+  <p style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="./">Volver a las medidas</a><button class="btn alt" type="button" id="again">Enviar otro mensaje</button></p>
+ </div>
+</main>
+<script>
+// Misma configuración pública que index.html. La dirección de correo de destino no está en la web: solo en el servidor.
+const CONFIG={supabaseUrl:"https://roglrkyhkoqngqqdnefh.supabase.co",supabaseKey:"sb_publishable_GQEgyQTx05J09R0-YvcLNQ_S0b6tQQg"};
+const f=document.getElementById("f"),m=document.getElementById("m"),done=document.getElementById("done");
+const fail=(t,el)=>{m.className="msg err";m.textContent=t;if(el)el.focus()};
+f.addEventListener("submit",async e=>{
+ e.preventDefault();
+ const d={name:f.name.value.trim(),email:f.email.value.trim(),phone:f.phone.value.trim(),body:f.body.value.trim(),web:f.web.value};
+ if(d.name.length<2)return fail("Escribe tu nombre.",f.name);
+ if(!d.email&&!d.phone)return fail("Deja un correo o un teléfono para poder responderte.",f.email);
+ if(d.email&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email))return fail("Revisa el correo electrónico.",f.email);
+ if(d.phone&&!/^[0-9+() .-]{6,30}$/.test(d.phone))return fail("Revisa el teléfono: solo números, espacios y +.",f.phone);
+ if(d.body.length<10)return fail("Escribe un mensaje de al menos 10 caracteres.",f.body);
+ const b=f.querySelector("button[type=submit]");b.disabled=true;m.className="msg";m.textContent="Enviando…";
+ try{
+  const r=await fetch(CONFIG.supabaseUrl+"/functions/v1/contacto",{method:"POST",headers:{"Content-Type":"application/json",apikey:CONFIG.supabaseKey},body:JSON.stringify(d)});
+  let j={};try{j=await r.json()}catch(x){}
+  if(r.ok&&j.ok){f.hidden=true;done.hidden=false;f.reset();m.textContent="";done.querySelector("h2").tabIndex=-1;done.querySelector("h2").focus()}
+  else if(j.error==="rate_limit")fail("Has enviado varios mensajes seguidos. Inténtalo de nuevo dentro de una hora.");
+  else if(j.error==="invalid_input")fail("Revisa los datos e inténtalo de nuevo.");
+  else fail("No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.");
+ }catch(x){fail("No se pudo conectar con el servidor. Inténtalo de nuevo en unos minutos.")}
+ b.disabled=false;
+});
+document.getElementById("again").addEventListener("click",()=>{done.hidden=true;f.hidden=false;f.body.focus()});
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Moderación · España, un país que puede funcionar</title>
+<meta name="theme-color" content="#100a1c">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="paginas.css">
+<style>
+:root{--w:860px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 14px}
+.tab{border:1px solid var(--edge);background:var(--surface);border-radius:999px;padding:8px 14px;min-height:40px;font-weight:600;font-size:.9rem}
+.tab[aria-pressed=true]{background:#fff;color:var(--dark);border-color:transparent}
+.tab b{font-variant-numeric:tabular-nums;margin-left:4px}
+.tab .dot{display:inline-block;min-width:22px;padding:0 6px;border-radius:99px;background:var(--pk);color:#2a0518;font-size:.78rem;margin-left:6px;text-align:center}
+.item{background:rgba(16,10,28,.6);border:1px solid var(--edge);border-radius:16px;padding:16px 18px;margin-bottom:10px}
+.item.new{border-color:rgba(255,79,168,.6)}
+.meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.84rem;color:var(--muted)}
+.meta b{color:#fff}
+.meta .tag{color:var(--pk2);font-weight:650}
+.where{font-size:.84rem;color:var(--gr2);margin-top:2px}
+.body{margin:8px 0 12px;white-space:pre-wrap;overflow-wrap:anywhere;color:#fff}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.empty{border:1px dashed var(--edge);border-radius:16px;padding:40px 20px;text-align:center;color:var(--muted)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+details{margin-top:30px}
+summary{cursor:pointer;font-weight:600;color:#fff}
+</style>
+</head>
+<body>
+<div class="top"><a class="brand" href="./"><img src="favicon.svg" alt="" width="30" height="30"><span>Moderación</span></a><button class="btn alt sm" id="out" hidden>Salir</button></div>
+<main class="wrap">
+ <form class="panel" id="login" style="max-width:420px;margin-inline:auto">
+  <h1 style="font-size:1.8rem;margin:0 0 6px">Panel de moderación</h1>
+  <p class="note" style="margin-top:0">Solo para el responsable de la web.</p>
+  <label class="field">Clave<input name="key" type="password" autocomplete="current-password" required></label>
+  <p class="msg" id="lm" role="status" aria-live="polite"></p>
+  <button class="btn" type="submit">Entrar</button>
+ </form>
+
+ <div id="app" hidden>
+  <div class="head"><div><p class="kicker">Panel privado</p><h1 style="margin-bottom:0">Moderación</h1></div><button class="btn alt sm" id="reload">Actualizar</button></div>
+  <div class="tabs" id="tabs" role="group" aria-label="Sección"></div>
+  <p class="msg" id="am" role="status" aria-live="polite"></p>
+  <div id="list"></div>
+  <details><summary>Cambiar la clave</summary>
+   <form class="panel" id="chg" style="max-width:420px;margin-top:12px">
+    <label class="field">Clave nueva <small>(mínimo 12 caracteres)</small><input name="n1" type="password" autocomplete="new-password" minlength="12" required></label>
+    <label class="field">Repítela<input name="n2" type="password" autocomplete="new-password" minlength="12" required></label>
+    <p class="msg" id="cm" role="status" aria-live="polite"></p>
+    <button class="btn" type="submit">Guardar clave</button>
+   </form>
+  </details>
+ </div>
+</main>
+<script src="propuestas.js"></script>
+<script>
+const CONFIG={supabaseUrl:"https://roglrkyhkoqngqqdnefh.supabase.co",supabaseKey:"sb_publishable_GQEgyQTx05J09R0-YvcLNQ_S0b6tQQg"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const titles=Object.fromEntries(((window.PROGRAMA||{}).propuestas||[]).map(p=>[p.id,p.title]));
+const fdate=s=>{try{return new Date(s).toLocaleString("es-ES",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}catch(e){return ""}};
+let KEY="",D={comments:[],messages:[]},TAB="pending";
+try{KEY=sessionStorage.getItem("epf-mod")||""}catch(e){}
+const ERR={forbidden:"Clave incorrecta.",rate_limit:"Demasiados intentos fallidos. Espera 15 minutos.",invalid_input:"Datos no válidos."};
+async function rpc(fn,args){
+ const r=await fetch(`${CONFIG.supabaseUrl}/rest/v1/rpc/${fn}`,{method:"POST",headers:{apikey:CONFIG.supabaseKey,"Content-Type":"application/json"},body:JSON.stringify({p_key:KEY,...args})});
+ if(!r.ok)throw new Error("No se pudo conectar con el servidor.");
+ const j=await r.json();if(j&&j.error){const e=new Error(ERR[j.error]||"Error.");e.code=j.error;throw e}return j;
+}
+async function load(){D=await rpc("mod_list",{});render()}
+function show(on){$("login").hidden=on;$("app").hidden=!on;$("out").hidden=!on}
+function logout(){KEY="";try{sessionStorage.removeItem("epf-mod")}catch(e){}show(false);$("login").key.value=""}
+const TABS=[["pending","Pendientes"],["published","Publicadas"],["rejected","Rechazadas"],["messages","Mensajes"]];
+function render(){
+ const n={pending:0,published:0,rejected:0};D.comments.forEach(c=>n[c.status]++);
+ const unread=D.messages.filter(x=>!x.read).length;
+ $("tabs").innerHTML=TABS.map(([k,l])=>`<button type="button" class="tab" data-tab="${k}" aria-pressed="${TAB===k}">${l}${k==="messages"?`<b>${D.messages.length}</b>${unread?`<span class="dot">${unread} sin leer</span>`:""}`:`<b>${n[k]}</b>`}</button>`).join("");
+ if(TAB==="messages"){
+  $("list").innerHTML=D.messages.map(x=>`<article class="item${x.read?"":" new"}"><div class="meta"><b>${esc(x.name)}</b><span>${fdate(x.at)}</span>${x.read?"":'<span class="tag">Sin leer</span>'}<span>${x.emailed?"Enviado a tu correo":"No enviado por correo"}</span></div>
+<div class="where">${x.email?`<a href="mailto:${esc(x.email)}">${esc(x.email)}</a>`:""}${x.email&&x.phone?" · ":""}${x.phone?`<a href="tel:${esc(x.phone.replace(/[^0-9+]/g,""))}">${esc(x.phone)}</a>`:""}</div>
+<p class="body">${esc(x.body)}</p><div class="acts"><button class="btn alt sm" data-m="${x.read?"unread":"read"}" data-id="${x.id}">${x.read?"Marcar como no leído":"Marcar como leído"}</button><button class="btn alt sm" data-m="delete" data-id="${x.id}">Borrar</button></div></article>`).join("")||'<div class="empty">No hay mensajes de contacto.</div>';
+  return;
+ }
+ const rows=D.comments.filter(c=>c.status===TAB);
+ $("list").innerHTML=rows.map(c=>`<article class="item${c.reports?" new":""}"><div class="meta"><b>${esc(c.alias)}</b><span>${fdate(c.at)}</span>${c.reports?`<span class="tag">${c.reports} ${c.reports===1?"denuncia":"denuncias"}</span>`:""}</div>
+<div class="where">${titles[c.p]?`<a href="./#m=${esc(c.p)}" target="_blank" rel="noopener">${esc(titles[c.p])}</a>`:`Medida que ya no existe (${esc(c.p)})`}</div>
+<p class="body">${esc(c.body)}</p><div class="acts">${c.status!=="published"?`<button class="btn ok sm" data-c="published" data-id="${c.id}">Publicar</button>`:""}${c.status!=="rejected"?`<button class="btn no sm" data-c="rejected" data-id="${c.id}">Rechazar</button>`:""}${c.status!=="pending"?`<button class="btn alt sm" data-c="pending" data-id="${c.id}">Devolver a pendientes</button>`:""}</div></article>`).join("")
+  ||`<div class="empty">${TAB==="pending"?"No hay opiniones pendientes de revisar.":TAB==="published"?"Todavía no hay opiniones publicadas.":"No hay opiniones rechazadas."}</div>`;
+}
+const say=(t,cls)=>{$("am").className="msg "+(cls||"");$("am").textContent=t};
+$("login").addEventListener("submit",async e=>{
+ e.preventDefault();const lm=$("lm"),b=e.target.querySelector("button");KEY=e.target.key.value;b.disabled=true;lm.className="msg";lm.textContent="Comprobando…";
+ try{await load();try{sessionStorage.setItem("epf-mod",KEY)}catch(x){}lm.textContent="";show(true)}catch(x){KEY="";lm.className="msg err";lm.textContent=x.message}
+ b.disabled=false;
+});
+$("out").addEventListener("click",logout);
+$("reload").addEventListener("click",async()=>{say("Actualizando…");try{await load();say("")}catch(x){say(x.message,"err");if(x.code==="forbidden")logout()}});
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-tab]");if(t){TAB=t.dataset.tab;render();return}
+ const b=e.target.closest("[data-c],[data-m]");if(!b)return;
+ const id=+b.dataset.id;
+ if(b.dataset.m==="delete"&&!confirm("¿Borrar este mensaje definitivamente?"))return;
+ b.disabled=true;say("Guardando…");
+ try{
+  if(b.dataset.c)await rpc("mod_set_comment",{p_id:id,p_status:b.dataset.c});
+  else await rpc("mod_set_message",{p_id:id,p_action:b.dataset.m});
+  await load();say(b.dataset.c==="published"?"Opinión publicada.":b.dataset.c==="rejected"?"Opinión rechazada.":"Hecho.","ok");
+ }catch(x){say(x.message,"err");b.disabled=false;if(x.code==="forbidden")logout()}
+});
+$("chg").addEventListener("submit",async e=>{
+ e.preventDefault();const f=e.target,cm=$("cm");
+ if(f.n1.value.length<12){cm.className="msg err";cm.textContent="La clave debe tener al menos 12 caracteres.";return}
+ if(f.n1.value!==f.n2.value){cm.className="msg err";cm.textContent="Las dos claves no coinciden.";return}
+ try{await rpc("mod_change_key",{p_new:f.n1.value});KEY=f.n1.value;try{sessionStorage.setItem("epf-mod",KEY)}catch(x){}f.reset();cm.className="msg ok";cm.textContent="Clave cambiada."}
+ catch(x){cm.className="msg err";cm.textContent=x.message}
+});
+if(KEY)load().then(()=>show(true)).catch(()=>logout());
+</script>
+</body>
+</html>
