@@ -26,6 +26,12 @@
 .empty{border:1px dashed var(--edge);border-radius:16px;padding:40px 20px;text-align:center;color:var(--muted)}
 .head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
 details{margin-top:30px}
+.item details{margin-top:8px}
+.vt{width:100%;border-collapse:collapse;font-size:.92rem;background:rgba(16,10,28,.6);border:1px solid var(--edge);border-radius:14px;overflow:hidden}
+.vt th{text-align:left;font-size:.76rem;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--edge);white-space:nowrap}
+.vt td{padding:9px 12px;border-bottom:1px solid var(--line);color:#fff;font-variant-numeric:tabular-nums}
+.vt td:first-child{color:var(--text)}
+.vt td.g{color:var(--gr);font-weight:700}.vt td.r{color:var(--pk2);font-weight:700}
 summary{cursor:pointer;font-weight:600;color:#fff}
 </style>
 </head>
@@ -60,9 +66,10 @@ summary{cursor:pointer;font-weight:600;color:#fff}
 const CONFIG={supabaseUrl:"https://roglrkyhkoqngqqdnefh.supabase.co",supabaseKey:"sb_publishable_GQEgyQTx05J09R0-YvcLNQ_S0b6tQQg"};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const BLOQUES=((window.PROGRAMA||{}).bloques||[]).map(b=>b.nombre);
 const titles=Object.fromEntries(((window.PROGRAMA||{}).propuestas||[]).map(p=>[p.id,p.title]));
 const fdate=s=>{try{return new Date(s).toLocaleString("es-ES",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}catch(e){return ""}};
-let KEY="",D={comments:[],messages:[],alerts:[],alerts_all:[],alerts_people:0},TAB="pending";
+let KEY="",D={comments:[],messages:[],alerts:[],alerts_all:[],alerts_people:0,ideas:[],votes:[],alerts_by_email:[]},TAB="pending",ALV="p";
 try{KEY=sessionStorage.getItem("epf-mod")||""}catch(e){}
 const ERR={forbidden:"Clave incorrecta.",rate_limit:"Demasiados intentos fallidos. Espera 15 minutos.",invalid_input:"Datos no válidos."};
 async function rpc(fn,args){
@@ -70,17 +77,40 @@ async function rpc(fn,args){
  if(!r.ok)throw new Error("No se pudo conectar con el servidor.");
  const j=await r.json();if(j&&j.error){const e=new Error(ERR[j.error]||"Error.");e.code=j.error;throw e}return j;
 }
-async function load(){D=await rpc("mod_list",{});render()}
+async function load(){D=await rpc("mod_list",{});(D.ideas||[]).forEach(i=>{titles["c-"+i.id]=i.title+" (propuesta ciudadana)"});render()}
 function show(on){$("login").hidden=on;$("app").hidden=!on;$("out").hidden=!on}
 function logout(){KEY="";try{sessionStorage.removeItem("epf-mod")}catch(e){}show(false);$("login").key.value=""}
-const TABS=[["pending","Pendientes"],["published","Publicadas"],["rejected","Rechazadas"],["messages","Mensajes"],["alerts","Avisos de firmas"]];
+const TABS=[["pending","Pendientes"],["published","Publicadas"],["rejected","Rechazadas"],["ideas","Propuestas"],["messages","Mensajes"],["alerts","Avisos de firmas"],["votes","Votos"]];
 function render(){
  const n={pending:0,published:0,rejected:0};D.comments.forEach(c=>n[c.status]++);
  const unread=D.messages.filter(x=>!x.read).length;
- $("tabs").innerHTML=TABS.map(([k,l])=>`<button type="button" class="tab" data-tab="${k}" aria-pressed="${TAB===k}">${l}${k==="alerts"?`<b>${D.alerts_people||0}</b>`:k==="messages"?`<b>${D.messages.length}</b>${unread?`<span class="dot">${unread} sin leer</span>`:""}`:`<b>${n[k]}</b>`}</button>`).join("");
+ $("tabs").innerHTML=TABS.map(([k,l])=>`<button type="button" class="tab" data-tab="${k}" aria-pressed="${TAB===k}">${l}${k==="votes"?"":k==="ideas"?`<b>${(D.ideas||[]).length}</b>${(D.ideas||[]).some(i=>i.status==="pending")?`<span class="dot">${D.ideas.filter(i=>i.status==="pending").length} por revisar</span>`:""}`:k==="alerts"?`<b>${D.alerts_people||0}</b>`:k==="messages"?`<b>${D.messages.length}</b>${unread?`<span class="dot">${unread} sin leer</span>`:""}`:`<b>${n[k]}</b>`}</button>`).join("");
+ if(TAB==="ideas"){
+  const ST={pending:"Pendiente",published:"Publicada",rejected:"Rechazada"};
+  $("list").innerHTML=(D.ideas||[]).map(i=>`<article class="item${i.status==="pending"?" new":""}"><div class="meta"><b>${esc(i.alias)}</b><span>${fdate(i.at)}</span><span class="tag">${ST[i.status]}</span></div>
+<p class="body" style="font-weight:700;margin-bottom:4px">${esc(i.title)}</p><p class="body" style="margin-top:0">${esc(i.body)}</p>
+<label class="field" style="margin:0 0 12px;max-width:420px">Categoría en la que aparece<select data-blk="${i.id}" style="display:block;width:100%;margin-top:5px;border:1px solid var(--edge);background:rgba(255,255,255,.07);border-radius:10px;padding:8px 10px;min-height:42px;font-weight:400">${[["","Sin categoría (solo en «Propuestas ciudadanas»)"],...BLOQUES.map(b=>[b,b])].map(([v,l])=>`<option value="${esc(v)}"${(i.block||"")===v?" selected":""}>${esc(l)}</option>`).join("")}${i.block&&!BLOQUES.includes(i.block)?`<option selected>${esc(i.block)}</option>`:""}</select></label>
+<div class="acts">${i.status!=="published"?`<button class="btn ok sm" data-i="published" data-id="${i.id}">Publicar</button>`:""}${i.status!=="rejected"?`<button class="btn no sm" data-i="rejected" data-id="${i.id}">Rechazar</button>`:""}${i.status!=="pending"?`<button class="btn alt sm" data-i="pending" data-id="${i.id}">Devolver a pendientes</button>`:""}</div></article>`).join("")||'<div class="empty">Nadie ha propuesto medidas todavía.</div>';
+  return;
+ }
+ if(TAB==="votes"){
+  const vt=Object.fromEntries((D.votes||[]).map(v=>[v.p,v])),al=Object.fromEntries((D.alerts||[]).map(a=>[a.p,a.n]));
+  const ids=[...new Set([...Object.keys(titles),...Object.keys(vt)])];
+  const rows=ids.map(id=>{const v=vt[id]||{up:0,down:0},n=v.up+v.down;return {t:titles[id]||id,up:v.up,down:v.down,pc:n?Math.round(v.up/n*100)+"%":"–",al:al[id]||0}}).sort((a,b)=>b.up-a.up||a.down-b.down||a.t.localeCompare(b.t));
+  const tu=rows.reduce((s,r)=>s+r.up,0),td=rows.reduce((s,r)=>s+r.down,0);
+  $("list").innerHTML=`<p class="note" style="margin:0 0 12px">${tu+td} votos en total (${tu} a favor y ${td} en contra) de ${D.voters||0} ${D.voters===1?"dispositivo":"dispositivos"}. Ordenadas por votos a favor.</p>
+<div style="overflow-x:auto"><table class="vt"><thead><tr><th>Medida</th><th>A favor</th><th>En contra</th><th>Apoyo</th><th>Avisos</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.t)}</td><td class="g">${r.up}</td><td class="r">${r.down}</td><td>${r.pc}</td><td>${r.al||""}</td></tr>`).join("")}</tbody></table></div>`;
+  return;
+ }
+ if(TAB==="alerts"&&ALV==="e"){
+  const be=D.alerts_by_email||[];
+  $("list").innerHTML=`<p class="acts" style="margin-bottom:12px"><button class="btn alt sm" data-alv="p">Ver por medida</button><button class="btn sm" data-alv="e">Ver por correo</button></p>`
+   +(be.map(a=>`<article class="item"><div class="meta"><b>${esc(a.email)}</b><span>${a.ps.length} ${a.ps.length===1?"medida":"medidas"}</span>${a.all?'<span class="tag">Quiere aviso de cualquier recogida</span>':""}</div><ul style="margin:8px 0 0;padding-left:20px">${a.ps.map(p=>`<li>${esc(titles[p]||p)}</li>`).join("")}</ul></article>`).join("")||'<div class="empty">Nadie ha pedido aviso todavía.</div>');
+  return;
+ }
  if(TAB==="alerts"){
   const al=D.alerts||[],all=D.alerts_all||[];
-  $("list").innerHTML=`<p class="note" style="margin:0 0 12px">${D.alerts_people||0} ${D.alerts_people===1?"persona ha":"personas han"} dejado su correo. Cada lista es de quienes quieren aviso si se abre la recogida de firmas de esa medida.</p>`
+  $("list").innerHTML=`<p class="acts" style="margin-bottom:12px"><button class="btn sm" data-alv="p">Ver por medida</button><button class="btn alt sm" data-alv="e">Ver por correo</button></p><p class="note" style="margin:0 0 12px">${D.alerts_people||0} ${D.alerts_people===1?"persona ha":"personas han"} dejado su correo. Cada lista es de quienes quieren aviso si se abre la recogida de firmas de esa medida.</p>`
    +(all.length?`<article class="item"><div class="meta"><b>Quieren aviso de cualquier recogida de firmas</b><span>${all.length} ${all.length===1?"correo":"correos"}</span></div><details><summary>Ver correos</summary><p class="body">${all.map(esc).join("\n")}</p></details><div class="acts"><button class="btn alt sm" data-copy="${esc(all.join(", "))}">Copiar correos</button></div></article>`:"")
    +(al.map(a=>`<article class="item"><div class="meta"><b>${esc(titles[a.p]||a.p)}</b><span>${a.n} ${a.n===1?"correo":"correos"}</span></div><details><summary>Ver correos</summary><p class="body">${a.emails.map(esc).join("\n")}</p></details><div class="acts"><button class="btn alt sm" data-copy="${esc(a.emails.join(", "))}">Copiar correos</button></div></article>`).join("")||'<div class="empty">Nadie ha pedido aviso todavía.</div>')
    +`<form class="panel" id="delAl" style="max-width:420px"><label class="field" style="margin-top:0">Borrar un correo de todas las listas<input name="email" type="email" required placeholder="correo@ejemplo.com"></label><button class="btn alt sm" type="submit" style="margin-top:10px">Borrar</button></form>`;
@@ -109,19 +139,25 @@ $("reload").addEventListener("click",async()=>{say("Actualizando…");try{await 
 document.addEventListener("click",async e=>{
  const t=e.target.closest("[data-tab]");if(t){TAB=t.dataset.tab;render();return}
  const cp=e.target.closest("[data-copy]");if(cp){try{await navigator.clipboard.writeText(cp.dataset.copy);say("Correos copiados. Pégalos en el campo CCO de tu correo para que nadie vea las direcciones de los demás.","ok")}catch(x){say("No se pudo copiar. Abre «Ver correos» y cópialos a mano.","err")}return}
- const b=e.target.closest("[data-c],[data-m]");if(!b)return;
+ const av=e.target.closest("[data-alv]");if(av){ALV=av.dataset.alv;render();return}
+ const b=e.target.closest("[data-c],[data-m],[data-i]");if(!b)return;
  const id=+b.dataset.id;
  if(b.dataset.m==="delete"&&!confirm("¿Borrar este mensaje definitivamente?"))return;
  b.disabled=true;say("Guardando…");
  try{
-  if(b.dataset.c)await rpc("mod_set_comment",{p_id:id,p_status:b.dataset.c});
+  if(b.dataset.i)await rpc("mod_set_idea",{p_id:id,p_status:b.dataset.i});
+  else if(b.dataset.c)await rpc("mod_set_comment",{p_id:id,p_status:b.dataset.c});
   else await rpc("mod_set_message",{p_id:id,p_action:b.dataset.m});
-  await load();say(b.dataset.c==="published"?"Opinión publicada.":b.dataset.c==="rejected"?"Opinión rechazada.":"Hecho.","ok");
+  await load();say(b.dataset.i==="published"?"Propuesta publicada.":b.dataset.i==="rejected"?"Propuesta rechazada.":b.dataset.c==="published"?"Opinión publicada.":b.dataset.c==="rejected"?"Opinión rechazada.":"Hecho.","ok");
  }catch(x){say(x.message,"err");b.disabled=false;if(x.code==="forbidden")logout()}
 });
 document.addEventListener("submit",async e=>{
  if(e.target.id!=="delAl")return;e.preventDefault();const em=e.target.email.value.trim();if(!em||!confirm("¿Borrar "+em+" de todas las listas de avisos?"))return;
  try{const r=await rpc("mod_delete_alert",{p_email:em});await load();say(r.deleted?"Correo borrado de "+r.deleted+" "+(r.deleted===1?"lista.":"listas."):"Ese correo no estaba en ninguna lista.","ok")}catch(x){say(x.message,"err")}
+});
+document.addEventListener("change",async e=>{
+ const s=e.target.closest("[data-blk]");if(!s)return;say("Guardando…");
+ try{await rpc("mod_set_idea_block",{p_id:+s.dataset.blk,p_block:s.value});await load();say("Categoría cambiada.","ok")}catch(x){say(x.message,"err")}
 });
 $("chg").addEventListener("submit",async e=>{
  e.preventDefault();const f=e.target,cm=$("cm");

@@ -72,3 +72,15 @@ AVISOS DE RECOGIDA DE FIRMAS
   más la de quienes quieren aviso de cualquier recogida. "Copiar correos" los deja listos para pegar.
 - Al escribirles, pon las direcciones en CCO (copia oculta) para que nadie vea los correos de los demás.
 - Si alguien pide que se borre su correo, hazlo desde esa misma pestaña ("Borrar un correo de todas las listas").
+
+PROPUESTAS CIUDADANAS
+- Cualquiera puede proponer una medida con el botón "Propón tu medida": título, explicación, categoría y alias.
+- No se publica hasta que la apruebes en el panel de moderación, pestaña "Propuestas". Ahí también puedes
+  cambiarla de categoría con el desplegable.
+- Una vez publicada aparece dentro de su categoría, marcada como "Propuesta ciudadana" con el alias de su autor,
+  y también en la categoría "Propuestas ciudadanas", que las reúne todas. Se vota, se opina y se comparte igual.
+- No cuentan en el número de medidas del programa ni en "Empezar a votar", pero sí en Resultados.
+
+VOTOS Y AVISOS EN EL PANEL
+- Pestaña "Votos": todas las medidas con sus votos a favor, en contra, porcentaje de apoyo y número de avisos.
+- Pestaña "Avisos de firmas": se puede ver por medida (lista de correos) o por correo (medidas de cada persona).

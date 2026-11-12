@@ -659,6 +659,25 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 .aviso-in .btn{margin-top:10px}
 .chk{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:.92rem;color:var(--text);min-height:32px}
 .chk input{width:20px;height:20px;accent-color:var(--gr);flex:none}
+.ppband{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 32px;align-items:center;margin-top:56px;padding:clamp(20px,4vw,34px);border-radius:22px;border:1px solid var(--edge);background:radial-gradient(480px 260px at 100% 0,rgba(46,230,166,.3),transparent 70%),radial-gradient(480px 260px at 0 100%,rgba(255,79,168,.26),transparent 70%),#1a1129}
+.ppband h2{font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:750;margin:6px 0 8px}
+.ppband p:not(.kicker){max-width:60ch;color:#ece6f5}
+.ppband-b{display:flex;flex-direction:column;gap:10px}
+.propon-btn{width:100%;margin-bottom:12px}
+.tools .cats h3{margin-top:10px}
+.by{font-size:.84rem;color:var(--muted);margin:-2px 0 8px}.by b{color:#fff}
+.sheet-body .by{margin:0 0 10px}
+.cit-intro{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-content:space-between;background:var(--surface);border:1px solid var(--edge);border-radius:14px;padding:14px 18px}
+.cit-intro p{flex:1 1 320px;font-size:.92rem}
+.pend-card{border-style:dashed;opacity:.9}
+.pend-card h3{font-size:1.15rem;margin:10px 0 8px}
+.aviso-in select{width:100%;border:1px solid var(--edge);background:rgba(255,255,255,.07);border-radius:10px;padding:10px 12px;min-height:44px;margin-top:5px;font-weight:400}
+.aviso-in textarea{min-height:130px}
+#propon{width:min(560px,calc(100% - 24px))}
+@media(max-width:1000px){.propon-btn{grid-column:1/-1;margin:0}}
+@media(max-width:860px){.ppband{grid-template-columns:1fr}}
+.cit-chip{background:#fff}
+.card:has(.cit-chip){border-style:dashed}
 </style>
 </head>
 <body>
@@ -736,6 +755,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  <div class="wrap prog">
   <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
   <aside class="tools" aria-label="Buscar y filtrar medidas">
+   <button type="button" class="btn btn-accent propon-btn" data-act="propon">Propón tu medida</button>
    <label class="search"><span class="sr">Buscar medidas</span><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg><input type="search" id="q" placeholder="Buscar: vivienda, autónomos, agua…" autocomplete="off"></label>
    <select id="sort" aria-label="Ordenar medidas"><option value="prog">Orden del programa</option><option value="apoyo">Más apoyadas</option><option value="votos">Más votadas</option><option value="debate">Más comentadas</option></select>
    <select id="catSel" aria-label="Categoría"></select>
@@ -757,6 +777,11 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
   <p class="note">Compártela: cada voto nuevo la acerca.</p></div>
  <div id="rank"></div>
 </section>
+
+<section class="wrap" id="propon-sec" data-view="inicio" aria-labelledby="ppT"><div class="ppband">
+ <div><p class="kicker">¿Piensas otra cosa?</p><h2 id="ppT">Propón tu medida</h2><p>Si echas algo en falta o lo harías de otra manera, escríbelo. Cuando se revise y se publique, cualquiera podrá votarla, opinar y compartirla, igual que las del programa.</p></div>
+ <div class="ppband-b"><button type="button" class="btn btn-accent" data-act="propon">Propón tu medida</button><button type="button" class="btn btn-glass" data-act="cit">Ver propuestas ciudadanas</button></div>
+</div></section>
 
 <section class="sec wrap" id="como" data-view="inicio" aria-labelledby="comoT">
  <div class="sec-head"><div><p class="kicker">Antes de opinar</p><h2 id="comoT">Reglas del debate</h2></div></div>
@@ -789,6 +814,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 <dialog class="sheet" id="detalle" aria-labelledby="dT"></dialog>
 <dialog class="hub" id="compartir" aria-labelledby="hubT"></dialog>
 <dialog class="hub aviso-d" id="aviso" aria-labelledby="avT"></dialog>
+<dialog class="hub aviso-d" id="propon" aria-labelledby="prpT"></dialog>
 <dialog class="quiz" id="quiz" aria-label="Vota el programa"><div class="quiz-in" id="quizIn"></div></dialog>
 <div class="dock" id="dock"><div class="dock-p"><b id="dockN">0</b> votadas<i><span id="dockBar" style="width:0"></span></i></div>
  <button class="btn btn-glass btn-sm" data-act="hub" data-k="web" aria-label="Compartir la web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg></button><button class="btn btn-accent btn-sm" data-act="quiz" id="dockBtn">Votar</button></div>
@@ -817,6 +843,10 @@ const ic=n=>`<svg class="ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[n]
 const nf=new Intl.NumberFormat("es-ES",{useGrouping:"always"});
 const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
 const TONES=["#ff6ab5","#2ee6a6"],blockIdx=Object.fromEntries(blocks.map((b,i)=>[b.nombre,i]));
+// Propuestas ciudadanas: llegan del servidor, se votan y comparten como las demás, pero no cuentan como medidas del programa.
+const CIT="Propuestas ciudadanas";blockBy[CIT]={nombre:CIT,icono:"chat-circle"};blockIdx[CIT]=1;
+const toIdea=(x,pend)=>({id:x.id,block:x.block&&blockBy[x.block]?x.block:CIT,title:x.title,desc:x.body,alias:x.alias,at:x.at,citizen:true,pend:!!pend});
+function syncIdeas(){for(const k in byId)if(byId[k].citizen)delete byId[k];S.ideas.forEach(p=>{byId[p.id]=p})}
 const colorOf=p=>TONES[(blockIdx[p.block]||0)%2];
 const iconOf=p=>(blockBy[p.block]||{}).icono||"check";
 
@@ -833,7 +863,7 @@ let VOTER=ls.get("epf-voter");
 if(!/^[0-9a-f-]{36}$/.test(VOTER||"")){VOTER=uuid();ls.set("epf-voter",VOTER)}
 
 // ───────── Estado ─────────
-const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:blocks[0].nombre,q:"",sort:"prog",rank:"apoyo",just:null,tryId:null,year:2027,view:"inicio",ptab:"resumen"};
+const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:blocks[0].nombre,q:"",sort:"prog",rank:"apoyo",just:null,tryId:null,ideas:[],myIdeas:[],year:2027,view:"inicio",ptab:"resumen"};
 const tot=id=>S.totals[id]||{up:0,down:0};
 const comsOf=id=>S.comments[id]||[];
 
@@ -864,6 +894,7 @@ const api={
  vote:(id,v)=>remote?rpc("cast_vote",{p_proposal:id,p_voter:VOTER,p_value:v}):Promise.resolve(local.vote(id,v)),
  comment:(id,alias,body)=>remote?rpc("add_comment",{p_proposal:id,p_voter:VOTER,p_alias:alias,p_body:body}):Promise.resolve(local.comment(id,alias,body)),
  report:id=>remote?rpc("report_comment",{p_id:id,p_voter:VOTER}):Promise.resolve(),
+ idea:(alias,title,body,block)=>remote?rpc("add_idea",{p_voter:VOTER,p_alias:alias,p_title:title,p_body:body,p_block:block||null}):Promise.resolve({id:"c-0",status:"pending"}),
  alert:(id,email,all)=>remote?rpc("add_alert",{p_proposal:id,p_voter:VOTER,p_email:email,p_all:!!all}):Promise.resolve({ok:true})
 };
 function errMsg(e){
@@ -876,6 +907,7 @@ async function load(){
  try{
   const st=await api.state();
   S.totals=st.totals||{};S.mine=st.mine||{};S.comments=group(st.comments);S.pending=group(st.pending);S.visits=st.visits||null;S.ready=true;
+  S.ideas=(st.ideas||[]).map(x=>toIdea(x));S.myIdeas=(st.my_ideas||[]).map(x=>toIdea(x,true));syncIdeas();
   if(!remote)banner("Modo de prueba: no hay servidor configurado y los votos solo se guardan en este navegador.");
  }catch(e){S.ready=false;banner('No se pudo conectar con el servidor de votos. <button class="link" data-act="retry">Reintentar</button>')}
  renderAll();
@@ -917,6 +949,39 @@ async function submitAlert(form){
  b.disabled=true;msg.className="form-msg";msg.textContent="Guardando…";
  try{await sendAlert(id,email,form.all.checked);$("aviso").close();toast("Hecho. Te avisaremos si se abre la recogida de firmas.")}
  catch(e){msg.className="form-msg err";msg.textContent=e.code==="invalid_input"?"Revisa el correo electrónico.":errMsg(e)}
+ b.disabled=false;
+}
+
+// ───────── Propón tu medida ─────────
+function openPropon(){
+ const d=$("propon");
+ d.innerHTML=`<form class="aviso-in" id="prpForm" novalidate><div class="hub-h"><h2 id="prpT">Propón tu medida</h2><button type="button" class="x" data-act="prpclose" aria-label="Cerrar">${ic("x")}</button></div>
+<p class="hub-t">Una medida concreta: qué harías y para qué. Se revisa antes de publicarse y aparecerá en su categoría con tu alias, marcada como propuesta ciudadana.</p>
+<label class="field">Título de la medida<input name="title" maxlength="140" placeholder="Por ejemplo: Transporte público gratuito para menores de 26"></label>
+<label class="field">Explícala<textarea name="body" maxlength="2000" placeholder="Qué propones, a quién afecta y qué problema resuelve."></textarea></label>
+<label class="field">Categoría<select name="block"><option value="">Elige la categoría que mejor encaje</option>${blocks.map(b=>`<option>${esc(b.nombre)}</option>`).join("")}</select></label>
+<label class="field">Alias (se mostrará junto a tu propuesta)<input name="alias" maxlength="40" autocomplete="nickname" value="${esc(ls.get("epf-alias")||"")}"></label>
+<p class="form-msg" id="prpMsg" role="status"></p><button class="btn btn-accent" type="submit">Enviar propuesta</button>
+<p class="note">No se publican amenazas, acoso, incitación a la violencia ni ataques discriminatorios. No uses tu nombre completo si no quieres que sea público.</p></form>`;
+ if(!d.open)d.showModal();
+}
+async function submitPropon(form){
+ const msg=$("prpMsg"),title=form.title.value.trim(),body=form.body.value.trim(),alias=form.alias.value.trim(),b=form.querySelector("button[type=submit]");
+ const fail=(t,el)=>{msg.className="form-msg err";msg.textContent=t;if(el)el.focus()};
+ if(title.length<8)return fail("Escribe un título de al menos 8 caracteres.",form.title);
+ if(body.length<20)return fail("Explica la medida con al menos 20 caracteres.",form.body);
+ if(!form.block.value)return fail("Elige una categoría.",form.block);
+ if(alias.length<2)return fail("Escribe un alias de al menos 2 caracteres.",form.alias);
+ if(!S.ready)return fail("Sin conexión con el servidor. Inténtalo de nuevo en unos minutos.");
+ b.disabled=true;msg.className="form-msg";msg.textContent="Enviando…";
+ try{
+  const r=await api.idea(alias,title,body,form.block.value);
+  if(r&&r.error){b.disabled=false;return fail(r.error==="rate_limit"?"Has enviado varias propuestas hoy. Inténtalo de nuevo mañana.":"Revisa los datos e inténtalo de nuevo.")}
+  ls.set("epf-alias",alias);S.myIdeas.unshift(toIdea({id:r.id,title,body,alias,block:form.block.value,at:new Date().toISOString()},true));
+  $("propon").close();S.filter=CIT;S.q="";$("q").value="";renderChips();renderGrid();
+  if(S.view!=="medidas")location.hash="#medidas";else window.scrollTo(0,0);
+  toast("Propuesta recibida. Se publicará cuando se revise.");
+ }catch(e){fail(errMsg(e))}
  b.disabled=false;
 }
 
@@ -988,16 +1053,16 @@ function renderFeats(){
 <button type="button" data-act="open" data-id="${p.id}">Ver y votar ${ic("arrow-right")}</button></article>`).join("");
 }
 function renderChips(){
- const counts={};props.forEach(p=>counts[p.block]=(counts[p.block]||0)+1);
+ const counts={};[...props,...S.ideas].forEach(p=>counts[p.block]=(counts[p.block]||0)+1);
  const chip=(name,n,b)=>`<button type="button" class="cat" data-act="chip" data-b="${esc(name)}" aria-pressed="${S.filter===name&&!S.q.trim()}"${b?` style="--c:${colorOf({block:b.nombre})}"`:""}>${b?ic(b.icono):ic("check")}<span>${esc(name)}</span><small>${n}</small></button>`;
  const bs=blocks.filter(b=>counts[b.nombre]);
- $("chips").innerHTML=bs.map(b=>chip(b.nombre,counts[b.nombre],b)).join("");
- $("catSel").innerHTML=bs.map(b=>`<option value="${esc(b.nombre)}">${esc(b.nombre)} (${counts[b.nombre]})</option>`).join("");
+ $("chips").innerHTML=bs.map(b=>chip(b.nombre,counts[b.nombre],b)).join("")+`<h3>De la gente</h3>`+chip(CIT,S.ideas.length,blockBy[CIT]);
+ $("catSel").innerHTML=bs.map(b=>`<option value="${esc(b.nombre)}">${esc(b.nombre)} (${counts[b.nombre]})</option>`).join("")+`<option value="${CIT}">${CIT} (${S.ideas.length})</option>`;
  $("catSel").value=S.filter;
 }
 function visible(){
  const q=norm(S.q.trim());
- let list=props.filter(p=>(q?true:p.block===S.filter)&&(!q||norm([p.title,p.desc,p.plan||"",p.goal||"",p.block,(p.measures||[]).join(" "),(p.datos||[]).join(" ")].join(" ")).includes(q)));
+ let list=[...props,...S.ideas].filter(p=>(q?true:S.filter===CIT?p.citizen:p.block===S.filter)&&(!q||norm([p.title,p.desc,p.plan||"",p.goal||"",p.block,(p.measures||[]).join(" "),(p.datos||[]).join(" ")].join(" ")).includes(q)));
  const net=p=>{const t=tot(p.id),n=t.up+t.down;return n?t.up/n:-1};
  if(S.sort==="apoyo")list=[...list].sort((a,b)=>net(b)-net(a)||tot(b.id).up-tot(a.id).up);
  if(S.sort==="votos")list=[...list].sort((a,b)=>tot(b.id).up+tot(b.id).down-tot(a.id).up-tot(a.id).down);
@@ -1007,8 +1072,8 @@ function visible(){
 function card(p){
  const n=comsOf(p.id).length;
  const cs=comsOf(p.id);
- return `<article class="card" style="--c:${colorOf(p)}"><svg class="card-ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg><span class="blk">${ic(iconOf(p))}${esc(p.block)}${p.plan?'<span class="plan-chip">Plan 2027–2034</span>':""}</span>
-<h3><button type="button" data-act="open" data-id="${p.id}">${esc(p.title)}</button></h3><p class="clamp">${esc(p.desc)}</p>${datosHTML(p,2)}
+ return `<article class="card" style="--c:${colorOf(p)}"><svg class="card-ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg><span class="blk">${ic(iconOf(p))}${esc(p.block)}${p.plan?'<span class="plan-chip">Plan 2027–2034</span>':""}${p.citizen?'<span class="plan-chip cit-chip">Propuesta ciudadana</span>':""}</span>
+<h3><button type="button" data-act="open" data-id="${p.id}">${esc(p.title)}</button></h3>${p.citizen?`<p class="by">Propuesta de <b>${esc(p.alias)}</b>, no del programa</p>`:""}<p class="clamp">${esc(p.desc)}</p>${datosHTML(p,2)}
 ${voteBox(p.id)}${n?`<p class="quote"><b>${esc(cs[0].alias)}:</b> ${esc(cs[0].body)}</p>`:""}
 <div class="card-foot"><button type="button" class="ghost" data-act="open" data-id="${p.id}" data-to="coms">${ic("chat-circle")}${n?`${n} ${n===1?"opinión":"opiniones"}`:"Opinar"}</button><button type="button" class="ghost" data-act="share" data-id="${p.id}">${ic("share-network")}Compartir</button></div></article>`;
 }
@@ -1017,17 +1082,24 @@ function renderGrid(){
 
  // Sin búsqueda se ve una sola categoría; al buscar, se busca en todas.
  const q=S.q.trim(),b=blockBy[S.filter]||{},c=colorOf({block:S.filter});
+ if(!q&&S.filter===CIT){
+  const mine=S.myIdeas.map(p=>`<article class="card pend-card" style="--c:${c}"><span class="blk">${ic("chat-circle")}Tu propuesta · pendiente de revisión</span><h3>${esc(p.title)}</h3><p class="clamp">${esc(p.desc)}</p><p class="note">Solo la ves tú. Aparecerá aquí para todos cuando se revise.</p></article>`).join("");
+  $("grid").innerHTML=`<h3 class="grid-h" style="--c:${c}">${ic("chat-circle")}${CIT}<small>${list.length} ${list.length===1?"propuesta":"propuestas"}</small></h3>
+<div class="cit-intro"><p>Medidas que propone la gente. Cada una aparece también dentro de su categoría, marcada como propuesta ciudadana. Se revisan antes de publicarse, y no se rechaza ninguna por ser contraria al programa. Puedes votarlas, opinar y compartirlas igual que las demás.</p><button type="button" class="btn btn-accent" data-act="propon">Propón tu medida</button></div>`
+   +mine+(list.map(card).join("")||(mine?"":`<div class="empty"><p>Todavía no hay propuestas publicadas. La primera puede ser la tuya.</p></div>`));
+  return;
+ }
  const head=q?`<h3 class="grid-h">${ic("magnifying-glass")}Resultados de «${esc(q)}»<small>${list.length} ${list.length===1?"medida":"medidas"}</small></h3>`
   :`<h3 class="grid-h" style="--c:${c}">${ic(b.icono)}${esc(S.filter)}<small>${list.length} medidas</small></h3>${b.nota?`<p class="blk-nota">${esc(b.nota)}</p>`:""}`;
  $("grid").innerHTML=head+(list.map(card).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Volver a las categorías</button></div>`);
 }
 function renderRank(){
- const rows=props.map(p=>({p,t:tot(p.id)})).filter(r=>r.t.up+r.t.down>0);
+ const rows=[...props,...S.ideas].map(p=>({p,t:tot(p.id)})).filter(r=>r.t.up+r.t.down>0);
  if(!rows.length){$("rank").innerHTML=`<div class="empty"><p>Todavía no hay votos. El primero puede ser el tuyo.</p><button class="btn btn-accent" data-act="quiz">Vota el programa</button></div>`;return}
  const m=S.rank;
  rows.sort((a,b)=>m==="rechazo"?(b.t.down-a.t.down||a.t.up-b.t.up):m==="votos"?(b.t.up+b.t.down-a.t.up-a.t.down):((b.t.up-b.t.down)-(a.t.up-a.t.down)||b.t.up-a.t.up));
  const top=rows.slice(0,10),max=Math.max(...top.map(r=>r.t.up+r.t.down));
- $("rank").innerHTML=`<ol class="rank">${top.map((r,i)=>`<li><span class="rank-n">${i+1}</span><button type="button" class="rank-t" data-act="open" data-id="${r.p.id}" style="--c:${colorOf(r.p)}">${esc(r.p.title)}<small>${esc(r.p.block)}</small></button>
+ $("rank").innerHTML=`<ol class="rank">${top.map((r,i)=>`<li><span class="rank-n">${i+1}</span><button type="button" class="rank-t" data-act="open" data-id="${r.p.id}" style="--c:${colorOf(r.p)}">${esc(r.p.title)}<small>${esc(r.p.block)}${r.p.citizen?` · Propuesta de ${esc(r.p.alias)}`:""}</small></button>
 <div class="rank-bar" role="img" aria-label="${r.t.up} a favor y ${r.t.down} en contra"><i class="g" style="width:${r.t.up/max*100}%"></i><i class="r" style="width:${r.t.down/max*100}%"></i></div>
 <span class="rank-v"><b>${nf.format(r.t.up)}</b> · <em>${nf.format(r.t.down)}</em></span></li>`).join("")}</ol>`;
 }
@@ -1093,7 +1165,7 @@ const baseUrl=()=>location.href.split("#")[0].split("?")[0].replace(/index\.html
 // En local (pruebas) se usa la dirección pública declarada en <link rel="canonical">.
 const CANON=(document.querySelector('link[rel="canonical"]')||{}).href||"";
 const siteUrl=()=>onWeb?baseUrl():CANON;
-const urlOf=id=>siteUrl()?(id?`${siteUrl()}medida/${id}/`:siteUrl()):"";
+const urlOf=id=>siteUrl()?(id?((byId[id]||{}).citizen?`${siteUrl()}#m=${id}`:`${siteUrl()}medida/${id}/`):siteUrl()):"";
 const shortUrl=()=>siteUrl().replace(/^https?:\/\//,"").replace(/\/$/,"");
 function shareLinks(text,url){
  const t=encodeURIComponent(text),u=encodeURIComponent(url),tu=encodeURIComponent(text+" "+url);
@@ -1241,7 +1313,7 @@ function openDetail(id,to){
  const p=byId[id];if(!p)return;openId=id;const d=$("detalle");
  d.style.setProperty("--c",colorOf(p));
  d.innerHTML=`<div class="sheet-top"><span class="blk">${ic(iconOf(p))}${esc(p.block)}</span><button type="button" class="x" data-act="close" aria-label="Cerrar">${ic("x")}</button></div>
-<div class="sheet-body"><h2 id="dT">${esc(p.title)}</h2><p>${esc(p.desc)}</p>
+<div class="sheet-body"><h2 id="dT">${esc(p.title)}</h2>${p.citizen?`<p class="by"><span class="plan-chip cit-chip" style="margin:0 8px 0 0">Propuesta ciudadana</span>Propuesta de <b>${esc(p.alias)}</b>, no del programa · ${fdate(p.at)}</p>`:""}<p style="white-space:pre-wrap">${esc(p.desc)}</p>
 ${p.plan?`<div class="box plan"><h3>Plan 2027–2034</h3><p>${esc(p.plan)}</p></div>`:""}
 ${datosHTML(p,0," big")}
 ${p.goal?`<div class="box goal"><h3>Objetivo</h3><p>${esc(p.goal)}</p></div>`:""}
@@ -1264,7 +1336,7 @@ ${firmasHTML(id)}
 function closeDetail(){const d=$("detalle");if(d.open)d.close()}
 $("detalle").addEventListener("close",()=>{openId=null;if(location.hash.startsWith("#m="))history.replaceState(null,"","#"+S.view)});
 // Pestañas: #inicio, #plan, #medidas y #resultados (y los nombres antiguos de las secciones).
-const VIEW_OF={inicio:"inicio",top:"inicio",destacadas:"inicio","plan-resumen":"inicio",difunde:"inicio",como:"inicio",medidas:"medidas",programa:"medidas",plan:"plan",resultados:"resultados",ranking:"resultados"};
+const VIEW_OF={inicio:"inicio",top:"inicio",destacadas:"inicio","propon-sec":"inicio","plan-resumen":"inicio",difunde:"inicio",como:"inicio",medidas:"medidas",programa:"medidas",plan:"plan",resultados:"resultados",ranking:"resultados"};
 function setView(v,keepScroll){
  S.view=v;document.querySelectorAll("[data-view]").forEach(e=>{e.hidden=e.dataset.view!==v});
  document.querySelectorAll(".tab").forEach(t=>{if(t.dataset.v===v)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
@@ -1340,6 +1412,9 @@ document.addEventListener("click",async e=>{
  else if(a==="img"){el.disabled=true;try{await saveCanvas(await drawCard(byId[id],"post"),id+".png",byId[id].title)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="resimg"){el.disabled=true;try{await saveCanvas(await drawResult(el.dataset.pct,el.dataset.n),"mi-resultado.png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="chip"){S.filter=el.dataset.b;S.q="";$("q").value="";renderChips();renderGrid();if($("grid").getBoundingClientRect().top<0)window.scrollTo(0,0)}
+ else if(a==="propon"){if(!S.ready){toast("Sin conexión con el servidor.");return}openPropon()}
+ else if(a==="prpclose")$("propon").close();
+ else if(a==="cit"){S.filter=CIT;S.q="";$("q").value="";renderChips();renderGrid();if(S.view!=="medidas")location.hash="#medidas";else window.scrollTo(0,0)}
  else if(a==="alert")openAlert(id);
  else if(a==="alert1"){el.disabled=true;try{await sendAlert(id,AL.email(),false);toast("Hecho. Te avisaremos también de esta medida.")}catch(x){el.disabled=false;toast(x.code==="rate_limit"?errMsg(x):"No se pudo guardar. Inténtalo de nuevo.")}}
  else if(a==="avclose")$("aviso").close();
@@ -1355,7 +1430,7 @@ document.addEventListener("click",async e=>{
  else if(a==="retry"){banner("");load()}
  else if(a==="report"){try{await api.report(+el.dataset.c);toast("Gracias. Revisaremos esa opinión.");el.disabled=true}catch(x){toast(errMsg(x))}}
 });
-document.addEventListener("submit",e=>{if(e.target.id==="comForm"){e.preventDefault();submitComment(e.target)}else if(e.target.id==="avForm"){e.preventDefault();submitAlert(e.target)}});
+document.addEventListener("submit",e=>{if(e.target.id==="comForm"){e.preventDefault();submitComment(e.target)}else if(e.target.id==="avForm"){e.preventDefault();submitAlert(e.target)}else if(e.target.id==="prpForm"){e.preventDefault();submitPropon(e.target)}});
 $("quiz").addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;if(e.key==="ArrowRight")quizAnswer(1);else if(e.key==="ArrowLeft")quizAnswer(-1);else if(e.key==="ArrowDown")quizAnswer(0)});
 $("quiz").addEventListener("close",()=>{renderGrid()});
 $("aviso").addEventListener("input",()=>{const m=$("avMsg");if(m){m.textContent="";m.className="form-msg"}});
