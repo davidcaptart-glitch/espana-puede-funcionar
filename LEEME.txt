@@ -16,6 +16,8 @@ QUÉ HAY EN LA CARPETA
 - og/               Imágenes de vista previa para redes (una por medida + portada).
 - fuentes/          Tipografía (Bricolage Grotesque, licencia libre OFL).
 - herramientas/     generar.js
+- plan.js           El Plan 2027–2034: resumen, calendario año a año, financiación, escenarios y ejemplos.
+                    Son los textos y cifras literales del documento del plan; para cambiarlos, edita ese archivo.
 
 CAMBIAR O AÑADIR MEDIDAS
 - Edita propuestas.js. No cambies el "id" de una medida publicada: los votos y opiniones van ligados a él.
@@ -29,6 +31,8 @@ CAMBIAR O AÑADIR MEDIDAS
     "tablas":   tablas de tramos, por ejemplo [{"t":"Título","h":["Columna 1","Columna 2"],"r":[["a","b"]]}].
     "measures": la lista "Qué incluye".
     "pending":  lo que queda "Pendiente de concretar".
+    "plan":     cuándo se aplica dentro del Plan 2027–2034 (sale destacado y pone el distintivo en la tarjeta).
+    "nota":     frases que van debajo de las tablas.
 - No inventes cifras: pon solo las que estén aprobadas en el documento del programa.
 
 COMPARTIR E INSTAGRAM

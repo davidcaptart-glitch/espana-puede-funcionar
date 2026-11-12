@@ -2,6 +2,7 @@
 // IMPORTANTE: no cambies el "id" de una medida ya publicada: los votos y comentarios van ligados a él.
 // Para añadir una medida, copia un bloque { ... } y dale un id nuevo (minúsculas, números y guiones).
 // Campos opcionales: "datos" (cifras destacadas: [["40.000 €","explicación"],…]) y "tablas" ([{t:"título",h:[cabeceras],r:[filas]}]).
+// "plan" (texto del calendario 2027–2034, sale destacado) y "nota" (lista de frases bajo las tablas).
 // Después de añadir o cambiar títulos, vuelve a ejecutar herramientas/generar.js (ver LEEME.txt).
 window.PROGRAMA={
 // Medidas que aparecen en "Para empezar" (por id)
@@ -20,11 +21,11 @@ bloques:[
  {"nombre":"Empleo, autónomos y protección social","color":"#5d56a7","icono":"briefcase"},
  {"nombre":"Gasto público y sostenibilidad financiera","color":"#4c5caa","icono":"coins"},
  {"nombre":"Vivienda","color":"#3861aa","icono":"house-line"},
- {"nombre":"Sanidad","color":"#1a66a7","icono":"heartbeat"},
- {"nombre":"Educación","color":"#006ba1","icono":"graduation-cap"},
+ {"nombre":"Sanidad","color":"#1a66a7","icono":"heartbeat","nota":"Estos objetivos se alcanzan de forma progresiva entre 2027 y 2034 y se financian con el ahorro de la administración y la reordenación del gasto."},
+ {"nombre":"Educación","color":"#006ba1","icono":"graduation-cap","nota":"Estos objetivos se alcanzan de forma progresiva entre 2027 y 2034 y se financian con el ahorro de la administración y la reordenación del gasto."},
  {"nombre":"Industria y economía productiva","color":"#007099","icono":"factory"},
  {"nombre":"Justicia y seguridad","color":"#00738e","icono":"scales"},
- {"nombre":"Infraestructuras y territorio","color":"#007682","icono":"train-regional"},
+ {"nombre":"Infraestructuras y territorio","color":"#007682","icono":"train-regional","nota":"Estos objetivos se alcanzan de forma progresiva entre 2027 y 2034 y se financian con el ahorro de la administración y la reordenación del gasto."},
  {"nombre":"Política internacional, inmigración y defensa","color":"#007873","icono":"globe-hemisphere-west"},
  {"nombre":"Medio ambiente y sostenibilidad","color":"#007964","icono":"leaf"},
  {"nombre":"Agricultura, ganadería y pesca","color":"#007953","icono":"grains"},
@@ -256,11 +257,11 @@ propuestas:[
   "id": "revocacion-anticipada-del-gobierno",
   "block": "Transparencia y control político",
   "title": "Revocación anticipada del Gobierno",
-  "desc": "Los ciudadanos podrán iniciar un proceso para revocar al Gobierno si incumple compromisos fundamentales. Se activa con las firmas del 10 % del censo electoral y se decide en referéndum.",
+  "desc": "Los ciudadanos podrán iniciar un proceso para revocar al Gobierno si incumple compromisos fundamentales. Se activa con las firmas del 10% del censo electoral y se decide en referéndum.",
   "goal": "Que el voto no sea un cheque en blanco durante cuatro años.",
   "datos": [
    [
-    "10 %",
+    "10%",
     "del censo electoral para activarla"
    ],
    [
@@ -273,7 +274,7 @@ propuestas:[
    ]
   ],
   "measures": [
-   "Umbral de activación: firmas del 10 % del censo electoral nacional.",
+   "Umbral de activación: firmas del 10% del censo electoral nacional.",
    "Firmas digitales y físicas verificadas por una autoridad electoral independiente.",
    "No puede activarse durante el primer año de legislatura, y solo una vez por legislatura.",
    "Exige justificación pública y memoria de cumplimiento.",
@@ -372,24 +373,25 @@ propuestas:[
   "block": "Fiscalidad y modelo económico",
   "title": "Autónomos: sin cuota fija y pagando según el beneficio",
   "desc": "Se elimina la cuota mensual fija. El autónomo tributa y cotiza sobre su beneficio neto, no sobre lo que factura: si no hay beneficio, no paga. Por debajo de 85.000 € de facturación, IVA simplificado o franquicia.",
+  "plan": "Desde 2027: cuota cero cuando no hay beneficio, primer paso de la cotización por beneficio real y franquicia de IVA para facturación inferior a 85.000 €. La tabla completa del 2% al 10% llega después de 2034.",
   "goal": "Que empezar una actividad no cueste dinero antes de ganarlo.",
   "datos": [
    [
     "0 €",
-    "de cuota fija mensual"
+    "de cuota cuando no hay beneficio, desde 2027"
    ],
    [
     "85.000 €",
     "de facturación: IVA simplificado o franquicia"
    ],
    [
-    "2–10 %",
+    "2–10%",
     "cotización según beneficio"
    ]
   ],
   "tablas": [
    {
-    "t": "Cotización propuesta",
+    "t": "Cotización final (después de 2034)",
     "h": [
      "Beneficio anual",
      "Cotización"
@@ -397,23 +399,23 @@ propuestas:[
     "r": [
      [
       "Hasta 12.000 €",
-      "2 %"
+      "2%"
      ],
      [
       "12.000–24.000 €",
-      "4 %"
+      "4%"
      ],
      [
       "24.000–40.000 €",
-      "6 %"
+      "6%"
      ],
      [
       "40.000–60.000 €",
-      "8 %"
+      "8%"
      ],
      [
       "Más de 60.000 €",
-      "10 %"
+      "10%"
      ]
     ]
    }
@@ -429,22 +431,55 @@ propuestas:[
  {
   "id": "irpf-40000-euros-exentos",
   "block": "Fiscalidad y modelo económico",
-  "title": "IRPF: los primeros 40.000 € de salario, sin impuesto",
-  "desc": "Mínimo exento de 40.000 € anuales para las rentas salariales y del trabajo, y cuatro tramos marginales del 15 % al 30 % a partir de ahí. Tener varios pagadores deja de penalizar.",
+  "title": "IRPF: 30.000 € de salario libres en 2034, con 40.000 € como objetivo",
+  "desc": "Mínimo exento para rentas salariales: 30.000 € anuales en 2034. El objetivo final es 40.000 €. La tarifa final tiene cuatro tramos marginales del 15% al 30%, y tener varios pagadores deja de penalizar.",
   "goal": "Aumentar la renta disponible de quienes viven de su salario, manteniendo la progresividad.",
   "datos": [
    [
-    "40.000 €",
-    "de salario bruto anual exentos"
+    "30.000 €",
+    "de salario libre de IRPF en 2034"
    ],
    [
-    "30 %",
-    "tipo marginal máximo"
+    "40.000 €",
+    "objetivo final"
    ]
   ],
   "tablas": [
    {
-    "t": "Tramos marginales sobre el salario",
+    "t": "Calendario del salario libre de IRPF",
+    "h": [
+     "Año",
+     "Salario libre de IRPF"
+    ],
+    "r": [
+     [
+      "Hoy",
+      "Unos 17.100 €"
+     ],
+     [
+      "2028",
+      "20.000 €"
+     ],
+     [
+      "2029",
+      "22.500 €"
+     ],
+     [
+      "2030",
+      "25.000 €"
+     ],
+     [
+      "2032",
+      "27.500 €"
+     ],
+     [
+      "2034",
+      "30.000 €"
+     ]
+    ]
+   },
+   {
+    "t": "Tarifa final (después de 2034)",
     "h": [
      "Tramo de salario",
      "Tipo"
@@ -452,26 +487,29 @@ propuestas:[
     "r": [
      [
       "Hasta 40.000 €",
-      "0 %"
+      "0%"
      ],
      [
       "40.000–50.000 €",
-      "15 %"
+      "15%"
      ],
      [
       "50.000–65.000 €",
-      "20 %"
+      "20%"
      ],
      [
       "65.000–80.000 €",
-      "25 %"
+      "25%"
      ],
      [
       "Más de 80.000 €",
-      "30 %"
+      "30%"
      ]
     ]
    }
+  ],
+  "nota": [
+   "Hasta 2034, por encima del mínimo exento se mantienen los tipos actuales. El mínimo exento se aplica a salarios; las pensiones mantienen su tributación actual durante el plan."
   ],
   "measures": [
    "El mínimo exento se calcula sobre el salario bruto anual antes de cotizaciones sociales.",
@@ -486,6 +524,7 @@ propuestas:[
   "block": "Fiscalidad y modelo económico",
   "title": "1.200 € al año por cada hijo o adulto dependiente",
   "desc": "Crédito fiscal de 1.200 € anuales por cada hijo dependiente y por cada adulto dependiente. Es reembolsable: se cobra aunque supere lo que se paga de impuestos, y no hay límite de dependientes por hogar.",
+  "plan": "Calendario: menores de 18 años y adultos dependientes, desde 2029; jóvenes de 18 a 25 años, desde 2032.",
   "goal": "Apoyar a quien mantiene a otras personas, también cuando sus ingresos son bajos.",
   "datos": [
    [
@@ -513,6 +552,7 @@ propuestas:[
   "block": "Fiscalidad y modelo económico",
   "title": "Deducciones por alquiler, hipoteca, formación y cuidados",
   "desc": "Ocho deducciones reembolsables por gastos documentados, con un tope global de 6.000 € al año por contribuyente. Los créditos familiares quedan fuera de ese tope.",
+  "plan": "Desde 2032 se aplican tres deducciones, con la mitad de su límite final: alquiler de vivienda habitual (15%, hasta 750 €), intereses de hipoteca habitual (15%, hasta 750 €) y familia y cuidados (20%, hasta 1.000 €). Las demás deducciones y los límites completos llegan después de 2034.",
   "goal": "Devolver parte de lo que las familias gastan en vivienda, formación, cuidados y ahorro.",
   "datos": [
    [
@@ -526,7 +566,7 @@ propuestas:[
   ],
   "tablas": [
    {
-    "t": "Deducciones y límites anuales",
+    "t": "Deducciones finales (después de 2034)",
     "h": [
      "Concepto",
      "Deducción",
@@ -535,42 +575,42 @@ propuestas:[
     "r": [
      [
       "Alquiler de vivienda habitual",
-      "15 %",
+      "15%",
       "1.500 €"
      ],
      [
       "Intereses de hipoteca habitual",
-      "15 %",
+      "15%",
       "1.500 €"
      ],
      [
       "Rehabilitación y accesibilidad",
-      "20 %",
+      "20%",
       "3.000 €"
      ],
      [
       "Eficiencia energética",
-      "25 %",
+      "25%",
       "2.500 €"
      ],
      [
       "Educación y formación",
-      "20 %",
+      "20%",
       "1.500 €"
      ],
      [
       "Familia y cuidados",
-      "20 %",
+      "20%",
       "2.000 €"
      ],
      [
       "Donaciones admitidas",
-      "30 %",
-      "10 % de la base"
+      "30%",
+      "10% de la base"
      ],
      [
       "Ahorro e inversión productiva",
-      "15 %",
+      "15%",
       "2.000 €"
      ]
     ]
@@ -606,6 +646,7 @@ propuestas:[
   "block": "Fiscalidad y modelo económico",
   "title": "Sin impuestos de Patrimonio, Sucesiones ni Donaciones",
   "desc": "Se eliminan los tres como figuras independientes. Lo heredado o donado no tributa al recibirse: solo se grava la ganancia real, descontada la inflación, cuando el receptor lo vende.",
+  "plan": "Se eliminan en 2030.",
   "goal": "No gravar dos veces lo que ya pagó impuestos, ni obligar a vender para heredar.",
   "datos": [
    [
@@ -630,11 +671,12 @@ propuestas:[
   "id": "ahorro-e-inversion-solo-ganancias-reales",
   "block": "Fiscalidad y modelo económico",
   "title": "Ahorro e inversión: solo tributan las ganancias reales",
-  "desc": "Nunca se grava el capital ni las plusvalías no realizadas. Las ganancias se ajustan por inflación y tributan en cuatro tramos del 10 % al 25 %.",
+  "desc": "Nunca se grava el capital ni las plusvalías no realizadas. Las ganancias se ajustan por inflación y tributan en cuatro tramos del 10% al 25%.",
+  "plan": "Se aplica desde 2033.",
   "goal": "No cobrar impuestos por una subida de precios que solo es inflación.",
   "datos": [
    [
-    "10–25 %",
+    "10–25%",
     "tipos sobre la ganancia real"
    ],
    [
@@ -652,19 +694,19 @@ propuestas:[
     "r": [
      [
       "Hasta 5.000 €",
-      "10 %"
+      "10%"
      ],
      [
       "5.000–20.000 €",
-      "15 %"
+      "15%"
      ],
      [
       "20.000–50.000 €",
-      "20 %"
+      "20%"
      ],
      [
       "Más de 50.000 €",
-      "25 %"
+      "25%"
      ]
     ]
    }
@@ -680,48 +722,74 @@ propuestas:[
  {
   "id": "iva-en-tres-tipos",
   "block": "Fiscalidad y modelo económico",
-  "title": "IVA en tres tipos: 0 %, 10 % y 18 %",
-  "desc": "Productos esenciales al 0 %, consumo común al 10 % y un tipo general del 18 %.",
+  "title": "IVA en tres tipos: 0%, 10% y 18%",
+  "desc": "Productos esenciales al 0% desde 2027, consumo común al 10% y un tipo general que baja al 20% en 2031 y al 19% en 2033, con el 18% como objetivo final.",
   "goal": "Abaratar lo esencial y simplificar el impuesto.",
   "datos": [
    [
-    "0 %",
-    "productos esenciales"
+    "0%",
+    "productos esenciales, desde 2027"
    ],
    [
-    "10 %",
-    "consumo común"
+    "19%",
+    "tipo general en 2033"
    ],
    [
-    "18 %",
-    "tipo general"
+    "18%",
+    "tipo general, objetivo final"
    ]
   ],
-  "measures": [
-   "Tipo del 0 % para productos esenciales.",
-   "Tipo del 10 % para consumo común.",
-   "Tipo general del 18 %."
+  "tablas": [
+   {
+    "t": "Tipos de IVA",
+    "h": [
+     "Tipo",
+     "Hoy",
+     "Plan 2027–2034",
+     "Objetivo final"
+    ],
+    "r": [
+     [
+      "Productos esenciales",
+      "4%",
+      "0% desde 2027",
+      "0%"
+     ],
+     [
+      "Consumo común",
+      "10%",
+      "10%",
+      "10%"
+     ],
+     [
+      "General",
+      "21%",
+      "20% en 2031 y 19% en 2033",
+      "18%"
+     ]
+    ]
+   }
   ],
   "pending": "Comprobar la compatibilidad con la Directiva europea del IVA y las categorías que admite para tipos reducidos o cero."
  },
  {
   "id": "impuesto-de-sociedades-por-tamano",
   "block": "Fiscalidad y modelo económico",
-  "title": "Impuesto de sociedades del 10 % al 18 % según tamaño",
-  "desc": "Tipos nominales progresivos según el tamaño de la empresa, y un tipo del 5 % durante los dos primeros ejercicios con beneficio para las empresas nuevas.",
+  "title": "Impuesto de sociedades del 10% al 18% según tamaño",
+  "desc": "Tipos nominales progresivos según el tamaño de la empresa, y un tipo del 5% durante los dos primeros ejercicios con beneficio para las empresas nuevas.",
   "goal": "Que las empresas pequeñas paguen menos y crecer no se castigue de golpe.",
   "datos": [
    [
-    "10 %",
-    "microempresas"
+    "10%",
+    "microempresas, desde 2027"
    ],
    [
-    "18 %",
-    "grandes empresas"
+    "18%",
+    "grandes empresas, en 2034"
    ],
    [
-    "5 %",
-    "empresas nuevas, dos ejercicios"
+    "5%",
+    "empresas nuevas, desde 2027"
    ]
   ],
   "tablas": [
@@ -729,24 +797,29 @@ propuestas:[
     "t": "Tipos por tamaño de empresa",
     "h": [
      "Empresa",
-     "Tipo"
+     "Tipo",
+     "Desde"
     ],
     "r": [
      [
       "Microempresa",
-      "10 %"
+      "10%",
+      "2027"
      ],
      [
       "Pequeña",
-      "12 %"
+      "12%",
+      "2027"
      ],
      [
       "Mediana",
-      "15 %"
+      "15%",
+      "2030"
      ],
      [
       "Grande",
-      "18 %"
+      "23% en 2033 y 18% en 2034",
+      "2033"
      ]
     ]
    }
@@ -754,9 +827,9 @@ propuestas:[
   "measures": [
    "Clasificación por facturación, trabajadores y beneficio neto.",
    "Se agregan grupos y empresas vinculadas para evitar la fragmentación artificial.",
-   "Empresas nuevas: tipo del 5 % en los dos primeros ejercicios con beneficio positivo, con actividad real en España.",
+   "Empresas nuevas (se aplica desde 2027): tipo del 5% en los dos primeros ejercicios con beneficio positivo, con actividad real en España.",
    "No vale para empresas creadas por escisión solo para beneficiarse del tipo reducido.",
-   "Las deducciones no pueden reducir más del 70 % de la cuota bruta: siempre se paga al menos el 30 %.",
+   "Las deducciones no pueden reducir más del 70% de la cuota bruta: siempre se paga al menos el 30%.",
    "Las deducciones no usadas se pueden aplicar durante diez ejercicios."
   ]
  },
@@ -764,19 +837,20 @@ propuestas:[
   "id": "incentivos-a-la-inversion-productiva",
   "block": "Fiscalidad y modelo económico",
   "title": "Menos impuestos para la empresa que invierte, investiga y forma",
-  "desc": "Deducciones para inversiones reales: 40 % en I+D+i, 30 % en digitalización, 30 % en energía y medio ambiente y 30 % en formación, con un 10 % adicional en sectores estratégicos.",
+  "desc": "Deducciones para inversiones reales: 40% en I+D+i, 30% en digitalización, 30% en energía y medio ambiente y 30% en formación, con un 10% adicional en sectores estratégicos.",
+  "plan": "Calendario: la deducción del 40% en I+D+i se aplica desde 2027. Las deducciones de digitalización, energía y medio ambiente, formación y sectores estratégicos llegan después de 2034.",
   "goal": "Que el beneficio que se reinvierte en España tribute menos que el que no.",
   "datos": [
    [
-    "40 %",
+    "40%",
     "deducción en I+D+i"
    ],
    [
-    "30 %",
+    "30%",
     "digitalización, energía y formación"
    ],
    [
-    "+10 %",
+    "+10%",
     "en sectores estratégicos"
    ],
    [
@@ -785,10 +859,10 @@ propuestas:[
    ]
   ],
   "measures": [
-   "40 % en I+D+i acreditada: personal investigador, tecnología, prototipos, patentes y colaboración con universidades.",
-   "30 % en digitalización: ERP, CRM, sistemas industriales, IA, ciberseguridad y automatización.",
-   "30 % en inversiones energéticas y ambientales: autoconsumo, baterías, electrificación y maquinaria eficiente.",
-   "30 % en formación acreditada: técnica, industrial, robótica, IA, idiomas, seguridad y reciclaje.",
+   "40% en I+D+i acreditada: personal investigador, tecnología, prototipos, patentes y colaboración con universidades.",
+   "30% en digitalización: ERP, CRM, sistemas industriales, IA, ciberseguridad y automatización.",
+   "30% en inversiones energéticas y ambientales: autoconsumo, baterías, electrificación y maquinaria eficiente.",
+   "30% en formación acreditada: técnica, industrial, robótica, IA, idiomas, seguridad y reciclaje.",
    "Reserva de beneficios: diferimiento fiscal de lo retenido para invertir en España en un máximo de tres años; si no se invierte, se regulariza con intereses.",
    "Se exige mantenimiento de los activos, justificación, auditoría y ausencia de ayudas duplicadas."
   ],
@@ -797,12 +871,12 @@ propuestas:[
  {
   "id": "lucha-contra-el-fraude-fiscal",
   "block": "Fiscalidad y modelo económico",
-  "title": "Fraude fiscal: detección con IA, multas de hasta el 100 %",
+  "title": "Fraude fiscal: detección con IA, multas de hasta el 100%",
   "desc": "Cruce de datos e inteligencia artificial para detectar el fraude, siempre con investigación humana antes de sancionar. Se distingue el error de buena fe del fraude deliberado, que prescribe a los 20 años.",
   "goal": "Perseguir al que defrauda a propósito sin tratar como delincuente al que se equivoca.",
   "datos": [
    [
-    "100 %",
+    "100%",
     "multa máxima sobre lo defraudado"
    ],
    [
@@ -814,7 +888,7 @@ propuestas:[
     "sin ayudas ni contratos públicos"
    ],
    [
-    "−50 %",
+    "−50%",
     "de multa por regularizar antes de la inspección"
    ]
   ],
@@ -822,8 +896,8 @@ propuestas:[
    "Detección mediante IA y cruce de datos con autorización legal; investigación humana, explicación de motivos y derecho de defensa.",
    "Error involuntario de buena fe: corrección o regularización, sin sanción cuando corresponda.",
    "Negligencia grave: devolución más sanción proporcional.",
-   "Fraude deliberado: devolución, intereses y multa de hasta el 100 % de lo defraudado, y remisión a Fiscalía.",
-   "Regularización voluntaria antes de la inspección: reducción del 50 % de la multa; se pierde si se reincide en cinco años.",
+   "Fraude deliberado: devolución, intereses y multa de hasta el 100% de lo defraudado, y remisión a Fiscalía.",
+   "Regularización voluntaria antes de la inspección: reducción del 50% de la multa; se pierde si se reincide en cinco años.",
    "Empresas condenadas por fraude deliberado: cinco años sin ayudas ni contratación pública.",
    "Inspección independiente, seleccionada por mérito, sin comisiones ligadas a multas o recaudación y con rotación cada cuatro años.",
    "Sin registro público nominal de defraudadores: se publican estadísticas agregadas cada año."
@@ -837,8 +911,8 @@ propuestas:[
   "goal": "Igualdad de trato para la empresa que invierte y produce en España, sea de donde sea.",
   "datos": [
    [
-    "10 %",
-    "de capital privado español exigido a empresas extranjeras"
+    "10%",
+    "de capital privado español para inversores de fuera de la UE en sectores estratégicos"
    ]
   ],
   "measures": [
@@ -847,33 +921,62 @@ propuestas:[
    "Recuperación de impuestos cuando haya traslado artificial de beneficios.",
    "Devolución de ayudas e incentivos si se deslocaliza la producción incumpliendo compromisos, salvo insolvencia, fuerza mayor o reestructuración que preserve empleo.",
    "Mismos incentivos para empresas nacionales y extranjeras con inversión, empleo y actividad real.",
-   "Mínimo del 10 % de capital privado español en las empresas extranjeras que se establezcan en España, incluidas las europeas; sin capital público para cubrirlo."
-  ],
-  "pending": "La exigencia del 10 % de capital español tiene un riesgo jurídico muy elevado por la libre circulación de capitales y la libertad de establecimiento de la UE, y debe analizarse."
+   "Exigencia de un mínimo del 10% de capital privado español para inversores de fuera de la Unión Europea que se establezcan en sectores estratégicos. No se aplica a empresas de la Unión Europea."
+  ]
  },
  {
   "id": "cotizaciones-sociales-mas-bajas",
   "block": "Empleo, autónomos y protección social",
   "title": "Cotizaciones más bajas para contratar y cobrar más",
-  "desc": "Cotización empresarial objetivo del 10 % del salario bruto y cotización del trabajador del 0 % al 5 % según salario: quien gana hasta 15.000 € al año no cotiza.",
+  "desc": "La cotización que paga la empresa baja del ≈ 32% de hoy al 28,5% en 2034, con el 10% del salario bruto como objetivo final. La del trabajador baja un punto en 2031 y, después de 2034, pasa a una tabla del 0% al 5% según salario.",
+  "plan": "En 2031 la cotización del trabajador baja un punto, hasta cerca del 5,5%. La tabla por tramos llega después de 2034.",
   "goal": "Abaratar la contratación y subir el salario neto sin dejar desprotegidas a las personas.",
   "datos": [
    [
-    "10 %",
-    "cotización de la empresa"
+    "28,5%",
+    "cotización de la empresa en 2034"
    ],
    [
-    "0 %",
-    "cotización del trabajador hasta 15.000 €"
+    "10%",
+    "objetivo final de la empresa"
    ],
    [
-    "5 %",
-    "cotización máxima del trabajador"
+    "≈ 5,5%",
+    "cotización del trabajador desde 2031"
    ]
   ],
   "tablas": [
    {
-    "t": "Cotización del trabajador",
+    "t": "Cotización empresarial",
+    "h": [
+     "Año",
+     "Cotización empresarial"
+    ],
+    "r": [
+     [
+      "Hoy",
+      "≈ 32%"
+     ],
+     [
+      "2027",
+      "31%"
+     ],
+     [
+      "2031",
+      "30%"
+     ],
+     [
+      "2034",
+      "28,5%"
+     ],
+     [
+      "Objetivo final",
+      "10% del salario bruto"
+     ]
+    ]
+   },
+   {
+    "t": "Cotización final (después de 2034)",
     "h": [
      "Salario anual",
      "Cotización"
@@ -881,30 +984,29 @@ propuestas:[
     "r": [
      [
       "Hasta 15.000 €",
-      "0 %"
+      "0%"
      ],
      [
       "15.000–25.000 €",
-      "2 %"
+      "2%"
      ],
      [
       "25.000–40.000 €",
-      "3 %"
+      "3%"
      ],
      [
       "40.000–60.000 €",
-      "4 %"
+      "4%"
      ],
      [
       "Más de 60.000 €",
-      "5 %"
+      "5%"
      ]
     ]
    }
   ],
   "measures": [
-   "Objetivo de cotización empresarial: 10 % del salario bruto.",
-   "Cotización del trabajador progresiva, del 0 % al 5 %.",
+   "Cotización final del trabajador progresiva, del 0% al 5%.",
    "Eliminar las cargas que penalizan la contratación."
   ],
   "pending": "Estudiar qué parte de las prestaciones se financia con cotizaciones y qué parte con impuestos generales."
@@ -934,7 +1036,7 @@ propuestas:[
   "id": "bolsa-personal-de-desempleo",
   "block": "Empleo, autónomos y protección social",
   "title": "Tu paro es tuyo: bolsa personal que no caduca",
-  "desc": "Cada tres meses trabajados generan un mes de prestación, hasta 24 meses. El derecho se acumula entre empleos, incluye a los autónomos y no caduca. Los primeros 18 meses se cobra el 100 %.",
+  "desc": "Cada tres meses trabajados generan un mes de prestación, hasta 24 meses. El derecho se acumula entre empleos, incluye a los autónomos y no caduca. Se cobra entre el 70% y el 80% de la renta media de los últimos diez años, con tope.",
   "goal": "Una protección que acompaña a la persona, no al puesto, y que también cubre a los autónomos.",
   "datos": [
    [
@@ -946,65 +1048,65 @@ propuestas:[
     "máximo acumulable"
    ],
    [
-    "100 %",
-    "durante los primeros 18 meses"
+    "80%",
+    "de la renta media, los seis primeros meses"
    ]
   ],
   "tablas": [
    {
-    "t": "Porcentaje de la prestación",
+    "t": "Porcentaje de prestación",
     "h": [
-     "Periodo",
-     "Porcentaje"
+     "Meses de prestación",
+     "Porcentaje de la renta media de los últimos diez años"
     ],
     "r": [
      [
-      "Meses 1–18",
-      "100 %"
+      "1 a 6",
+      "80%"
      ],
      [
-      "Meses 19–20",
-      "90 %"
+      "7 a 12",
+      "75%"
      ],
      [
-      "Meses 21–22",
-      "80 %"
-     ],
-     [
-      "Meses 23–24",
-      "70 %"
+      "13 a 24",
+      "70%"
      ]
     ]
    }
+  ],
+  "nota": [
+   "Tope: 1,5 veces el SMI mensual normalizado (unos 2.140 € al mes con el SMI de 2026).",
+   "Tras una baja voluntaria, la prestación empieza a cobrarse a los tres meses."
   ],
   "measures": [
    "Tres meses trabajados generan un mes de prestación, hasta 24 meses.",
    "El derecho persiste entre empleos y actividades por cuenta propia, y no caduca.",
    "La cuantía se calcula sobre los ingresos medios de los últimos diez años, actualizados por inflación.",
    "Incluye salarios y rendimientos netos de autónomos.",
-   "Se contempla el derecho también tras una baja voluntaria."
-  ],
-  "pending": "Periodos de espera y medidas contra el fraude en caso de baja voluntaria."
+   "El derecho se mantiene tras una baja voluntaria, con una espera de tres meses."
+  ]
  },
  {
   "id": "pensiones-con-minima-universal",
   "block": "Empleo, autónomos y protección social",
-  "title": "Pensiones: reparto, mínima universal y jubilación flexible",
-  "desc": "Se mantiene el sistema de reparto y se garantiza una pensión mínima universal ligada al coste de vida, compatible con trabajar y con otros ingresos. La edad de jubilación irá de 65 a 70 años según el desgaste de cada profesión.",
+  "title": "Pensiones: reparto, mínima ligada al salario mínimo y jubilación flexible",
+  "desc": "Se mantiene el sistema de reparto y se garantiza una pensión mínima ligada al salario mínimo: el 75% del SMI anual, que sube cada año con él. La edad de jubilación irá de 65 a 70 años según el desgaste de cada profesión.",
   "goal": "Que nadie quede sin una pensión suficiente y que quien quiera seguir trabajando pueda hacerlo.",
   "datos": [
    [
-    "65–70",
-    "años, según desgaste profesional"
+    "75% del SMI",
+    "pensión mínima: unos 12.800 € con el SMI de 2026"
    ],
    [
-    "Universal",
-    "pensión mínima ligada al coste de vida"
+    "65–70",
+    "años, según desgaste profesional"
    ]
   ],
   "measures": [
    "Mantener el sistema de reparto.",
-   "Pensión mínima universal ligada al coste de vida, independiente de otros ingresos o patrimonio.",
+   "Garantizar una pensión mínima ligada al salario mínimo.",
+   "La pensión mínima queda ligada al salario mínimo: el 75% del SMI anual (unos 12.800 € con el SMI de 2026), y sube cada año con él. La cobra quien cumpla los requisitos de renta y residencia.",
    "Pensión contributiva según años cotizados y aportaciones.",
    "Edad de jubilación entre 65 y 70 años, fijada con criterios técnicos por una comisión independiente según el desgaste profesional.",
    "Jubilación anticipada voluntaria con reducción proporcional y excepciones.",
@@ -1024,7 +1126,7 @@ propuestas:[
     "se reduce la ayuda por cada euro ganado"
    ],
    [
-    "30 %",
+    "30%",
     "suelo a partir de 24 meses"
    ]
   ],
@@ -1038,23 +1140,23 @@ propuestas:[
     "r": [
      [
       "Meses 1–6",
-      "100 %"
+      "100%"
      ],
      [
       "Meses 7–12",
-      "85 %"
+      "85%"
      ],
      [
       "Meses 13–18",
-      "70 %"
+      "70%"
      ],
      [
       "Meses 19–24",
-      "50 %"
+      "50%"
      ],
      [
       "Más de 24 meses",
-      "30 %"
+      "30%"
      ]
     ]
    }
@@ -1062,7 +1164,7 @@ propuestas:[
   "measures": [
    "Reducción de 0,50 € de prestación por cada euro de ingreso neto.",
    "Suspensión al superar el umbral de ingresos y reactivación si vuelve la necesidad.",
-   "Un nuevo episodio real de necesidad permite recuperar el 100 %."
+   "Un nuevo episodio real de necesidad permite recuperar el 100%."
   ]
  },
  {
@@ -1081,14 +1183,14 @@ propuestas:[
     "de mantenimiento de la subida salarial"
    ],
    [
-    "30 %",
+    "30%",
     "deducción en formación"
    ]
   ],
   "measures": [
    "Deducción por creación neta de empleo indefinido, manteniéndolo 24 meses.",
    "Incentivos por aumentos salariales superiores a la inflación, mantenidos al menos 12 meses.",
-   "Deducción del 30 % en gastos de formación acreditados.",
+   "Deducción del 30% en gastos de formación acreditados.",
    "Contratos temporales solo para necesidades realmente temporales."
   ],
   "pending": "Importes y límites de las deducciones."
@@ -1201,7 +1303,8 @@ propuestas:[
    "El gasto ordinario no crece permanentemente más que los ingresos estructurales.",
    "Se tienen en cuenta la inflación y el desarrollo económico.",
    "Se usan ingresos recurrentes, no extraordinarios.",
-   "Excepciones justificadas y temporales."
+   "Excepciones justificadas y temporales.",
+   "Regla del plan 2027–2034: el gasto público total crece cada año un punto menos que el PIB nominal y pasa del 45% al 40,75% del PIB en 2034."
   ]
  },
  {
@@ -1224,11 +1327,11 @@ propuestas:[
   "id": "vivienda-publica-en-alquiler-que-nunca-se-vende",
   "block": "Vivienda",
   "title": "Vivienda pública en alquiler que nunca se vende",
-  "desc": "Un parque público permanente, solo en alquiler, financiado por un Fondo Estatal de Vivienda. El alquiler máximo será el 50 % del salario mínimo mensual, sea cual sea el tamaño de la familia.",
+  "desc": "Un parque público permanente, solo en alquiler, financiado por un Fondo Estatal de Vivienda. El alquiler máximo será el 50% del salario mínimo mensual, sea cual sea el tamaño de la familia.",
   "goal": "Un parque público de alquiler asequible que crezca y no se privatice.",
   "datos": [
    [
-    "50 % del SMI",
+    "50% del SMI",
     "alquiler máximo mensual"
    ],
    [
@@ -1281,7 +1384,7 @@ propuestas:[
   ],
   "measures": [
    "La vivienda pública es exclusivamente de alquiler y nunca se vende.",
-   "Alquiler máximo universal: 50 % del SMI mensual normalizado.",
+   "Alquiler máximo universal: 50% del SMI mensual normalizado.",
    "El Fondo Estatal de Vivienda se usa solo para construir, rehabilitar, mantener y gestionar profesionalmente vivienda pública.",
    "Contratos renovables, con revisión de requisitos.",
    "Protección frente a no renovaciones arbitrarias."
@@ -1310,7 +1413,7 @@ propuestas:[
   "datos": [
    [
     "Exento",
-    "alquiler inferior al 50 % del SMI"
+    "alquiler inferior al 50% del SMI"
    ]
   ],
   "tablas": [
@@ -1322,19 +1425,19 @@ propuestas:[
     ],
     "r": [
      [
-      "Menos del 50 % del SMI",
+      "Menos del 50% del SMI",
       "Exento"
      ],
      [
-      "Entre el 50 % y el 70 %",
+      "Entre el 50% y el 70%",
       "Reducida"
      ],
      [
-      "Entre el 70 % y el 100 %",
+      "Entre el 70% y el 100%",
       "Ordinaria"
      ],
      [
-      "100 % del SMI o más",
+      "100% del SMI o más",
       "Elevada"
      ]
     ]
@@ -1353,11 +1456,11 @@ propuestas:[
   "id": "vivienda-turistica-y-vacia-al-fondo-de-vivienda",
   "block": "Vivienda",
   "title": "Pisos turísticos y viviendas vacías pagan la vivienda pública",
-  "desc": "Recargo del 30 % sobre el beneficio del alquiler turístico de vivienda completa y gravamen anual a las viviendas vacías más de un año sin justificación. Todo lo recaudado va al Fondo Estatal de Vivienda. No se expropia ni se obliga a alquilar.",
+  "desc": "Recargo del 30% sobre el beneficio del alquiler turístico de vivienda completa y gravamen anual a las viviendas vacías más de un año sin justificación. Todo lo recaudado va al Fondo Estatal de Vivienda. No se expropia ni se obliga a alquilar.",
   "goal": "Devolver vivienda al mercado residencial respetando la propiedad privada.",
   "datos": [
    [
-    "+30 %",
+    "+30%",
     "recargo al alquiler turístico de vivienda completa"
    ],
    [
@@ -1365,7 +1468,7 @@ propuestas:[
     "vacía sin gravamen"
    ],
    [
-    "30 % del SMI anual",
+    "30% del SMI anual",
     "gravamen máximo por vivienda vacía"
    ]
   ],
@@ -1379,27 +1482,27 @@ propuestas:[
     "r": [
      [
       "0–12 meses",
-      "0 %"
+      "0%"
      ],
      [
       "12–24 meses",
-      "10 % del SMI anual"
+      "10% del SMI anual"
      ],
      [
       "24–36 meses",
-      "20 % del SMI anual"
+      "20% del SMI anual"
      ],
      [
       "Más de 36 meses",
-      "30 % del SMI anual"
+      "30% del SMI anual"
      ]
     ]
    }
   ],
   "measures": [
-   "Alquiler turístico de vivienda completa: tributación general más un recargo del 30 % sobre el beneficio neto.",
+   "Alquiler turístico de vivienda completa: tributación general más un recargo del 30% sobre el beneficio neto.",
    "El alquiler turístico de habitaciones no tiene ese recargo.",
-   "Licencia turística inactiva: gravamen anual fijo del 30 % del SMI anual, que se extingue al renunciar a la licencia y volver al mercado residencial.",
+   "Licencia turística inactiva: gravamen anual fijo del 30% del SMI anual, que se extingue al renunciar a la licencia y volver al mercado residencial.",
    "Vivienda vacía: excepciones por obras, herencias en tramitación, traslado temporal, litigios o imposibilidad acreditada de alquilar.",
    "No se impone el alquiler de viviendas vacías ni se expropian por estar vacías.",
    "Todos estos gravámenes se destinan al Fondo Estatal de Vivienda."
@@ -1410,6 +1513,7 @@ propuestas:[
   "block": "Vivienda",
   "title": "Cambiar de casa sin pagar impuestos por ello",
   "desc": "Quien vende su vivienda habitual para comprar otra vivienda habitual no tributa por la ganancia ni paga los impuestos de transmisión de la nueva compra, con 24 meses de plazo.",
+  "plan": "Se aplica desde 2028.",
   "goal": "Que mudarse por trabajo o por familia no tenga peaje fiscal.",
   "datos": [
    [
@@ -1438,7 +1542,7 @@ propuestas:[
   "goal": "Desincentivar comprar para revender rápido sin castigar a quien vende su casa.",
   "datos": [
    [
-    "+30 %",
+    "+30%",
     "si se revende en menos de 1 año"
    ],
    [
@@ -1456,19 +1560,19 @@ propuestas:[
     "r": [
      [
       "Menos de 1 año",
-      "+30 %"
+      "+30%"
      ],
      [
       "Entre 1 y 2 años",
-      "+20 %"
+      "+20%"
      ],
      [
       "Entre 2 y 5 años",
-      "+10 %"
+      "+10%"
      ],
      [
       "Más de 5 años",
-      "0 %"
+      "0%"
      ]
     ]
    }
@@ -1701,7 +1805,7 @@ propuestas:[
   "id": "nueve-sectores-estrategicos",
   "block": "Industria y economía productiva",
   "title": "Nueve sectores estratégicos para la industria",
-  "desc": "Concentrar el esfuerzo industrial en nueve sectores, que tendrán una deducción fiscal adicional del 10 % sobre los incentivos generales.",
+  "desc": "Concentrar el esfuerzo industrial en nueve sectores, que tendrán una deducción fiscal adicional del 10% sobre los incentivos generales.",
   "goal": "Apostar por los sectores donde España puede competir y reducir dependencias.",
   "datos": [
    [
@@ -1709,7 +1813,7 @@ propuestas:[
     "sectores prioritarios"
    ],
    [
-    "+10 %",
+    "+10%",
     "de deducción adicional"
    ]
   ],
@@ -1763,7 +1867,7 @@ propuestas:[
   "goal": "Que el conocimiento que se genera en España se convierta en empresas y empleo en España.",
   "datos": [
    [
-    "40 %",
+    "40%",
     "deducción fiscal por I+D+i"
    ]
   ],

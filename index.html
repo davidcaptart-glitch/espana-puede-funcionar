@@ -436,7 +436,8 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 .skel{background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%}
 
 @media(max-width:860px){
- .spread{grid-template-columns:1fr}
+ .spread{grid-template-columns:minmax(0,1fr)}
+ .spread>*{min-width:0}
  .story{width:170px;order:-1}
  .dock{display:flex}
  footer{padding-bottom:110px}
@@ -474,6 +475,100 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 .feat-l{font-size:.82rem;opacity:.9;margin-top:4px;padding-right:30px}
 .feat h3{margin-top:22px;font-size:1.25rem}
 .q-card .datos{margin:14px 0 0}
+
+/* Plan 2027–2034 */
+.plan-sec{padding-block:56px 8px}
+.plan-lead{font-size:1.1rem;color:#ece6f5;max-width:70ch;margin-top:10px}
+.plan-h{font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:700;margin:44px 0 6px}
+.plan-p{color:var(--muted);max-width:75ch;margin-bottom:16px}
+.cmp{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin:22px 0 0;padding:0;list-style:none}
+.cmp li{background:var(--surface);border:1px solid var(--edge);border-radius:14px;padding:14px 16px}
+.cmp span{display:block;font-size:.84rem;color:var(--muted);margin-bottom:6px}
+.cmp s{color:var(--pk2);text-decoration-thickness:1px;font-size:.92rem;margin-right:8px}
+.cmp b{font-family:var(--display);font-size:1.3rem;color:var(--gr);line-height:1.15}
+.cmp em{font-style:normal;color:var(--muted);margin-right:8px}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.trio div,.steps2 li,.case{background:var(--surface);border:1px solid var(--edge);border-radius:14px;padding:16px 18px}
+.trio b,.steps2 b{display:block;color:#fff;margin-bottom:4px}
+.trio p,.steps2 p{font-size:.93rem}
+.plan-note{margin-top:16px;max-width:80ch}
+.years{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;align-items:end;height:190px;margin-top:8px}
+.yr{all:unset;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:6px;text-align:center;min-width:0}
+.yr i{display:block;width:100%;border-radius:10px 10px 4px 4px;background:rgba(255,255,255,.12);transition:background .2s;min-height:10px}
+.yr:hover i{background:rgba(255,255,255,.22)}
+.yr[aria-pressed=true] i{background:var(--mix)}
+.yr small{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.yr b{font-family:var(--display);font-size:1rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.yr[aria-pressed=true] b{color:#fff}
+.yr:focus-visible{outline:3px solid var(--gr2);outline-offset:3px;border-radius:10px}
+.ypanel{margin-top:16px;border-radius:20px;border:1px solid var(--edge);padding:clamp(18px,3vw,28px);background:radial-gradient(520px 300px at 0 0,rgba(255,79,168,.22),transparent 70%),radial-gradient(520px 300px at 100% 100%,rgba(46,230,166,.18),transparent 70%),#1a1129}
+.ypanel h4{font-family:var(--display);font-size:clamp(1.5rem,4vw,2.1rem);font-weight:750;color:#fff;margin:0;line-height:1.1;letter-spacing:-.02em}
+.ypanel h4 span{background:var(--mix);-webkit-background-clip:text;background-clip:text;color:transparent;margin-right:10px}
+.ynum{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:18px 0 0;padding:0;list-style:none}
+.ynum li{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.ynum b{display:block;font-family:var(--display);font-size:1.35rem;color:#fff;font-variant-numeric:tabular-nums;line-height:1.2}
+.ynum span{font-size:.78rem;color:var(--muted)}
+.yprog{height:10px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:16px}
+.yprog span{display:block;height:100%;background:var(--mix);transition:width .4s}
+.yprog-l{font-size:.8rem;color:var(--muted);margin-top:6px}
+.ynav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.pay{display:flex;height:34px;border-radius:12px;overflow:hidden;margin:6px 0 4px;gap:2px}
+.pay i{display:block;height:100%}
+.pay-k{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.8rem;color:var(--muted);margin-bottom:6px}
+.pay-k i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.steps2{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;counter-reset:s}
+.steps2 li{counter-increment:s}
+.steps2 li::before{content:counter(s);display:block;font-family:var(--display);font-size:1.8rem;font-weight:750;line-height:1;margin-bottom:8px;background:var(--mix);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content}
+.cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.case b{display:block;font-family:var(--display);font-size:1.6rem;color:var(--gr);line-height:1.1;margin-bottom:8px}
+.case strong{display:block;color:#fff;margin-bottom:4px}
+.case p{font-size:.92rem}
+.risks{margin:14px 0 0;padding-left:20px;max-width:85ch}.risks li{margin:6px 0}.risks b{color:#fff}
+.aviso{margin:36px 0 0;padding:16px 20px;border-left:3px solid var(--pk);background:var(--surface);border-radius:0 12px 12px 0;font-size:.9rem;color:var(--text);max-width:90ch}
+.tblw{overflow-x:auto}
+.tbl.w3 td:last-child,.tbl.w3 th:last-child{white-space:nowrap}
+.box.plan{background:linear-gradient(95deg,rgba(255,79,168,.16),rgba(46,230,166,.14));border-color:rgba(255,255,255,.2)}
+.box.plan h3{color:#fff}
+.notas{margin:10px 0 0;padding-left:20px;font-size:.93rem}.notas li{margin:4px 0}
+.blk-nota{grid-column:1/-1;font-size:.88rem;color:var(--muted);margin:-8px 0 0}
+.plan-chip{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;color:var(--dark);background:var(--mix);border-radius:99px;padding:2px 9px;margin-left:auto;white-space:nowrap}
+.card .blk{width:100%}
+
+/* Medidas con las categorías a la derecha */
+.prog{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+.prog .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));padding-top:0}
+.tools{position:sticky;top:72px;z-index:5;background:var(--surface);border:1px solid var(--edge);border-radius:18px;padding:14px;max-height:calc(100dvh - 88px);overflow-y:auto;backdrop-filter:none}
+.tools h3{font-size:.74rem;font-family:var(--body);text-transform:uppercase;letter-spacing:.12em;color:var(--pk2);font-weight:650;margin:14px 4px 6px}
+.tools .search{display:block}
+.tools select{width:100%;max-width:none;margin-top:8px}
+#catSel{display:none}
+.cats{display:flex;flex-direction:column;gap:2px}
+.cat{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:10px;color:var(--text);font-weight:550;font-size:.9rem;min-height:40px;line-height:1.25;transition:background .2s}
+.cat .ic{color:var(--c,var(--muted))}
+.cat small{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.cat:hover{background:rgba(255,255,255,.08)}
+.cat[aria-pressed=true]{background:var(--c,#fff);color:var(--dark);font-weight:700}
+.cat[aria-pressed=true] .ic,.cat[aria-pressed=true] small{color:var(--dark)}
+#programa{scroll-margin-top:60px}
+@media(max-width:1000px){
+ .prog{grid-template-columns:1fr;gap:14px}
+ .tools{order:-1;top:56px;margin-inline:-20px;border-radius:0;border-width:0 0 1px;padding:10px 20px;background:rgba(13,8,23,.94);backdrop-filter:blur(10px);display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:none;overflow:visible}
+ .tools h3,.cats{display:none}
+ #catSel{display:block;grid-column:1/-1;margin:0}
+ .tools .search{grid-column:1}
+ .tools #sort{margin:0}
+}
+@media(max-width:860px){
+ .trio{grid-template-columns:1fr}
+ .tblw .tbl{min-width:520px}
+ .years{height:150px;gap:5px}
+ .yr small{display:none}
+ .yr b{font-size:.8rem}
+}
+@media(max-width:520px){
+ .top-plan{display:none}
+ .tbl{font-size:.86rem}.tbl td,.tbl th{padding:8px 10px}
+}
 </style>
 </head>
 <body>
@@ -482,7 +577,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 
 <div class="topbar"><div class="wrap">
  <a class="brand" href="#top"><img src="favicon.svg" alt="" width="30" height="30"><span>España puede funcionar</span></a>
- <div class="top-acts"><a class="btn btn-glass btn-sm top-contact" href="contacto.html">Contacto</a><button class="btn btn-glass btn-sm" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir</button><button class="btn btn-accent btn-sm top-vote" data-act="quiz">Votar</button></div>
+ <div class="top-acts"><a class="btn btn-glass btn-sm top-plan" href="#plan">Plan 2027–2034</a><a class="btn btn-glass btn-sm top-contact" href="contacto.html">Contacto</a><button class="btn btn-glass btn-sm" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir</button><button class="btn btn-accent btn-sm top-vote" data-act="quiz">Votar</button></div>
 </div></div>
 
 <header class="hero" id="top">
@@ -494,6 +589,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
    <div class="hero-cta">
     <button class="btn btn-accent" data-act="quiz"><span id="ctaMain">Vota el programa</span> <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button>
     <button class="btn btn-glass" data-act="hub" data-k="web"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></svg>Compartir la web</button>
+    <a class="link" href="#plan">Plan 2027–2034</a>
     <a class="link" href="#programa">Ver las medidas</a>
    </div>
    <ul class="stats" aria-label="Participación">
@@ -524,18 +620,24 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
  <div class="feats" id="feats" tabindex="0" role="region" aria-label="Medidas destacadas"></div>
 </section>
 
+<section class="plan-sec wrap" id="plan" aria-labelledby="planT">
+ <p class="kicker">Fiscalidad y economía · Cómo y cuándo</p>
+ <h2 id="planT" style="font-size:clamp(1.9rem,4.4vw,3rem);font-weight:750;margin-top:6px">Plan 2027–2034</h2>
+ <div id="planBody"></div>
+</section>
+
 <section class="sec" id="programa" aria-labelledby="progT">
  <div class="wrap sec-head"><div><p class="kicker">El programa completo</p><h2 id="progT">Todas las medidas</h2></div></div>
- <div class="tools">
-  <div class="wrap">
-   <div class="chips" id="chips" role="group" aria-label="Filtrar por bloque"></div>
-   <div class="tools-row">
-    <label class="search"><span class="sr">Buscar medidas</span><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg><input type="search" id="q" placeholder="Buscar: vivienda, autónomos, agua…" autocomplete="off"></label>
-    <select id="sort" aria-label="Ordenar medidas"><option value="prog">Orden del programa</option><option value="apoyo">Más apoyadas</option><option value="votos">Más votadas</option><option value="debate">Más comentadas</option></select>
-   </div>
-  </div>
+ <div class="wrap prog">
+  <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
+  <aside class="tools" aria-label="Buscar y filtrar medidas">
+   <label class="search"><span class="sr">Buscar medidas</span><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg><input type="search" id="q" placeholder="Buscar: vivienda, autónomos, agua…" autocomplete="off"></label>
+   <select id="sort" aria-label="Ordenar medidas"><option value="prog">Orden del programa</option><option value="apoyo">Más apoyadas</option><option value="votos">Más votadas</option><option value="debate">Más comentadas</option></select>
+   <select id="catSel" aria-label="Categoría"></select>
+   <h3>Categorías</h3>
+   <nav class="cats" id="chips" aria-label="Categorías"></nav>
+  </aside>
  </div>
- <div class="wrap"><div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div></div>
 </section>
 
 <section class="sec wrap" id="ranking" aria-labelledby="rankT">
@@ -568,7 +670,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 </section>
 </main>
 
-<footer><div class="wrap">
+<footer><div class="wrap" style="display:block;padding-bottom:18px"><p style="max-width:95ch"><b style="color:#fff">Sobre las cifras del Plan 2027–2034.</b> Las cifras de este plan son estimaciones propias en euros de 2025, calculadas a partir de datos públicos de la Agencia Tributaria, la Seguridad Social y el Banco de España. No son una evaluación oficial. El coste real de cada medida lo fijará la auditoría independiente que activa cada hito anual.</p></div><div class="wrap">
  <div><h2>Privacidad</h2>
   <p>Para votar y opinar no pedimos tu nombre real ni tu correo. Para que cada dispositivo vote una sola vez, tu navegador guarda un identificador aleatorio. El servidor (Supabase, alojado en la UE) conserva un resumen irreversible de la dirección IP únicamente para frenar abusos.</p>
   <p>Las opiniones aparecen con el alias que elijas. Los votos reflejan la opinión de quienes participan aquí; no son vinculantes ni representativos.</p></div>
@@ -587,6 +689,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
 <div class="toast" id="toast" role="status" aria-live="polite" popover="manual"></div>
 
 <script src="propuestas.js"></script>
+<script src="plan.js"></script>
 <script>
 // ───────── Configuración ─────────
 // La clave es "publicable": está pensada para ir en la web. Los datos están protegidos en el servidor.
@@ -624,7 +727,7 @@ let VOTER=ls.get("epf-voter");
 if(!/^[0-9a-f-]{36}$/.test(VOTER||"")){VOTER=uuid();ls.set("epf-voter",VOTER)}
 
 // ───────── Estado ─────────
-const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:"Todas",q:"",sort:"prog",rank:"apoyo",just:null};
+const S={totals:{},mine:{},comments:{},pending:{},visits:null,ready:false,filter:"Todas",q:"",sort:"prog",rank:"apoyo",just:null,year:2027};
 const tot=id=>S.totals[id]||{up:0,down:0};
 const comsOf=id=>S.comments[id]||[];
 
@@ -676,14 +779,14 @@ let toastT;function toast(m){const t=$("toast");t.textContent=m;try{if(t.showPop
 
 // ───────── Cifras y tablas ─────────
 const datosHTML=(p,max,cls)=>p.datos&&p.datos.length?`<ul class="datos${cls||""}">${p.datos.slice(0,max||99).map(d=>`<li><b>${esc(d[0])}</b><span>${esc(d[1])}</span></li>`).join("")}</ul>`:"";
-const tablasHTML=p=>(p.tablas||[]).map(t=>`<table class="tbl${t.r.some(r=>String(r[r.length-1]).length>22)?" txt":""}"><caption>${esc(t.t)}</caption><thead><tr>${t.h.map(x=>`<th scope="col">${esc(x)}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table>`).join("");
+const tablasHTML=p=>(p.tablas||[]).map(t=>`<table class="tbl${t.r.some(r=>String(r[r.length-1]).length>22)||t.h.length>2?" txt":""}"><caption>${esc(t.t)}</caption><thead><tr>${t.h.map(x=>`<th scope="col">${esc(x)}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table>`).join("");
 
 // ───────── Votos ─────────
 function voteBox(id){
  const t=tot(id),n=t.up+t.down,m=S.mine[id]||0,p=n?Math.round(t.up/n*100):0;
  return `<div class="vb" data-vb="${id}">
-<div class="bar${n?"":" empty-bar"}" role="img" aria-label="${n?`${p} % de apoyo con ${n} ${n===1?"voto":"votos"}`:"Sin votos todavía"}"><span style="width:${p}%"></span></div>
-<div class="vb-meta"><span>${n?`<b>${p} %</b> de apoyo`:"Sin votos todavía"}</span><span>${n?`${nf.format(n)} ${n===1?"voto":"votos"}`:""}</span></div>
+<div class="bar${n?"":" empty-bar"}" role="img" aria-label="${n?`${p}% de apoyo con ${n} ${n===1?"voto":"votos"}`:"Sin votos todavía"}"><span style="width:${p}%"></span></div>
+<div class="vb-meta"><span>${n?`<b>${p}%</b> de apoyo`:"Sin votos todavía"}</span><span>${n?`${nf.format(n)} ${n===1?"voto":"votos"}`:""}</span></div>
 <div class="vb-btns"><button type="button" class="v up${m===1?" on":""}" data-act="vote" data-id="${id}" data-v="1" aria-pressed="${m===1}">${ic("thumbs-up")}De acuerdo <b>${nf.format(t.up)}</b></button><button type="button" class="v down${m===-1?" on":""}" data-act="vote" data-id="${id}" data-v="-1" aria-pressed="${m===-1}">${ic("thumbs-down")}En contra <b>${nf.format(t.down)}</b></button></div>
 ${m&&S.just===id?`<div class="nudge"><span>${m===1?"Has votado a favor.":"Has votado en contra."} ¿Y ahora?</span><button type="button" data-act="open" data-id="${id}" data-to="coms">${ic("chat-circle")}Di por qué</button><button type="button" data-act="share" data-id="${id}">${ic("share-network")}Compártela</button></div>`:""}</div>`;
 }
@@ -728,12 +831,15 @@ function renderFeats(){
 }
 function renderChips(){
  const counts={};props.forEach(p=>counts[p.block]=(counts[p.block]||0)+1);
- const chip=(name,n,b)=>`<button type="button" class="chip" data-act="chip" data-b="${esc(name)}" aria-pressed="${S.filter===name}"${b?` style="--c:${colorOf({block:b.nombre})}"`:""}>${b?ic(b.icono):""}${esc(name)} <small>${n}</small></button>`;
- $("chips").innerHTML=chip("Todas",props.length)+blocks.filter(b=>counts[b.nombre]).map(b=>chip(b.nombre,counts[b.nombre],b)).join("");
+ const chip=(name,n,b)=>`<button type="button" class="cat" data-act="chip" data-b="${esc(name)}" aria-pressed="${S.filter===name}"${b?` style="--c:${colorOf({block:b.nombre})}"`:""}>${b?ic(b.icono):ic("check")}<span>${esc(name)}</span><small>${n}</small></button>`;
+ const bs=blocks.filter(b=>counts[b.nombre]);
+ $("chips").innerHTML=chip("Todas",props.length)+bs.map(b=>chip(b.nombre,counts[b.nombre],b)).join("");
+ $("catSel").innerHTML=`<option value="Todas">Todas las categorías (${props.length})</option>`+bs.map(b=>`<option value="${esc(b.nombre)}">${esc(b.nombre)} (${counts[b.nombre]})</option>`).join("");
+ $("catSel").value=S.filter;
 }
 function visible(){
  const q=norm(S.q.trim());
- let list=props.filter(p=>(S.filter==="Todas"||p.block===S.filter)&&(!q||norm([p.title,p.desc,p.goal||"",p.block,(p.measures||[]).join(" "),(p.datos||[]).join(" ")].join(" ")).includes(q)));
+ let list=props.filter(p=>(S.filter==="Todas"||p.block===S.filter)&&(!q||norm([p.title,p.desc,p.plan||"",p.goal||"",p.block,(p.measures||[]).join(" "),(p.datos||[]).join(" ")].join(" ")).includes(q)));
  const net=p=>{const t=tot(p.id),n=t.up+t.down;return n?t.up/n:-1};
  if(S.sort==="apoyo")list=[...list].sort((a,b)=>net(b)-net(a)||tot(b.id).up-tot(a.id).up);
  if(S.sort==="votos")list=[...list].sort((a,b)=>tot(b.id).up+tot(b.id).down-tot(a.id).up-tot(a.id).down);
@@ -743,7 +849,7 @@ function visible(){
 function card(p){
  const n=comsOf(p.id).length;
  const cs=comsOf(p.id);
- return `<article class="card" style="--c:${colorOf(p)}"><svg class="card-ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg><span class="blk">${ic(iconOf(p))}${esc(p.block)}</span>
+ return `<article class="card" style="--c:${colorOf(p)}"><svg class="card-ic" viewBox="0 0 256 256" aria-hidden="true">${ICONS[iconOf(p)]||""}</svg><span class="blk">${ic(iconOf(p))}${esc(p.block)}${p.plan?'<span class="plan-chip">Plan 2027–2034</span>':""}</span>
 <h3><button type="button" data-act="open" data-id="${p.id}">${esc(p.title)}</button></h3><p class="clamp">${esc(p.desc)}</p>${datosHTML(p,2)}
 ${voteBox(p.id)}${n?`<p class="quote"><b>${esc(cs[0].alias)}:</b> ${esc(cs[0].body)}</p>`:""}
 <div class="card-foot"><button type="button" class="ghost" data-act="open" data-id="${p.id}" data-to="coms">${ic("chat-circle")}${n?`${n} ${n===1?"opinión":"opiniones"}`:"Opinar"}</button><button type="button" class="ghost" data-act="share" data-id="${p.id}">${ic("share-network")}Compartir</button></div></article>`;
@@ -751,7 +857,7 @@ ${voteBox(p.id)}${n?`<p class="quote"><b>${esc(cs[0].alias)}:</b> ${esc(cs[0].bo
 function renderGrid(){
  const list=visible();
  const grouped=S.filter==="Todas"&&!S.q.trim()&&S.sort==="prog";let last=null;
- $("grid").innerHTML=list.map(p=>{let hd="";if(grouped&&p.block!==last){last=p.block;const n=props.filter(x=>x.block===p.block).length;hd=`<h3 class="grid-h" style="--c:${colorOf(p)}">${ic(iconOf(p))}${esc(p.block)}<small>${n} medidas</small></h3>`}return hd+card(p)}).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Ver todas las medidas</button></div>`;
+ $("grid").innerHTML=list.map(p=>{let hd="";if(grouped&&p.block!==last){last=p.block;const n=props.filter(x=>x.block===p.block).length;hd=`<h3 class="grid-h" style="--c:${colorOf(p)}">${ic(iconOf(p))}${esc(p.block)}<small>${n} medidas</small></h3>${(blockBy[p.block]||{}).nota?`<p class="blk-nota">${esc(blockBy[p.block].nota)}</p>`:""}`}return hd+card(p)}).join("")||`<div class="empty"><p>Ninguna medida coincide con tu búsqueda.</p><button class="btn btn-line" data-act="clear">Ver todas las medidas</button></div>`;
 }
 function renderRank(){
  const rows=props.map(p=>({p,t:tot(p.id)})).filter(r=>r.t.up+r.t.down>0);
@@ -762,6 +868,59 @@ function renderRank(){
  $("rank").innerHTML=`<ol class="rank">${top.map((r,i)=>`<li><span class="rank-n">${i+1}</span><button type="button" class="rank-t" data-act="open" data-id="${r.p.id}" style="--c:${colorOf(r.p)}">${esc(r.p.title)}<small>${esc(r.p.block)}</small></button>
 <div class="rank-bar" role="img" aria-label="${r.t.up} a favor y ${r.t.down} en contra"><i class="g" style="width:${r.t.up/max*100}%"></i><i class="r" style="width:${r.t.down/max*100}%"></i></div>
 <span class="rank-v"><b>${nf.format(r.t.up)}</b> · <em>${nf.format(r.t.down)}</em></span></li>`).join("")}</ol>`;
+}
+// ───────── Plan 2027–2034 ─────────
+const PL=window.PLAN;
+const tbl=(cap,h,rows,cls)=>`<div class="tblw"><table class="tbl ${cls||"txt"}">${cap?`<caption>${esc(cap)}</caption>`:""}<thead><tr>${h.map(x=>`<th scope="col">${esc(x)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+function yearHTML(){
+ const i=PL.anios.findIndex(y=>y.a===S.year),y=PL.anios[i],pc=y.n/PL.total*100;
+ return `<h4><span>${y.a}</span>${esc(y.lema)}</h4>
+<ul class="ynum"><li><b>${y.coste} M€</b><span>coste de los hitos de ${y.a}</span></li><li><b>${y.acum} M€</b><span>rebaja acumulada al año</span></li><li><b>${esc(y.estado[0])}</b><span>salario libre de IRPF</span></li><li><b>${esc(y.estado[1])}</b><span>cotización de la empresa</span></li><li><b>${esc(y.estado[2])}</b><span>IVA general</span></li></ul>
+<div class="yprog" role="img" aria-label="${Math.round(pc)}% del plan"><span style="width:${pc}%"></span></div><p class="yprog-l">${y.acum} de ${nf.format(PL.total)} M€ del plan a 2034</p>
+<div class="box dec" style="background:rgba(0,0,0,.25)"><h3>Hitos de ${y.a}</h3><ul>${y.hitos.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+${tbl("Coste estimado de cada medida (M€)",["Medida","Qué cambia","Coste (M€)"],y.det,"w3")}
+<div class="ynav">${i>0?`<button type="button" class="btn btn-glass btn-sm" data-act="year" data-y="${y.a-1}">${ic("arrow-left")}${y.a-1}</button>`:"<span></span>"}${i<PL.anios.length-1?`<button type="button" class="btn btn-glass btn-sm" data-act="year" data-y="${y.a+1}">${y.a+1}${ic("arrow-right")}</button>`:""}</div>`;
+}
+function renderPlan(only){
+ if(!PL)return;
+ if(only){document.querySelectorAll(".yr").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.y===S.year));$("yPanel").innerHTML=yearHTML();return}
+ const cols=["#ff4fa8","#2ee6a6","#ff8ecb","#8af5d0","#c9a8f5"],tot=PL.pago.reduce((n,x)=>n+x[2],0);
+ $("planBody").innerHTML=`<p class="plan-lead">${esc(PL.intro)}</p>
+<ul class="cmp">${PL.resumen.map(r=>`<li><span>${esc(r[0])}</span><em>Hoy</em><s>${esc(r[1])}</s><br><em>2034</em><b>${esc(r[2])}</b></li>`).join("")}</ul>
+<div class="trio">${PL.compromisos.map(c=>`<div><b>${esc(c[0])}</b><p>${esc(c[1])}</p></div>`).join("")}</div>
+<p class="plan-note">${esc(PL.cierre)}</p>
+
+<h3 class="plan-h" id="plan-calendario">Calendario 2027–2034</h3>
+<p class="plan-p">Elige un año para ver sus hitos, lo que cuestan y cómo queda cada impuesto.</p>
+<div class="years" role="group" aria-label="Año del plan">${PL.anios.map(y=>`<button type="button" class="yr" data-act="year" data-y="${y.a}" aria-pressed="${y.a===S.year}" aria-label="${y.a}: ${y.acum} M€ acumulados"><small>${y.acum}</small><i style="height:${Math.max(8,y.n/PL.total*100)}%"></i><b>${y.a}</b></button>`).join("")}</div>
+<div class="ypanel" id="yPanel" aria-live="polite">${yearHTML()}</div>
+<p class="note">${esc(PL.calNota)}</p>
+
+<h3 class="plan-h" id="plan-regla">Cómo se activa cada hito</h3>
+<p class="plan-p">${esc(PL.reglaIntro)}</p>
+<ol class="steps2">${PL.regla.map(r=>`<li><b>${esc(r[0])}</b><p>${esc(r[1])}</p></li>`).join("")}</ol>
+<p class="plan-note">${esc(PL.reglaCierre)}</p>
+
+<h3 class="plan-h" id="plan-pago">Cómo se paga</h3>
+<div class="pay" role="img" aria-label="Reparto de las fuentes de financiación en 2034">${PL.pago.map((x,i)=>`<i style="width:${x[2]/tot*100}%;background:${cols[i]}"></i>`).join("")}</div>
+<div class="pay-k">${PL.pago.map((x,i)=>`<span><i style="background:${cols[i]}"></i>${esc(x[0])}</span>`).join("")}</div>
+${tbl("",["Fuente de financiación en 2034","M€ de 2025","En qué consiste"],[...PL.pago.map(x=>[x[0],x[1],x[3]]),["Total",PL.pagoTotal,""]])}
+<p class="plan-note">${esc(PL.pagoCierre)}</p>
+
+<h3 class="plan-h" id="plan-escenarios">Tres escenarios</h3>
+<p class="plan-p">${esc(PL.escIntro)}</p>
+${tbl("",["Escenario","Crecimiento real medio","Retorno de las rebajas","Rebajas en 2034 (M€)","Plan completo en"],PL.escenarios)}
+<p class="plan-note"><b style="color:#fff">Riesgos que el plan reconoce:</b></p>
+<ul class="risks">${PL.riesgos.map(r=>`<li><b>${esc(r[0])}</b> ${esc(r[1])}</li>`).join("")}</ul>
+
+<h3 class="plan-h" id="plan-ti">Qué significa para ti</h3>
+<p class="plan-p">${esc(PL.casosIntro)}</p>
+<div class="cases">${PL.casos.map(c=>`<div class="case"><b>${esc(c[2])}</b><strong>${esc(c[0])}</strong><p>${esc(c[1])}</p></div>`).join("")}</div>
+
+<h3 class="plan-h" id="plan-despues">Lo que sigue después de 2034</h3>
+${tbl("",["Medida","Punto de partida en 2034","Objetivo final"],PL.despues)}
+<p class="plan-note">${esc(PL.despuesCierre)}</p>
+<blockquote class="aviso">${esc(PL.aviso)}</blockquote>`;
 }
 function renderAll(){renderStats();renderMe();renderFeats();renderChips();renderGrid();renderRank();route()}
 
@@ -797,9 +956,9 @@ const webText=()=>`${props.length} medidas para que España funcione. Vota cada 
 function shareCtx(k,id){
  if(k==="m"){const p=byId[id],url=urlOf(id);return {k,h:"Comparte esta medida",sub:p.title,text:shareText(p),url,name:id,
   story:()=>drawStory({tag:p.block,title:p.title,desc:p.desc,stat:p.datos&&p.datos[0],cta:"¿Estás de acuerdo? Vota.",btns:true}),post:()=>drawCard(p,"post")}}
- if(k==="res"){const c=myCounts(),pct=c.n?Math.round(c.up/c.n*100):0,url=urlOf("");return {k,h:"Comparte tu resultado",sub:`Coincides con el ${pct} % de las medidas que has votado.`,
-  text:`He votado el programa «${CONFIG.titulo}» y estoy de acuerdo con el ${pct} % de las medidas. ¿Y tú?`,url,name:"mi-resultado",
-  story:()=>drawStory({tag:CONFIG.titulo,big:pct+" %",title:"de acuerdo con el programa",desc:`He votado ${c.n} de ${props.length} medidas.`,cta:"¿Y tú? Vota."}),post:()=>drawResult(pct,c.n)}}
+ if(k==="res"){const c=myCounts(),pct=c.n?Math.round(c.up/c.n*100):0,url=urlOf("");return {k,h:"Comparte tu resultado",sub:`Coincides con el ${pct}% de las medidas que has votado.`,
+  text:`He votado el programa «${CONFIG.titulo}» y estoy de acuerdo con el ${pct}% de las medidas. ¿Y tú?`,url,name:"mi-resultado",
+  story:()=>drawStory({tag:CONFIG.titulo,big:pct+"%",title:"de acuerdo con el programa",desc:`He votado ${c.n} de ${props.length} medidas.`,cta:"¿Y tú? Vota."}),post:()=>drawResult(pct,c.n)}}
  const web={title:CONFIG.titulo+".",desc:`${props.length} medidas concretas, abiertas a tu voto. Vótalas una a una y deja tu opinión.`,block:"Programa abierto",cta:"Entra y vota."};
  return {k:"web",h:"Comparte la web",sub:"Cuanta más gente vote, más dicen los resultados.",text:webText(),url:urlOf(""),name:"espana-puede-funcionar",
   story:()=>drawStory({tag:web.block,title:web.title,stat:[String(props.length),"medidas concretas, abiertas a tu voto"],cta:web.cta,btns:true}),post:()=>drawCard(web,"post")};
@@ -861,7 +1020,7 @@ async function drawResult(pct,n){
  await fontsReady();
  const W=1080,H=1350,M=84,c=document.createElement("canvas");c.width=W;c.height=H;const ctx=c.getContext("2d");cardBg(ctx,W,H);ctx.textBaseline="top";
  ctx.font=`600 34px ${DF}`;ctx.fillStyle="#d3cee2";ctx.fillText(CONFIG.titulo,M,M);
- ctx.font=`750 400px ${DF}`;ctx.fillStyle=grad(ctx,M,760);ctx.fillText(pct+" %",M-10,250);
+ ctx.font=`750 400px ${DF}`;ctx.fillStyle=grad(ctx,M,760);ctx.fillText(pct+"%",M-10,250);
  ctx.font=`700 84px ${DF}`;ctx.fillStyle="#fff";wrapText(ctx,"de acuerdo con el programa",W-2*M).forEach((l,i)=>ctx.fillText(l,M,720+i*92));
  ctx.font=`400 38px ${BF}`;ctx.fillStyle="#d3cee2";ctx.fillText(`He votado ${n} de ${props.length} medidas.`,M,940);
  ctx.fillStyle=grad(ctx,M,W-2*M);ctx.fillRect(M,1100,W-2*M,4);
@@ -920,11 +1079,13 @@ function openDetail(id,to){
  d.style.setProperty("--c",colorOf(p));
  d.innerHTML=`<div class="sheet-top"><span class="blk">${ic(iconOf(p))}${esc(p.block)}</span><button type="button" class="x" data-act="close" aria-label="Cerrar">${ic("x")}</button></div>
 <div class="sheet-body"><h2 id="dT">${esc(p.title)}</h2><p>${esc(p.desc)}</p>
+${p.plan?`<div class="box plan"><h3>Plan 2027–2034</h3><p>${esc(p.plan)}</p></div>`:""}
 ${datosHTML(p,0," big")}
 ${p.goal?`<div class="box goal"><h3>Objetivo</h3><p>${esc(p.goal)}</p></div>`:""}
-${tablasHTML(p)}
+${tablasHTML(p)}${p.nota?`<ul class="notas">${p.nota.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
 ${p.measures?`<div class="box dec"><h3>Qué incluye</h3><ul>${p.measures.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>`:""}
 ${p.pending?`<div class="box pen"><h3>Pendiente de concretar</h3><p>${esc(p.pending)}</p></div>`:p.detail?`<div class="box pen"><h3>Aspectos a desarrollar</h3><p>${esc(p.detail)}</p></div>`:""}
+${(blockBy[p.block]||{}).nota?`<p class="note">${esc(blockBy[p.block].nota)}</p>`:""}
 ${voteBox(id)}
 <h3 class="sub" id="dShare">Compartir esta medida</h3>${shareBlock(p)}
 <h3 class="sub" id="dComs">Opiniones (<span id="dComsN">${comsOf(id).length}</span>)</h3><div id="dComsList">${comsHTML(id)}</div>
@@ -975,8 +1136,8 @@ function renderResult(){
  if(!c.n){box.innerHTML=quizTop(0,props.length)+`<div class="res"><h2>Aún no has votado ninguna medida</h2><p>Vota al menos una para ver tu resultado.</p><div class="share"><button type="button" class="btn btn-accent" data-act="quiz">Empezar</button></div></div>`;return}
  const pct=Math.round(c.up/c.n*100);
  const rows=blocks.map(b=>{let u=0,n=0;props.forEach(p=>{if(p.block===b.nombre&&S.mine[p.id]){n++;if(S.mine[p.id]===1)u++}});return {b,u,n}}).filter(r=>r.n);
- const url=urlOf(""),text=`He votado el programa «${CONFIG.titulo}» y estoy de acuerdo con el ${pct} % de las medidas. ¿Y tú?`;
- box.innerHTML=quizTop(c.n,props.length)+`<div class="res"><p class="res-n">${pct} %</p><h2 tabindex="-1" id="qT">de acuerdo con el programa</h2>
+ const url=urlOf(""),text=`He votado el programa «${CONFIG.titulo}» y estoy de acuerdo con el ${pct}% de las medidas. ¿Y tú?`;
+ box.innerHTML=quizTop(c.n,props.length)+`<div class="res"><p class="res-n">${pct}%</p><h2 tabindex="-1" id="qT">de acuerdo con el programa</h2>
 <p>Has votado ${c.n} de ${props.length} medidas: ${c.up} a favor y ${c.down} en contra.</p>
 <ul class="res-blocks">${rows.map(r=>`<li><span>${esc(r.b.nombre)}</span><div class="rank-bar"><i class="g" style="width:${r.u/r.n*100}%"></i></div><span>${r.u}/${r.n}</span></li>`).join("")}</ul>
 <div class="share"><button type="button" class="sh ig" data-act="hub" data-k="res">${ic("instagram-logo")}Instagram</button>${url?shareLinks(text,url):""}<button type="button" class="sh" data-act="resimg" data-pct="${pct}" data-n="${c.n}">${ic("image")}Descargar imagen</button>${left?`<button type="button" class="sh" data-act="quiz">Votar las ${left} que faltan</button>`:""}</div></div>`;
@@ -1000,7 +1161,8 @@ document.addEventListener("click",async e=>{
  else if(a==="copy"){try{await copy(urlOf(id));toast("Enlace copiado.")}catch(x){toast("No se pudo copiar. Copia la dirección desde la barra del navegador.")}}
  else if(a==="img"){el.disabled=true;try{await saveCanvas(await drawCard(byId[id],"post"),id+".png",byId[id].title)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
  else if(a==="resimg"){el.disabled=true;try{await saveCanvas(await drawResult(el.dataset.pct,el.dataset.n),"mi-resultado.png",CONFIG.titulo)}catch(x){toast("No se pudo crear la imagen.")}el.disabled=false}
- else if(a==="chip"){S.filter=el.dataset.b;renderChips();renderGrid()}
+ else if(a==="chip"){S.filter=el.dataset.b;renderChips();renderGrid();if($("grid").getBoundingClientRect().top<0)$("programa").scrollIntoView()}
+ else if(a==="year"){S.year=+el.dataset.y;renderPlan(true)}
  else if(a==="clear"){S.filter="Todas";S.q="";$("q").value="";renderChips();renderGrid()}
  else if(a==="rank"){S.rank=el.dataset.m;document.querySelectorAll('[data-act="rank"]').forEach(b=>b.setAttribute("aria-pressed",b===el));renderRank()}
  else if(a==="feat"){const f=$("feats");f.scrollBy({left:+el.dataset.d*Math.min(f.clientWidth,712),behavior:"smooth"})}
@@ -1015,6 +1177,7 @@ $("quiz").addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;
 $("quiz").addEventListener("close",()=>{renderGrid()});
 let qT;$("q").addEventListener("input",e=>{clearTimeout(qT);qT=setTimeout(()=>{S.q=e.target.value;renderGrid()},120)});
 $("sort").addEventListener("change",e=>{S.sort=e.target.value;renderGrid()});
+$("catSel").addEventListener("change",e=>{S.filter=e.target.value;renderChips();renderGrid();$("programa").scrollIntoView()});
 
 if(matchMedia("(max-width:520px)").matches)$("q").placeholder="Buscar medidas…";
 function renderSpread(){
@@ -1024,7 +1187,7 @@ function renderSpread(){
  const paint=()=>shareCtx("web").story().then(c=>{$("spreadImg").src=c.toDataURL("image/jpeg",.8)}).catch(()=>{});
  if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();paint()}},{rootMargin:"600px"});io.observe($("difunde"))}else paint();
 }
-renderStats();renderFeats();renderChips();renderSpread();
+renderStats();renderFeats();renderChips();renderSpread();renderPlan();
 load();
 
 </script>
