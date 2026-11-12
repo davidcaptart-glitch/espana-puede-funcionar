@@ -662,7 +662,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
   <div>
    <p class="kicker">Programa político abierto a tu voto</p>
    <h1>España, un país que <em>puede funcionar.</em></h1>
-   <p class="hero-lead">Aquí hay <b>90 medidas concretas</b> para cambiar cómo funciona el país: impuestos, vivienda, sanidad, empleo… En cada una decides tú: <b class="c-gr">de acuerdo</b> o <b class="c-pk">en contra</b>. Sin registro.</p>
+   <p class="hero-lead">Aquí hay <b><span data-n="medidas">90</span> medidas concretas</b> para cambiar cómo funciona el país: impuestos, vivienda, sanidad, empleo… En cada una decides tú: <b class="c-gr">de acuerdo</b> o <b class="c-pk">en contra</b>. Sin registro.</p>
    <ol class="steps3" aria-label="Cómo funciona">
     <li><b>Lee</b><span>una medida y sus cifras</span></li>
     <li><b>Vota</b><span>de acuerdo o en contra</span></li>
@@ -694,7 +694,7 @@ dialog::backdrop{background:rgba(5,3,10,.7)}
   <div class="feat-nav"><button type="button" data-act="feat" data-d="-1" aria-label="Anteriores"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg></button><button type="button" data-act="feat" data-d="1" aria-label="Siguientes"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button></div>
  </div>
  <div class="feats" id="feats" tabindex="0" role="region" aria-label="Medidas destacadas"></div>
- <p class="allbtn"><a class="btn btn-accent" href="#medidas">Ver todas las medidas por categorías <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></a><span>Son 90 medidas en 15 categorías. Puedes votar y compartir cada una.</span></p>
+ <p class="allbtn"><a class="btn btn-accent" href="#medidas">Ver todas las medidas por categorías <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></a><span>Son <span data-n="medidas">90</span> medidas en <span data-n="cats">15</span> categorías. Puedes votar y compartir cada una.</span></p>
 </section>
 
 <section class="sec wrap" id="plan-resumen" data-view="inicio" aria-labelledby="prT">
@@ -889,7 +889,9 @@ async function vote(id,v){
 function renderStats(){
  const votos=props.reduce((n,p)=>n+tot(p.id).up+tot(p.id).down,0),coms=props.reduce((n,p)=>n+comsOf(p.id).length,0),v=S.visits;
  const put=(id,n)=>{const el=$(id);el.textContent=nf.format(n);el.parentNode.hidden=!(S.ready&&n>0)};
- $("stMedidas").textContent=props.length;$("stCats").textContent=blocks.length;
+ const nCats=blocks.filter(b=>props.some(p=>p.block===b.nombre)).length;
+ $("stMedidas").textContent=props.length;$("stCats").textContent=nCats;
+ document.querySelectorAll("[data-n]").forEach(e=>{e.textContent=e.dataset.n==="cats"?nCats:props.length});
  put("stVotos",votos);put("stComs",coms);put("stVisitas",v?v.total:0);
  $("vTotal").textContent=v?nf.format(v.total):"–";$("vPeople").textContent=v?nf.format(v.people):"–";$("vToday").textContent=v?nf.format(v.today):"–";
 }
